@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>美國公債免遺產稅，但公債 ETF 不是｜稅務 x 美股 x AI</title>
+<meta name="description" content="直接持有 T-Bill 與持有美國掛牌公債 ETF，在美國遺產稅上是兩個世界。差在哪裡、怎麼安排。">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../index.html">稅務 <span class="x">x</span> 美股 <span class="x">x</span> AI</a>
+    <nav class="main-nav">
+      <a href="../index.html">首頁</a>
+      <a href="../services.html">服務項目</a>
+      <a href="../about.html">關於傑夫哥</a>
+      <a href="../disclaimer.html">免責聲明</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<article class="post">
+  <h1>美國公債免遺產稅，但公債 ETF 不是：持有人必須知道的規則差異</h1>
+  <div class="post-meta">傑夫哥 · 2026-07-04 · 分類：跨境稅務 · 法規基準日：2026-07-04</div>
+
+  <p>「美國公債對外國人免遺產稅」這句話本身是對的，但很多人把它引申成「所以我買公債 ETF 也免」，這一步就錯了。差別在持有形式，而這個差別在遺產稅上是全有或全無。</p>
+
+  <h2>規則本身</h2>
+
+  <p>美國遺產稅對外國人（非美國公民且非美國稅務居民）只課美國境內資產，免稅額實質上只有 USD 60,000（詳細計算見<a href="us-estate-tax-60k.html">遺產稅完整解析</a>）。而法規給了幾類資產豁免或排除，其中最重要的一類：外國人直接持有的美國政府公債（T-Bill、T-Note、T-Bond），其利息符合 portfolio interest 豁免者，不計入美國遺產稅的課稅範圍。</p>
+
+  <p>所以一個台灣投資人直接持有 USD 300,000 的美國公債，身故時這 30 萬完全不進美國遺產稅計算。</p>
+
+  <h2>為什麼 ETF 包起來就不一樣</h2>
+
+  <p>邏輯鏈是這樣的：</p>
+  <ol>
+    <li>你買 VBIL、BIL、SGOV 這類美國掛牌公債 ETF，你持有的不是公債，是<strong>基金的股份</strong></li>
+    <li>這些 ETF 是美國註冊的投資公司（RIC），發行人是美國實體</li>
+    <li>股票與基金股份的 situs 判斷看發行人註冊地：美國實體發行 = US-situs</li>
+    <li>因此公債 ETF 的股份計入美國遺產稅課稅範圍，底層資產是什麼不影響這個判斷</li>
+  </ol>
+
+  <p>綜合以上：<strong>直接持有公債免遺產稅；美國掛牌公債 ETF 要課</strong>。同樣的底層資產，隔了一層美國基金皮，遺產稅待遇完全翻轉。</p>
+
+  <h2>對照表</h2>
+
+  <table>
+    <tr><th>持有形式</th><th>美國遺產稅</th><th>利息/配息的美國預扣稅</th><th>操作便利性</th></tr>
+    <tr><td>直接持有 T-Bill / T-Note</td><td>豁免</td><td>免（portfolio interest）</td><td>需券商支援債券交易，最小面額與滾動再投資要自己管理</td></tr>
+    <tr><td>美國掛牌公債 ETF（VBIL、BIL、SGOV 等）</td><td>計入課稅（US-situs）</td><td>利息型配息多數情況可免（interest-related dividends），依基金申報而定</td><td>一鍵買賣，自動滾動</td></tr>
+    <tr><td>愛爾蘭 UCITS 公債 ETF</td><td>非 US-situs，不計入</td><td>基金層級適用美愛協定</td><td>需支援歐股市場的券商</td></tr>
+  </table>
+
+  <h2>實務上怎麼想</h2>
+
+  <ul>
+    <li><strong>部位小（美國資產合計遠低於 USD 60k）</strong>：便利性優先，ETF 沒問題，遺產稅本來就課不到你。</li>
+    <li><strong>部位大、現金與債券配置比重高</strong>：把公債部位改成直接持有，是成本最低的遺產稅規劃動作，不需要任何複雜結構，只是換一個持有形式。</li>
+    <li><strong>已經有大量美股部位的人</strong>：公債直接持有的豁免額度等於幫你「騰出」US-situs 空間，資產配置與遺產稅規劃可以一次設計。</li>
+  </ul>
+
+  <div class="assumption">假設說明：本文以台灣稅務居民個人投資者為準。ETF 配息的預扣稅處理依各基金年度申報的 interest-related dividend 比例而定，各家不同。貨幣市場基金、附買回結構等變形工具的認定另有細節。個案請諮詢合格稅務專業人員。</div>
+
+  <div class="sources">
+    <h4>資料來源</h4>
+    <ul>
+      <li>IRC §2105(b)（外國人遺產稅豁免資產，含符合 portfolio interest 之債務工具）</li>
+      <li>IRC §2104(a)（股份 situs 以發行人為準）</li>
+      <li>IRC §871(k)（interest-related dividends 預扣稅豁免）</li>
+      <li>法規查核日期：2026-07-04</li>
+    </ul>
+  </div>
+
+  <div class="disclaimer-box">本文為教育性質與個人觀點，不構成稅務專業意見。個案情境請諮詢合格稅務專業人員。作者可能持有文中討論之證券部位。完整免責聲明見<a href="../disclaimer.html">此頁</a>。</div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p><strong>稅務 x 美股 x AI</strong>｜傑夫哥　·　<a href="../services.html">合作邀約</a>　·　<a href="../disclaimer.html">免責聲明</a></p>
+    <p class="footer-disclaimer">© 2026 稅務 x 美股 x AI</p>
+  </div>
+</footer>
+
+</body>
+</html>

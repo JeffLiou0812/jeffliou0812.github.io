@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>散戶版 13F 追蹤系統：用 Python + SEC EDGAR 免費自動化｜稅務 x 美股 x AI</title>
+<meta name="description" content="不用付訂閱費，直接從 SEC 原始資料抓 Buffett、Burry 的持股變動。完整 SOP 與程式碼，含新手最常踩的地雷。">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../index.html">稅務 <span class="x">x</span> 美股 <span class="x">x</span> AI</a>
+    <nav class="main-nav">
+      <a href="../index.html">首頁</a>
+      <a href="../services.html">服務項目</a>
+      <a href="../about.html">關於傑夫哥</a>
+      <a href="../disclaimer.html">免責聲明</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<article class="post">
+  <h1>散戶版 13F 追蹤系統：用 Python + SEC EDGAR 免費自動化</h1>
+  <div class="post-meta">傑夫哥 · 2026-07-04 · 分類：AI x 美股 · 程式碼以 Python 3.13 測試</div>
+
+  <p>想知道 Buffett 上季加碼了什麼、Burry 又重壓了什麼，多數人用 Whalewisdom（月費 USD 25）或免費但更新慢的 Dataroma。其實這些網站的資料源都是同一個：SEC EDGAR，公開、免費、有 API。這篇教你直接從源頭抓，順便講清楚 13F 這個數據的正確用法與限制。</p>
+
+  <h2>13F 是什麼</h2>
+
+  <ul>
+    <li><strong>誰要申報</strong>：管理美股部位超過 USD 100M 的機構投資人</li>
+    <li><strong>報什麼</strong>：多頭部位（long only），選擇權與空頭基本看不到</li>
+    <li><strong>頻率</strong>：每季，季末後 45 天內申報</li>
+    <li><strong>格式</strong>：XML，機器可讀，這就是自動化的機會</li>
+  </ul>
+
+  <h2>先講限制，再講方法</h2>
+
+  <p>13F 有三個結構性限制，不先弄懂就用，比不用還危險：</p>
+  <ol>
+    <li><strong>45 天延遲</strong>：你看到的是季末快照，機構現在可能已反向操作。</li>
+    <li><strong>只有 long</strong>：對沖基金可能同時做多做空配對交易，只看 long 會誤判方向。</li>
+    <li><strong>部位規模語意不同</strong>：USD 10M 對 Berkshire 是零錢，對小型基金是重押。看變動比看存量有意義，看佔組合比重比看金額有意義。</li>
+  </ol>
+
+  <h2>核心流程：四步驟</h2>
+
+  <h3>Step 1：用 CIK 抓機構的申報清單</h3>
+  <p>每個申報機構有一個 CIK 編號（Berkshire 是 0001067983）。SEC 的 submissions API 一次回傳該機構所有申報紀錄：</p>
+  <pre><code>import requests
+
+HEADERS = {"User-Agent": "YourName your@email.com"}  # SEC 強制要求
+CIK = "0001067983"  # Berkshire Hathaway
+
+url = f"https://data.sec.gov/submissions/CIK{CIK}.json"
+data = requests.get(url, headers=HEADERS).json()
+
+filings = data["filings"]["recent"]
+idx = [i for i, f in enumerate(filings["form"]) if f == "13F-HR"]</code></pre>
+
+  <h3>Step 2：解析 13F 的 XML 持股表</h3>
+  <pre><code>import xml.etree.ElementTree as ET
+
+ns = {"ns": "http://www.sec.gov/edgar/document/thirteenf/informationtable"}
+root = ET.fromstring(xml_text)
+
+positions = []
+for it in root.findall(".//ns:infoTable", ns):
+    positions.append({
+        "name":  it.find("ns:nameOfIssuer", ns).text,
+        "cusip": it.find("ns:cusip", ns).text,
+        "value": int(it.find("ns:value", ns).text),
+        "shares": int(it.find("ns:shrsOrPrnAmt/ns:sshPrnamt", ns).text),
+    })</code></pre>
+
+  <h3>Step 3：CUSIP 轉 Ticker</h3>
+  <p>13F 用 CUSIP 識別證券，不是 ticker。維護一份對照表（或用 SEC 的 company_tickers.json 輔助），常見大型股一次建好就能重複用。</p>
+
+  <h3>Step 4：季度差異比對</h3>
+  <p>把本季與上季的持股表以 CUSIP 對齊，算出股數變化，就得到「加碼 / 減碼 / 新建倉 / 清倉」四類訊號，依變動金額排序輸出。</p>
+
+  <h2>新手最常踩的四個地雷</h2>
+
+  <table>
+    <tr><th>地雷</th><th>後果</th><th>解法</th></tr>
+    <tr><td>沒設 User-Agent</td><td>直接被 SEC 拒絕</td><td>Header 填「姓名 + email」</td></tr>
+    <tr><td>請求太快</td><td>超過 10 req/sec 會被封 24 小時</td><td>加 rate limiting，睡 0.15 秒再抓下一筆</td></tr>
+    <tr><td>value 單位搞錯</td><td>2023 年前申報以千美元為單位，之後改為美元。跨年度比對時混用，數字差一千倍</td><td>依申報期間判斷單位再正規化</td></tr>
+    <tr><td>只比對最新兩季</td><td>錯過建倉趨勢（連續三季加碼比單季加碼訊號強）</td><td>至少保留四到八季的歷史</td></tr>
+  </table>
+
+  <h2>自動化排程</h2>
+
+  <p>13F 集中在季末後第 40 到 45 天湧入。我的做法：Windows 工作排程器每週跑一次腳本，申報高峰期改每日；輸出寫入 Excel，變動超過門檻時寄 email 通知自己。整套系統的變動成本是零，唯一的投資是第一次搭建的幾個小時。</p>
+
+  <p>再往上一層的玩法，是把 13F 訊號接進 AI 研究流程：偵測到兩個以上追蹤對象同季加碼同一檔股票時，自動觸發該公司的財報深讀。這部分的作法寫在<a href="ai-research-workflow.html">AI 研究流程</a>那篇。</p>
+
+  <div class="sources">
+    <h4>資料來源</h4>
+    <ul>
+      <li>SEC EDGAR full-text search 與 submissions API（data.sec.gov）</li>
+      <li>SEC Form 13F 官方說明與 XML technical specification</li>
+      <li>程式碼為作者實際使用版本之簡化，Python 3.13 測試通過</li>
+    </ul>
+  </div>
+
+  <div class="disclaimer-box">本文為教育性質。13F 數據有最長 45 天延遲且僅含多頭部位，不構成投資建議，不建議直接照抄機構持股操作。完整免責聲明見<a href="../disclaimer.html">此頁</a>。</div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p><strong>稅務 x 美股 x AI</strong>｜傑夫哥　·　<a href="../services.html">合作邀約</a>　·　<a href="../disclaimer.html">免責聲明</a></p>
+    <p class="footer-disclaimer">© 2026 稅務 x 美股 x AI</p>
+  </div>
+</footer>
+
+</body>
+</html>

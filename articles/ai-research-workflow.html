@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我如何用 AI 打造投資研究流程：從財報到結論的自動化管線｜稅務 x 美股 x AI</title>
+<meta name="description" content="Python 抓數據、AI 深讀文件、多來源交叉驗證防幻覺。一套實際在用的研究工作流，工具與守則全公開。">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../index.html">稅務 <span class="x">x</span> 美股 <span class="x">x</span> AI</a>
+    <nav class="main-nav">
+      <a href="../index.html">首頁</a>
+      <a href="../services.html">服務項目</a>
+      <a href="../about.html">關於傑夫哥</a>
+      <a href="../disclaimer.html">免責聲明</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<article class="post">
+  <h1>我如何用 AI 打造投資研究流程：從財報到結論的自動化管線</h1>
+  <div class="post-meta">傑夫哥 · 2026-07-04 · 分類：AI 自動化</div>
+
+  <p>一個人做投資研究，時間永遠不夠：財報幾百頁、法說會逐字稿、13F 申報、新聞流。過去兩年我把整個研究流程重構成一條「人管判斷、機器管重複」的管線。這篇公開整套架構，以及比工具更重要的東西：防止 AI 幻覺的驗證守則。</p>
+
+  <h2>整體架構：五個階段</h2>
+
+  <table>
+    <tr><th>階段</th><th>做什麼</th><th>工具</th><th>人的角色</th></tr>
+    <tr><td>1. 數據擷取</td><td>股價、財務數據、13F、財報原文</td><td>Python（yfinance、SEC EDGAR API）</td><td>設定追蹤清單</td></tr>
+    <tr><td>2. 文件深讀</td><td>10-K、法說會逐字稿、產業報告的重點萃取與問答</td><td>AI 筆記工具（來源綁定式問答）</td><td>設計提問、驗證引用</td></tr>
+    <tr><td>3. 交叉驗證</td><td>關鍵數字對原始來源逐項核對</td><td>驗證清單 + 多來源比對</td><td>最終把關（不可外包給 AI）</td></tr>
+    <tr><td>4. 綜合分析</td><td>把數據、稅務視角、產業判斷整合成結論</td><td>AI 輔助草擬</td><td>判斷與定調（核心價值所在）</td></tr>
+    <tr><td>5. 產出與追蹤</td><td>分析報告、追蹤儀表板、定期更新排程</td><td>自動化腳本 + 排程器</td><td>覆核後發布</td></tr>
+  </table>
+
+  <p>原則很簡單：AI 負責量，人負責質。任何直接影響結論的數字，最後一關一定是人對原始來源。</p>
+
+  <h2>階段一：數據層自動化</h2>
+
+  <p>基礎是兩條 Python 管線。第一條抓市場與財務數據（yfinance 可以覆蓋大部分需求），第二條抓 SEC EDGAR 的原始申報（13F 追蹤的做法我寫在<a href="diy-13f-tracker.html">這篇</a>）。兩條管線都掛在排程器上定期自動跑，輸出統一格式，後面所有分析引用同一份數據源，避免同一個數字在不同文件裡出現不同版本。</p>
+
+  <h2>階段二：AI 深讀，但要「來源綁定」</h2>
+
+  <p>讀 10-K 我用來源綁定式的 AI 問答工具：把財報 PDF 餵進去，AI 只能根據上傳的文件回答，每個回答附引用位置。這與開放式聊天機器人的差別是本質性的：後者會用訓練記憶補洞，補出來的數字看起來煞有其事，實際上可能是三年前的、甚至是編的。</p>
+
+  <p>提問設計也有方法：與其問「這家公司財務狀況如何」，不如拆成有明確答案的問題鏈：「本年度有效稅率多少、與去年差異的主因是什麼、管理層對明年稅率的指引是什麼」。問題越可驗證，AI 產出的可靠度越高。</p>
+
+  <h2>階段三：防幻覺守則（整套流程的靈魂）</h2>
+
+  <p>我在實務中吃過的虧、看過的坑，濃縮成四條鐵則：</p>
+
+  <ol>
+    <li><strong>價格與市值永遠即時多來源驗證。</strong>AI 記憶中的股價一律視為過期。任何進報告的價格，至少兩個獨立即時來源交叉核對。</li>
+    <li><strong>任何 YoY、成長率，分子分母都要對原始來源。</strong>AI 最容易在「變化率」上出錯：期間對不齊、口徑混用。驗證時要求列出計算式與兩端數字的出處。</li>
+    <li><strong>引用頁碼必須回原文核對。</strong>AI 給的「第 24 頁」可能整份文件只有 5 頁。引用驗證不過，整段結論重做。</li>
+    <li><strong>發現一個錯，全面掃描同類錯。</strong>幻覺不是單點事件。一個數字錯了，代表同一批產出裡可能還有同源的錯，要整批重驗，不能改完一處就當沒事。</li>
+  </ol>
+
+  <div class="callout">這四條的共同邏輯：AI 的產出是「初稿」，驗證是獨立的流程步驟，而且驗證用的來源必須獨立於 AI 本身。讓 AI 自己檢查自己，等於沒有檢查。</div>
+
+  <h2>階段四與五：人做判斷，機器做維護</h2>
+
+  <p>驗證過的數據與深讀筆記進到綜合分析階段，AI 幫我草擬結構、列反方論點，但買賣判斷、部位權重、風險容忍這些決策不外包。產出後的追蹤靠排程自動化：財報季自動抓新 10-Q 觸發更新、13F 申報季自動比對持股變動、價格異動超過門檻自動提醒。</p>
+
+  <h2>想自己搭一套的人，從哪裡開始</h2>
+
+  <ol>
+    <li>先自動化最痛的一件事（多數人是「定期抓數據貼表格」），一條 yfinance 腳本就有感。</li>
+    <li>第二步加 AI 深讀，但同一天就把驗證守則立起來，不要等吃虧才補。</li>
+    <li>工具會一直換，架構不太會：數據層、深讀層、驗證層、判斷層、維護層。照這個順序疊，每一層都能獨立替換升級。</li>
+  </ol>
+
+  <div class="sources">
+    <h4>說明</h4>
+    <ul>
+      <li>本文描述之流程為作者實際使用的研究工作流架構，工具鏈組合依需求持續調整</li>
+      <li>文中不涉及任何特定標的之投資結論</li>
+    </ul>
+  </div>
+
+  <div class="disclaimer-box">本文為教育性質與個人經驗分享，不構成投資建議。AI 工具產出內容須經獨立驗證，使用者應自行承擔查核責任。完整免責聲明見<a href="../disclaimer.html">此頁</a>。</div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p><strong>稅務 x 美股 x AI</strong>｜傑夫哥　·　<a href="../services.html">合作邀約</a>　·　<a href="../disclaimer.html">免責聲明</a></p>
+    <p class="footer-disclaimer">© 2026 稅務 x 美股 x AI</p>
+  </div>
+</footer>
+
+</body>
+</html>
