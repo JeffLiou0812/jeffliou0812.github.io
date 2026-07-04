@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "data_version": "2026.07.1",
+ "data_version": "2026.07.2",
  "verified_date": "2026-07-04",
  "verification_note": "全部金額逐項核對財政部賦稅署 114-11-27 公告附表原文（PDF）；法條規則核對全國法規資料庫遺產及贈與稅法條文。",
  "tw_estate_tax": {
@@ -63,11 +63,13 @@
   "nra_filing_threshold": 60000,
   "unified_credit": 13000,
   "rate_range": "18%-40%（累進）",
-  "us_situs_categories": ["us_stock", "us_listed_etf", "us_corporate_bond", "us_reit", "us_mutual_fund"],
-  "non_us_situs_categories": ["foreign_issuer_adr", "ucits_etf", "non_us_listed_etf", "direct_us_treasury"],
+  "us_situs_categories": ["us_stock", "us_listed_etf", "us_reit", "us_mutual_fund", "us_brokerage_cash_mmf"],
+  "non_us_situs_categories": ["foreign_issuer_adr", "ucits_etf", "non_us_listed_etf", "direct_us_treasury", "us_corporate_bond_portfolio_debt"],
   "notes": [
    "直接持有美國公債（T-Bill/T-Note/T-Bond）法定豁免；美國掛牌公債 ETF 不豁免。",
-   "外國發行人 ADR（如 TSM）依發行人測試一般見解非 US-situs。"
+   "外國發行人 ADR（如 TSM）依發行人測試一般見解非 US-situs。",
+   "美國公司債：1984-07-18 後 registered form 公開發行者多數合於 portfolio interest exemption（IRC §871(h)），依 §2105(b)(3) 一般見解非 US-situs（2026.07.2 修正，前版誤列 US-situs）。",
+   "美國券商帳戶現金／貨幣市場基金：不適用 §2105(b)(1) 銀行存款豁免，一般見解為 US-situs（2026.07.2 新增）。"
   ],
   "article_url": "https://taxcodeusstocks.com/articles/us-estate-tax-60k.html",
   "source_basis": "站上文章 us-estate-tax-60k（2026-07-04 已驗證版）",
