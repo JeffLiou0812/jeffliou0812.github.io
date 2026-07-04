@@ -138,7 +138,7 @@
   <h2>看懂結果：三個規則決定一切</h2>
   <ol>
     <li><strong>100 萬是懸崖：</strong>全戶全年海外所得未達 100 萬，台灣端完全不計入；達到 100 萬，全額計入（不是超過部分計入）。但美國那 30% 是源頭扣走的，跟這個門檻無關。</li>
-    <li><strong>750 萬扣的是基本所得額：</strong>基本所得額 = 綜合所得淨額 + 計入的海外所得。薪水越高，750 萬的空間被國內所得吃掉越多。基本稅額 =（基本所得額 − 750 萬）× 20%，再跟一般綜所稅額比大小，只補差額。</li>
+    <li><strong>750 萬扣的是基本所得額：</strong>本工具簡化為「基本所得額 = 綜合所得淨額 + 計入的海外所得」。注意這是常見誤解點：完整的基本所得額還包含其他類別，例如受益人與要保人非屬同一人的人壽保險及年金保險死亡給付中超過 3,000 萬（現行調整為 3,740 萬）的部分、未上市櫃股票交易所得、非現金捐贈等（見下方「沒有涵蓋的三件事」）。薪水越高，750 萬的空間被國內所得吃掉越多。基本稅額 =（基本所得額 − 750 萬）× 20%，再跟一般綜所稅額比大小，只補差額。</li>
     <li><strong>美國扣的 30% 可以拿來抵：</strong>因為 30% 高於台灣端的 20% 稅率，<strong>純股利族在絕大多數情境下台灣補繳為 0，總稅負就是美國扣的 30%</strong>。台灣端真正會咬到的，是「未被外國課稅」的海外所得，最典型是已實現的財產交易所得（美國對非居民的證券資本利得不課稅）。試著在上面「海外財產交易所得」填個幾百萬，看台灣補繳怎麼跳出來。</li>
   </ol>
 
@@ -276,7 +276,10 @@
     document.getElementById('kpiUsSub').textContent = usd(inp.divUSD * US_WHT_RATE) + '，源頭扣走';
     document.getElementById('kpiTw').textContent = nt(r.twPayable);
     document.getElementById('kpiTotal').textContent = nt(r.total);
-    document.getElementById('kpiTotalSub').textContent = '股利 ' + nt(r.divTWD) + (r.netProperty > 0 || inp.other > 0 ? ' + 其他海外項目' : '');
+    var totalSubParts = [];
+    if (r.divTWD > 0) totalSubParts.push('股利 ' + nt(r.divTWD));
+    if (r.netProperty > 0 || inp.other > 0) totalSubParts.push(r.divTWD > 0 ? '其他海外項目' : '財產交易／其他海外項目');
+    document.getElementById('kpiTotalSub').textContent = totalSubParts.join(' + ');
     document.getElementById('kpiRate').textContent = r.overseas > 0 || inp.divUSD > 0 ? pct(r.effRate) : '–';
 
     // 結論句
