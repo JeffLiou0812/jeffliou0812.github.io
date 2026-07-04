@@ -1,0 +1,76 @@
+{
+ "schema_version": 1,
+ "data_version": "2026.07.1",
+ "verified_date": "2026-07-04",
+ "verification_note": "全部金額逐項核對財政部賦稅署 114-11-27 公告附表原文（PDF）；法條規則核對全國法規資料庫遺產及贈與稅法條文。",
+ "tw_estate_tax": {
+  "roc_year": 115,
+  "applies_to": "民國 115 年（西元 2026 年）發生之繼承案件",
+  "currency": "TWD",
+  "exemption": 13330000,
+  "brackets": [
+   {"up_to": 56210000, "rate": 0.10},
+   {"up_to": 112420000, "rate": 0.15},
+   {"up_to": null, "rate": 0.20}
+  ],
+  "deductions": {
+   "spouse": 5530000,
+   "lineal_descendant_per_person": 560000,
+   "lineal_descendant_minor_extra_per_year": 560000,
+   "parent_per_person": 1380000,
+   "severe_disability_extra_per_person": 6930000,
+   "dependent_sibling_grandparent_per_person": 560000,
+   "dependent_sibling_minor_extra_per_year": 560000,
+   "funeral": 1380000
+  },
+  "excluded_from_gross_estate": {
+   "daily_life_utensils": 1000000,
+   "professional_tools": 560000
+  },
+  "rules": [
+   "課稅基礎：經常居住中華民國境內之國民，就其全球遺產課稅（遺贈稅法 §1）。",
+   "稅額計算：遺產總額 − 免稅額 − 各項扣除額 = 課稅遺產淨額，按三級累進稅率計算（§13）。",
+   "未成年加扣：直系血親卑親屬或受扶養兄弟姊妹為未成年者，按其年齡距屆滿成年之年數，每年加扣一個單位扣除額（§17，法定額 40 萬經 CPI 調整公告為 56 萬）。",
+   "拋棄繼承：繼承人中拋棄繼承權者，不適用配偶、直系血親卑親屬、父母、身心障礙、受扶養親屬各款扣除（§17 第 2 項）。",
+   "非居住者限制：經常居住境外之國民或非國民，不適用 §17 第 1 項第 1 至 7 款扣除。",
+   "國外稅額扣抵：國外財產依所在地國法律已納之遺產稅，得由納稅義務人提出證明申請扣抵，但不得超過因加計該國外財產而增加之應納稅額（§11）。"
+  ],
+  "pending_legislation": {
+   "status": "草案（未生效，本參數檔不採用）",
+   "note": "財政部 2026-01-22 預告遺產及贈與稅法修正草案：①配偶剩餘財產差額扣除機制調整（配合憲法法庭判決）②被繼承人死亡前二年內對配偶贈與之財產併計 ③放寬分期繳納及實物抵繳要件。尚待行政院核定及立法院審議（查證日 2026-07-04）。通過後需更新本檔並升版 data_version。"
+  },
+  "sources": [
+   {
+    "name": "財政部賦稅署公告：115年發生繼承或贈與案件適用免稅額、不計入遺產總額之金額、各項扣除額及課稅級距金額（含附表 PDF，114-11-27 製表）",
+    "url": "https://www.dot.gov.tw/singlehtml/ch26?cntId=266ef2de8dd54f9494bd5c399b3f323a",
+    "checked": "2026-07-04"
+   },
+   {
+    "name": "財政部全球資訊網同名公告",
+    "url": "https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=9ba544f1016c4b85b54960b4346b5b75",
+    "checked": "2026-07-04"
+   },
+   {
+    "name": "遺產及贈與稅法 §17（扣除額與未成年加扣、拋棄繼承限制）",
+    "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0340072&flno=17",
+    "checked": "2026-07-04"
+   }
+  ]
+ },
+ "us_estate_tax_exposure_hint": {
+  "purpose": "僅供 US-situs 曝險提示，非精算。App 不計算美國稅額，僅標示曝險金額與門檻風險並導向文章。",
+  "currency": "USD",
+  "nra_filing_threshold": 60000,
+  "unified_credit": 13000,
+  "rate_range": "18%-40%（累進）",
+  "us_situs_categories": ["us_stock", "us_listed_etf", "us_corporate_bond", "us_reit", "us_mutual_fund"],
+  "non_us_situs_categories": ["foreign_issuer_adr", "ucits_etf", "non_us_listed_etf", "direct_us_treasury"],
+  "notes": [
+   "直接持有美國公債（T-Bill/T-Note/T-Bond）法定豁免；美國掛牌公債 ETF 不豁免。",
+   "外國發行人 ADR（如 TSM）依發行人測試一般見解非 US-situs。"
+  ],
+  "article_url": "https://taxcodeusstocks.com/articles/us-estate-tax-60k.html",
+  "source_basis": "站上文章 us-estate-tax-60k（2026-07-04 已驗證版）",
+  "checked": "2026-07-04"
+ }
+}
