@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4182088023942573" crossorigin="anonymous"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TRNEWFX3G6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TRNEWFX3G6');
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>美股股利稅負試算器：美國扣 30% 之後，台灣還要補多少？｜稅務 x 美股 x AI</title>
+<meta name="description" content="輸入美國股利與海外財產交易損益，自動算出美國 30% 扣繳、台灣最低稅負制補繳與總稅負。含損失只能同類互抵、實現才課稅、匯回迷思三大原則與 1042-S 扣抵教學。115 年度（2026）參數。">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="canonical" href="https://taxcodeusstocks.com/tools/us-dividend-tax-calculator.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="美股股利稅負試算器：美國扣 30% 之後，台灣還要補多少？｜稅務 x 美股 x AI">
+<meta property="og:description" content="輸入美國股利與海外財產交易損益，自動算出美國 30% 扣繳、台灣最低稅負制補繳與總稅負，並教你用 1042-S 主張扣抵。">
+<meta property="og:url" content="https://taxcodeusstocks.com/tools/us-dividend-tax-calculator.html">
+<meta property="og:site_name" content="稅務 x 美股 x AI">
+<meta property="og:locale" content="zh_TW">
+<style>
+  .calc-panel { background: #f0f3f7; border: 1px solid var(--line); border-radius: 8px; padding: 1.2rem 1.3rem; margin: 1.2rem 0; }
+  .calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: .9rem 1.1rem; }
+  .calc-field label { display: block; font-size: .85rem; font-weight: 700; color: var(--navy); margin-bottom: .25rem; }
+  .calc-field input { width: 100%; padding: .5rem .7rem; font-size: 1rem; border: 1px solid var(--line); border-radius: 6px; font-family: inherit; }
+  .calc-field input:focus { outline: 2px solid var(--gold); border-color: var(--gold); }
+  .calc-field .hint { font-size: .76rem; color: var(--muted); margin-top: .2rem; line-height: 1.5; }
+  .preset-row { margin-top: .35rem; display: flex; flex-wrap: wrap; gap: .35rem; }
+  .preset-row button { font-size: .78rem; padding: .15rem .55rem; border: 1px solid var(--line); background: #fff; border-radius: 4px; cursor: pointer; color: var(--navy); font-family: inherit; }
+  .preset-row button:hover { border-color: var(--gold); background: #faf6ee; }
+  .verdict { border-radius: 8px; padding: 1rem 1.2rem; margin: 1.2rem 0; font-size: 1rem; line-height: 1.8; border-left: 5px solid var(--gold); background: #faf6ee; }
+  .verdict.pay { border-left-color: var(--red); background: #fdf3f4; }
+  .verdict strong { color: var(--navy); }
+  .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .8rem; margin: 1rem 0; }
+  .kpi { background: var(--card); border: 1px solid var(--line); border-top: 4px solid var(--navy); border-radius: 8px; padding: .8rem 1rem; text-align: center; }
+  .kpi.total { border-top-color: var(--gold); }
+  .kpi .kpi-label { font-size: .78rem; color: var(--muted); }
+  .kpi .kpi-value { font-size: 1.25rem; font-weight: 700; color: var(--navy); margin-top: .15rem; white-space: nowrap; }
+  .kpi .kpi-sub { font-size: .74rem; color: #8a97a5; margin-top: .1rem; }
+  @media (max-width: 640px) { .kpi .kpi-value { font-size: 1.05rem; } }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../index.html">稅務 <span class="x">x</span> 美股 <span class="x">x</span> AI</a>
+    <nav class="main-nav">
+      <a href="../index.html">首頁</a>
+      <a href="../services.html">服務項目</a>
+      <a href="../about.html">關於傑夫哥</a>
+      <a href="../disclaimer.html">免責聲明</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<article class="post">
+  <h1>美股股利稅負試算器：美國扣 30% 之後，台灣還要補多少？</h1>
+  <div class="post-meta">傑夫哥 · 2026-07-04 · 分類：互動工具 · 參數基準：115 年度（2026），法規查核日 2026-07-04</div>
+
+  <p>台灣投資人領美股股利，稅要算兩層：美國端在源頭扣 30%（台美無租稅協定，W-8BEN 降不了），台灣端把它當海外所得，走最低稅負制（所得基本稅額條例）。這個試算器把兩層一次算給你看：輸入股利金額與同年度的海外財產交易損益，自動帶出美國扣繳、台灣補繳、總稅負，以及你該怎麼用券商寄來的 Form 1042-S 主張扣抵。三個最常被搞錯的原則（損失不能抵股利、實現才課稅、匯回不是課稅時點）也一併講清楚。</p>
+
+  <h2>輸入你的情境</h2>
+
+  <div class="calc-panel">
+    <div class="calc-grid">
+      <div class="calc-field">
+        <label for="inDividend">美國股利金額（USD，全年）</label>
+        <input type="number" id="inDividend" value="20000" min="0" step="1000" inputmode="decimal">
+        <div class="hint">1042-S income code 06 的 ordinary dividend 總額（扣繳前毛額）</div>
+      </div>
+      <div class="calc-field">
+        <label for="inFx">匯率（USD/TWD）</label>
+        <input type="number" id="inFx" value="30.0" min="1" step="0.1" inputmode="decimal">
+        <div class="hint">申報實務用收付日匯率或國稅局公告年度平均匯率，此處可自行調整</div>
+      </div>
+      <div class="calc-field">
+        <label for="inPropGain">海外財產交易所得（TWD，已實現）</label>
+        <input type="number" id="inPropGain" value="0" min="0" step="100000" inputmode="decimal">
+        <div class="hint">同年度已實現的海外證券、基金賣出或贖回獲利（帳面浮盈不算）</div>
+      </div>
+      <div class="calc-field">
+        <label for="inPropLoss">海外財產交易損失（TWD，已實現）</label>
+        <input type="number" id="inPropLoss" value="0" min="0" step="100000" inputmode="decimal">
+        <div class="hint">只能扣同年度海外財產交易所得，不能抵股利利息、不能遞延</div>
+      </div>
+      <div class="calc-field">
+        <label for="inOther">其他海外所得（TWD，全年全戶）</label>
+        <input type="number" id="inOther" value="0" min="0" step="100000" inputmode="decimal">
+        <div class="hint">海外利息、境外基金配息等其他類別（假設未在境外納稅）</div>
+      </div>
+      <div class="calc-field">
+        <label for="inNet">綜合所得淨額（TWD，全戶）</label>
+        <input type="number" id="inNet" value="1000000" min="0" step="100000" inputmode="decimal">
+        <div class="hint">所得總額減免稅額與扣除額後的數字，見去年申報書</div>
+        <div class="preset-row">
+          <button type="button" data-net="500000">退休族 50 萬</button>
+          <button type="button" data-net="1000000">上班族 100 萬</button>
+          <button type="button" data-net="2000000">雙薪家庭 200 萬</button>
+          <button type="button" data-net="4000000">高所得 400 萬</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="verdict" class="verdict" aria-live="polite"></div>
+
+  <div class="kpi-row" aria-live="polite">
+    <div class="kpi"><div class="kpi-label">美國扣繳 30%</div><div class="kpi-value" id="kpiUs">–</div><div class="kpi-sub" id="kpiUsSub"></div></div>
+    <div class="kpi"><div class="kpi-label">台灣應補繳</div><div class="kpi-value" id="kpiTw">–</div><div class="kpi-sub">扣抵後差額</div></div>
+    <div class="kpi total"><div class="kpi-label">總稅負（美＋台）</div><div class="kpi-value" id="kpiTotal">–</div><div class="kpi-sub" id="kpiTotalSub"></div></div>
+    <div class="kpi"><div class="kpi-label">有效稅率</div><div class="kpi-value" id="kpiRate">–</div><div class="kpi-sub">總稅負 ÷ 海外所得</div></div>
+  </div>
+
+  <h2>計算明細</h2>
+  <table>
+    <thead><tr><th>步驟</th><th>項目</th><th style="text-align:right;">金額</th></tr></thead>
+    <tbody id="detailBody"></tbody>
+  </table>
+
+  <div class="callout" id="filingNote" style="display:none;"><strong>申報提醒：</strong>你的基本所得額已超過 750 萬，<strong>即使補繳金額是 0，仍應填寫個人所得基本稅額申報表</strong>。免補稅不等於免申報，漏報是補稅加罰的問題。</div>
+
+  <h2>情境比較：不同股利水準下的總稅負</h2>
+  <p>以你目前輸入的匯率、財產交易損益、其他海外所得與綜合所得淨額為前提，看股利規模放大後兩層稅負怎麼變：</p>
+  <table>
+    <thead><tr><th>股利（USD）</th><th>海外所得合計（TWD）</th><th>美國扣繳（TWD）</th><th>台灣補繳（TWD）</th><th>總稅負（TWD）</th><th>佔海外所得</th></tr></thead>
+    <tbody id="scenarioBody"></tbody>
+  </table>
+
+  <h2>看懂結果：三個規則決定一切</h2>
+  <ol>
+    <li><strong>100 萬是懸崖：</strong>全戶全年海外所得未達 100 萬，台灣端完全不計入；達到 100 萬，全額計入（不是超過部分計入）。但美國那 30% 是源頭扣走的，跟這個門檻無關。</li>
+    <li><strong>750 萬扣的是基本所得額：</strong>基本所得額 = 綜合所得淨額 + 計入的海外所得。薪水越高，750 萬的空間被國內所得吃掉越多。基本稅額 =（基本所得額 − 750 萬）× 20%，再跟一般綜所稅額比大小，只補差額。</li>
+    <li><strong>美國扣的 30% 可以拿來抵：</strong>因為 30% 高於台灣端的 20% 稅率，<strong>純股利族在絕大多數情境下台灣補繳為 0，總稅負就是美國扣的 30%</strong>。台灣端真正會咬到的，是「未被外國課稅」的海外所得，最典型是已實現的財產交易所得（美國對非居民的證券資本利得不課稅）。試著在上面「海外財產交易所得」填個幾百萬，看台灣補繳怎麼跳出來。</li>
+  </ol>
+
+  <div class="callout">反直覺但重要：美國股利的「超額扣繳」是有用的。扣抵上限看的是全部海外所得增加的基本稅額，所以美國多扣的 30% 可以順便吸收同年度海外財產交易所得產生的基本稅額。股利與財產交易所得在同一申報戶、同一年度實現，扣抵效率最高。</div>
+
+  <h2>三個最常被搞錯的課稅原則</h2>
+  <ol>
+    <li><strong>損失不能抵股利，也不能留到明年：</strong>海外財產交易損失只能扣「同年度」的海外財產交易所得，是同類別內的互抵。賣股虧 300 萬、同年領息 300 萬，海外所得仍然是 300 萬，那筆虧損整筆作廢。今年大賠、明年大賺，兩年各算各的。所以海外部位少數合法的規劃空間，就是把獲利與虧損安排在同一年度實現互抵；損益兩邊都要以實際成本核實計算，對帳單留好。</li>
+    <li><strong>「實現」才課稅，浮盈不課：</strong>台灣端認的是已實現所得。抱著不賣，帳面漲再多都是 0；賣出、贖回，或換匯時實現的匯差，才進海外所得。反面提醒：長抱多年一次出清，多年獲利會集中在同一年度實現，很容易一口氣衝過 100 萬與 750 萬兩道門檻，分年實現是基本功。美國端的股利則相反：發放當下就被扣 30%，沒有實現與否的選擇空間。</li>
+    <li><strong>匯回不是課稅時點（這個迷思雙向都有人錯）：</strong>「錢留在美國券商帳戶、不匯回台灣就不用報」是錯的。海外所得看實現年度，跟資金放在哪裡無關，獲利趴在海外帳戶一樣要計入；國稅局透過複委託申報資料與金融帳戶資訊自動交換（CRS，涵蓋非美國帳戶）等管道的掌握度逐年提高。反過來，「把錢匯回台灣就會被課稅」也是錯的：匯回這個動作本身不是所得，匯回的是你的本金與過去年度已實現（該申報的當年就該申報）的所得，不會因為匯回再被課一次。該做的是保留對帳單與歷年申報紀錄，大額結匯時能向銀行與國稅局說明資金性質。</li>
+  </ol>
+
+  <h2>如何主張美國扣繳稅款回台灣抵稅：五個步驟</h2>
+  <ol>
+    <li><strong>保存 Form 1042-S：</strong>美國券商每年 3 月 15 日前寄發（多數可在券商網站下載）。確認 income code 06（股利）與扣繳稅額欄位的金額。複委託投資人向國內券商索取相關扣繳證明文件。</li>
+    <li><strong>五月報稅時填「個人所得基本稅額申報表」：</strong>海外所得填入基本所得額，算出基本稅額後與一般綜所稅額比較。</li>
+    <li><strong>在「海外已納稅額扣抵」欄填入美國扣繳稅額：</strong>按收付日或年度平均匯率換算為新台幣。</li>
+    <li><strong>檢附 1042-S 作為所得來源地納稅證明：</strong>稽徵機關必要時得要求補充其他文件。</li>
+    <li><strong>知道兩個上限：</strong>扣抵不能超過「因加計海外所得而增加的基本稅額」，而且<strong>抵不完的部分不退稅</strong>（美國多扣的部分，台灣不會退你；能否向美國退稅是另一個題目，一般散戶的正確扣繳沒有退稅空間）。</li>
+  </ol>
+
+  <h2>試算器沒有涵蓋的三件事</h2>
+  <ul>
+    <li><strong>配息成分：</strong>本工具假設輸入金額全部是 ordinary dividend（30% 扣繳）。債券 ETF 的利息型配息（QII）、REIT 與高配息 ETF 的資本返還（ROC）、基金的資本利得分配，美國端扣繳從 30% 到 0% 都有，實際稅負請以 1042-S 拆解。</li>
+    <li><strong>台美租稅協定進度：</strong>美國國會的 United States-Taiwan Expedited Double-Tax Relief Act（眾議院 2025-01-15 通過 H.R. 33，參議院 S. 199 截至 2026-07-04 未表決）若完成立法並經雙方互惠認定生效，個人股利扣繳可望降到 15%。在那之前，30% 就是現實，投資試算不要先用 15%。</li>
+    <li><strong>特殊項目：</strong>分開計稅的國內股利、特定保險給付、未上市櫃股票交易所得、CFC 等其他基本所得額計入項目都會改變計算，本工具未納入。海外有價證券提不出成本時按成交價 20% 設算所得的規則，也請自行留意。</li>
+  </ul>
+
+  <p>想把制度骨架看得更完整，配這兩篇：<a href="../articles/overseas-income-750-myth.html">海外所得 750 萬免稅？五個迷思一次拆掉</a>、<a href="../articles/tsm-adr-tax.html">TSM ADR vs 2330 的稅務差異</a>（ADR 的 21% 是台灣扣繳，不是海外稅，別搞混）。</p>
+
+  <div class="assumption">假設說明：本工具以台灣稅務居民個人（非美國人，已提交 W-8BEN，單一年度在美停留未滿 183 天）透過美國券商或複委託領取美國來源股利的一般情境為準。台灣端採 115 年度（2026）參數：基本所得額扣除額 750 萬、稅率 20%、海外所得計入門檻 100 萬（全戶）、綜所稅級距 61 萬／138 萬／277 萬／519 萬（累進差額 4.27 萬／15.31 萬／43.01 萬／94.91 萬）。海外所得以「已實現」認定；財產交易損失以同年度、同類別、核實計算為限。財產交易所得與其他海外所得假設未在境外納稅（美國對非居民的證券資本利得不課稅）。一般所得稅額為依級距之概算，未考慮投資抵減、重購退稅等個別調整。所有計算在你的瀏覽器內完成，本站不收集也不傳送你輸入的任何數字。個案請諮詢合格稅務專業人員。</div>
+
+  <div class="sources">
+    <h4>資料來源</h4>
+    <ul>
+      <li>IRC §871(a)(1)、§1441（美國來源股利對非居民外國人 30% 源頭扣繳）；IRS Form 1042-S 及其說明（income code 06、3 月 15 日寄發期限）</li>
+      <li>所得基本稅額條例 §3、§5（申報門檻）、§12（海外所得 100 萬計入門檻）、§13（750 萬扣除額、20% 稅率、海外已納稅額扣抵及其上限）</li>
+      <li>財政部稅務入口網：個人海外所得課徵基本稅額相關規定（已實現認定、海外財產交易損失限同年度海外財產交易所得扣除、無法提示成本按成交價 20% 設算）</li>
+      <li>財政部公告（台財稅字第 11204674390 號，2023-11-23）：113 年度起個人基本所得額扣除額調整為 750 萬元；115 年度經公告維持不變（2025-11-27）</li>
+      <li>財政部 115 年度綜合所得稅課稅級距公告（2025-11-27，CPI 累計上漲 4.13% 調整）：5%／12%／20%／30%／40% 五級距，上限 61 萬／138 萬／277 萬／519 萬</li>
+      <li>H.R. 33（119th Congress，2025-01-15 眾議院通過）、S. 199（參議院版，截至 2026-07-04 未表決）：United States-Taiwan Expedited Double-Tax Relief Act</li>
+      <li>IRS, United States Income Tax Treaties A to Z（台灣不在名單）；IRS Instructions for Form W-8BEN</li>
+      <li>法規查核日期：2026-07-04</li>
+    </ul>
+  </div>
+
+  <div class="disclaimer-box">本工具為教育性質的簡化試算，不構成稅務專業意見，計算結果不得作為申報依據。個案情境請諮詢合格稅務專業人員。完整免責聲明見<a href="../disclaimer.html">此頁</a>。</div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p><strong>稅務 x 美股 x AI</strong>｜傑夫哥　·　<a href="../services.html">合作邀約</a>　·　<a href="../disclaimer.html">免責聲明</a>　·　<a href="../privacy.html">隱私權政策</a></p>
+    <p class="footer-disclaimer">© 2026 稅務 x 美股 x AI</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  // 115 年度（2026）參數，法規查核日 2026-07-04
+  var US_WHT_RATE = 0.30;          // IRC §871(a)(1)
+  var AMT_DEDUCTION = 7500000;     // 基本所得額扣除額
+  var AMT_RATE = 0.20;
+  var OVERSEAS_CLIFF = 1000000;    // 海外所得計入門檻（全戶）
+  var BRACKETS = [                 // 綜所稅速算：稅率、累進差額
+    { max: 610000,   rate: 0.05, sub: 0 },
+    { max: 1380000,  rate: 0.12, sub: 42700 },
+    { max: 2770000,  rate: 0.20, sub: 153100 },
+    { max: 5190000,  rate: 0.30, sub: 430100 },
+    { max: Infinity, rate: 0.40, sub: 949100 }
+  ];
+
+  function regularTax(net) {
+    if (net <= 0) return 0;
+    for (var i = 0; i < BRACKETS.length; i++) {
+      if (net <= BRACKETS[i].max) return Math.max(0, Math.round(net * BRACKETS[i].rate - BRACKETS[i].sub));
+    }
+    return 0;
+  }
+
+  function calc(divUSD, fx, propGain, propLoss, otherOverseas, netIncome) {
+    var divTWD = Math.round(divUSD * fx);
+    var usWhtTWD = Math.round(divUSD * US_WHT_RATE * fx);
+    // 海外財產交易損失僅得扣除「同年度」海外財產交易所得，不得抵股利、利息，不得遞延
+    var netProperty = Math.max(0, propGain - propLoss);
+    var wastedLoss = Math.max(0, propLoss - propGain);
+    var overseas = divTWD + netProperty + otherOverseas;
+    var included = overseas >= OVERSEAS_CLIFF ? overseas : 0;
+    var basicIncome = netIncome + included;
+    var basicTax = Math.max(0, Math.round((basicIncome - AMT_DEDUCTION) * AMT_RATE));
+    var regTax = regularTax(netIncome);
+    var gap = Math.max(0, basicTax - regTax);
+    // 扣抵上限＝因加計海外所得而增加之基本稅額；本工具唯一計入項目是海外所得，上限即為差額全額
+    var creditLimit = included > 0 ? gap : 0;
+    var credit = Math.min(usWhtTWD, creditLimit);
+    var twPayable = Math.max(0, gap - credit);
+    var total = usWhtTWD + twPayable;
+    return {
+      divTWD: divTWD, usWhtTWD: usWhtTWD, netProperty: netProperty, wastedLoss: wastedLoss,
+      overseas: overseas, included: included,
+      basicIncome: basicIncome, basicTax: basicTax, regTax: regTax, gap: gap,
+      creditLimit: creditLimit, credit: credit, twPayable: twPayable, total: total,
+      // 申報義務雙要件：海外所得達 100 萬計入「且」基本所得額超過 750 萬（本工具無其他計入項目）
+      mustFile: included > 0 && basicIncome > AMT_DEDUCTION,
+      effRate: overseas > 0 ? total / overseas : (divUSD > 0 ? US_WHT_RATE : 0)
+    };
+  }
+
+  function nt(n) { return 'NT$' + Math.round(n).toLocaleString('zh-TW'); }
+  function usd(n) { return 'USD ' + Math.round(n).toLocaleString('en-US'); }
+  function pct(x) { return (x * 100).toFixed(1) + '%'; }
+
+  var hasTracked = false;
+
+  function readInputs() {
+    var fxRaw = parseFloat(document.getElementById('inFx').value);
+    return {
+      divUSD: Math.max(0, parseFloat(document.getElementById('inDividend').value) || 0),
+      fx: isNaN(fxRaw) ? 30 : Math.max(1, fxRaw),
+      propGain: Math.max(0, parseFloat(document.getElementById('inPropGain').value) || 0),
+      propLoss: Math.max(0, parseFloat(document.getElementById('inPropLoss').value) || 0),
+      other: Math.max(0, parseFloat(document.getElementById('inOther').value) || 0),
+      net: Math.max(0, parseFloat(document.getElementById('inNet').value) || 0)
+    };
+  }
+
+  function render() {
+    var inp = readInputs();
+    var r = calc(inp.divUSD, inp.fx, inp.propGain, inp.propLoss, inp.other, inp.net);
+
+    // KPI 卡
+    document.getElementById('kpiUs').textContent = nt(r.usWhtTWD);
+    document.getElementById('kpiUsSub').textContent = usd(inp.divUSD * US_WHT_RATE) + '，源頭扣走';
+    document.getElementById('kpiTw').textContent = nt(r.twPayable);
+    document.getElementById('kpiTotal').textContent = nt(r.total);
+    document.getElementById('kpiTotalSub').textContent = '股利 ' + nt(r.divTWD) + (r.netProperty > 0 || inp.other > 0 ? ' + 其他海外項目' : '');
+    document.getElementById('kpiRate').textContent = r.overseas > 0 || inp.divUSD > 0 ? pct(r.effRate) : '–';
+
+    // 結論句
+    var v = document.getElementById('verdict');
+    v.classList.remove('pay');
+    if (inp.divUSD <= 0 && r.overseas <= 0 && r.wastedLoss <= 0) {
+      v.innerHTML = '輸入股利金額開始試算。';
+    } else if (r.included === 0) {
+      v.innerHTML = (r.overseas > 0
+        ? '全戶海外所得 <strong>' + nt(r.overseas) + '</strong>，未達 100 萬計入門檻，台灣端不計入、免申報。' +
+          (r.usWhtTWD > 0
+            ? '總稅負就是美國源頭扣走的 <strong>' + nt(r.usWhtTWD) + '</strong>（股利的 30%）。注意：門檻只管台灣端，美國的 30% 不會因為金額小而免扣。'
+            : '本情境沒有美國股利扣繳，總稅負 <strong>NT$0</strong>。')
+        : '本年度海外所得計入 0，台灣端沒有稅負，也沒有申報義務。');
+    } else if (r.twPayable === 0) {
+      v.innerHTML = '海外所得 <strong>' + nt(r.overseas) + '</strong> 已計入，但' +
+        (r.gap === 0
+          ? '基本稅額（' + nt(r.basicTax) + '）沒有超過一般綜所稅額（' + nt(r.regTax) + '），'
+          : '基本稅額差額 ' + nt(r.gap) + ' 被美國已扣繳的 ' + nt(r.usWhtTWD) + ' 全額抵掉，') +
+        '<strong>台灣端補繳 0</strong>。' +
+        (r.usWhtTWD > 0 ? '總稅負 = 美國扣繳 <strong>' + nt(r.usWhtTWD) + '</strong>。' : '總稅負 <strong>NT$0</strong>。') +
+        (r.mustFile ? '<br>但基本所得額已超過 750 萬，<strong>仍應申報</strong>（見下方提醒）。' : '');
+    } else {
+      v.classList.add('pay');
+      v.innerHTML = (r.usWhtTWD > 0
+        ? '美國先扣 <strong>' + nt(r.usWhtTWD) + '</strong>，台灣端經扣抵後仍需補繳 <strong>' + nt(r.twPayable) + '</strong>' +
+          '（差額 ' + nt(r.gap) + '，已用美國扣繳抵掉 ' + nt(r.credit) + '）。'
+        : '台灣端應補繳 <strong>' + nt(r.twPayable) + '</strong>（基本稅額差額 ' + nt(r.gap) + '，本情境沒有海外已納稅額可扣抵）。') +
+        '總稅負 <strong>' + nt(r.total) + '</strong>，約佔海外所得 ' + pct(r.effRate) + '。' +
+        '會補繳通常是因為海外所得中有未被外國課稅的部分（如財產交易所得）。';
+    }
+    if (r.wastedLoss > 0) {
+      v.innerHTML += '<br><strong>損失提醒：</strong>有 ' + nt(r.wastedLoss) + ' 的海外財產交易損失無法使用。損失只能扣「同年度」的海外財產交易所得，不能抵股利或利息，也不能留到以後年度。';
+    }
+
+    // 計算明細
+    var rows = [
+      ['1', '美國股利（毛額）', usd(inp.divUSD) + ' ＝ ' + nt(r.divTWD)],
+      ['2', '美國源頭扣繳 30%', nt(r.usWhtTWD)],
+      ['3', '淨財產交易所得 ＝ 所得 − 損失（僅限同年度同類互抵）', nt(inp.propGain) + ' − ' + nt(inp.propLoss) + ' ＝ ' + nt(r.netProperty)],
+      ['4', '全戶海外所得合計 ＝ 股利 ＋ 淨財產交易所得 ＋ 其他', nt(r.overseas)],
+      ['5', '達 100 萬計入門檻？', r.included > 0 ? '達到，全額計入 ' + nt(r.included) : '未達，計入 0'],
+      ['6', '基本所得額 ＝ 綜合所得淨額 ＋ 計入海外所得', nt(inp.net) + ' ＋ ' + nt(r.included) + ' ＝ ' + nt(r.basicIncome)],
+      ['7', '基本稅額 ＝（基本所得額 − 750 萬）× 20%', nt(r.basicTax)],
+      ['8', '一般所得稅額（115 年度級距概算）', nt(r.regTax)],
+      ['9', '差額 ＝ 基本稅額 − 一般所得稅額（負數以 0 計）', nt(r.gap)],
+      ['10', '海外已納稅額扣抵 ＝ min（美國扣繳, 扣抵上限 ' + nt(r.creditLimit) + '）', nt(r.credit)],
+      ['11', '台灣應補繳 ＝ 差額 − 扣抵', nt(r.twPayable)],
+      ['12', '總稅負 ＝ 美國扣繳 ＋ 台灣補繳', nt(r.total)]
+    ];
+    if (r.wastedLoss > 0) {
+      rows.splice(3, 0, ['3b', '無法使用的損失（不能抵股利利息，不能遞延，整筆作廢）', nt(r.wastedLoss)]);
+    }
+    document.getElementById('detailBody').innerHTML = rows.map(function (x) {
+      return '<tr><td>' + x[0] + '</td><td>' + x[1] + '</td><td style="text-align:right;white-space:nowrap;">' + x[2] + '</td></tr>';
+    }).join('');
+
+    document.getElementById('filingNote').style.display = r.mustFile ? '' : 'none';
+
+    // 情境比較表
+    var levels = [10000, 30000, 50000, 100000, 300000, 1000000];
+    document.getElementById('scenarioBody').innerHTML = levels.map(function (d) {
+      var s = calc(d, inp.fx, inp.propGain, inp.propLoss, inp.other, inp.net);
+      return '<tr><td>' + d.toLocaleString('en-US') + '</td><td>' + nt(s.overseas) + (s.included === 0 ? '（未計入）' : '') + '</td><td>' +
+        nt(s.usWhtTWD) + '</td><td>' + nt(s.twPayable) + '</td><td><strong>' + nt(s.total) + '</strong></td><td>' + pct(s.effRate) + '</td></tr>';
+    }).join('');
+
+  }
+
+  // GA 事件：只在使用者第一次實際操作時發送一次，頁面載入不計
+  function trackOnce() {
+    if (!hasTracked && typeof gtag === 'function') {
+      gtag('event', 'calculator_use', { calculator: 'us_dividend_tax' });
+      hasTracked = true;
+    }
+  }
+
+  ['inDividend', 'inFx', 'inPropGain', 'inPropLoss', 'inOther', 'inNet'].forEach(function (id) {
+    document.getElementById(id).addEventListener('input', function () { trackOnce(); render(); });
+  });
+  document.querySelectorAll('.preset-row button').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.getElementById('inNet').value = btn.getAttribute('data-net');
+      trackOnce();
+      render();
+    });
+  });
+
+  render();
+})();
+</script>
+<noscript><div style="max-width:960px;margin:1rem auto;padding:1rem;background:#fdf3f4;border:1px solid #DC3545;border-radius:8px;">本試算器需要啟用 JavaScript 才能運作。規則摘要：美國股利扣 30%；台灣端全戶海外所得達 100 萬全額計入基本所得額，（基本所得額 − 750 萬）× 20% 與一般綜所稅比較補差額，美國已扣稅額可扣抵。</div></noscript>
+
+</body>
+</html>
