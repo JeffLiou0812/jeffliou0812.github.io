@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"><channel>
+  <title>稅務 x 美股 x AI｜傑夫哥</title>
+  <link>https://taxcodeusstocks.com/</link>
+  <description>國際稅務專業視角的美股投資分析與 AI 研究自動化。看不懂的稅務密碼，影響你看不見的投資報酬。</description>
+  <language>zh-tw</language>
+  <item>
+    <title>我如何用 AI 打造投資研究流程：從財報到結論的自動化管線</title>
+    <link>https://taxcodeusstocks.com/articles/ai-research-workflow.html</link>
+    <guid>https://taxcodeusstocks.com/articles/ai-research-workflow.html</guid>
+    <pubDate>Sat, 04 Jul 2026 09:00:00 +0000</pubDate>
+    <description>Python 抓數據、AI 深讀文件、多來源交叉驗證防幻覺。一套實際在用的研究工作流，工具與守則全公開。</description>
+  </item>
+  <item>
+    <title>Apple 的稅務密碼：ETR 從 12% 飆到 24%，再回到 15.6%</title>
+    <link>https://taxcodeusstocks.com/articles/apple-etr.html</link>
+    <guid>https://taxcodeusstocks.com/articles/apple-etr.html</guid>
+    <pubDate>Sat, 04 Jul 2026 09:00:00 +0000</pubDate>
+    <description>Apple 五年有效稅率完整拆解：四個結構性密碼、歐盟 State Aid 一次性補稅 USD 10.2B、Pillar Two 之後的新常態。</description>
+  </item>
+  <item>
+    <title>散戶版 13F 追蹤系統：用 Python + SEC EDGAR 免費自動化</title>
+    <link>https://taxcodeusstocks.com/articles/diy-13f-tracker.html</link>
+    <guid>https://taxcodeusstocks.com/articles/diy-13f-tracker.html</guid>
+    <pubDate>Sat, 04 Jul 2026 09:00:00 +0000</pubDate>
+    <description>不用付訂閱費，直接從 SEC 原始資料抓 Buffett、Burry 的持股變動。完整 SOP 與程式碼，含新手最常踩的地雷。</description>
+  </item>
+  <item>
+    <title>美國公債免遺產稅，但公債 ETF 不是</title>
+    <link>https://taxcodeusstocks.com/articles/treasury-etf-estate-tax.html</link>
+    <guid>https://taxcodeusstocks.com/articles/treasury-etf-estate-tax.html</guid>
+    <pubDate>Sat, 04 Jul 2026 09:00:00 +0000</pubDate>
+    <description>直接持有 T-Bill 與持有美國掛牌公債 ETF，在美國遺產稅上是兩個世界。差在哪裡、怎麼安排。</description>
+  </item>
+  <item>
+    <title>TSM ADR vs 2330：台灣投資人的稅務差異，多數人講錯的兩件事</title>
+    <link>https://taxcodeusstocks.com/articles/tsm-adr-tax.html</link>
+    <guid>https://taxcodeusstocks.com/articles/tsm-adr-tax.html</guid>
+    <pubDate>Sat, 04 Jul 2026 09:00:00 +0000</pubDate>
+    <description>TSM ADR 股利被扣 21% 拿不拿得回來？TSM ADR 算不算美國遺產稅資產？用發行人測試一次講清楚。</description>
+  </item>
+  <item>
+    <title>散戶買美股最危險的稅：美國遺產稅 USD 60,000 門檻完整解析</title>
+    <link>https://taxcodeusstocks.com/articles/us-estate-tax-60k.html</link>
+    <guid>https://taxcodeusstocks.com/articles/us-estate-tax-60k.html</guid>
+    <pubDate>Sat, 04 Jul 2026 09:00:00 +0000</pubDate>
+    <description>美國公民遺產稅免稅額 USD 15M，外國投資人只有 USD 60k。哪些資產算 US-situs、正確的稅額算法、三個合法規劃方向。</description>
+  </item>
+</channel></rss>
