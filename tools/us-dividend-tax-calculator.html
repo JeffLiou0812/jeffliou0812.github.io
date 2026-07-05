@@ -42,6 +42,9 @@
   .kpi .kpi-value { font-size: 1.25rem; font-weight: 700; color: var(--navy); margin-top: .15rem; white-space: nowrap; }
   .kpi .kpi-sub { font-size: .74rem; color: #8a97a5; margin-top: .1rem; }
   @media (max-width: 640px) { .kpi .kpi-value { font-size: 1.05rem; } }
+  .calc-checks { display: flex; flex-direction: column; gap: .4rem; margin: 0 0 .5rem; }
+  .calc-check { font-size: .88rem; color: var(--ink); cursor: pointer; display: flex; align-items: flex-start; gap: .45rem; }
+  .calc-check input { margin-top: .3rem; flex: none; }
 </style>
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
@@ -112,6 +115,15 @@
       </div>
     </div>
   </div>
+
+  <div class="calc-checks">
+    <label class="calc-check"><input type="checkbox" id="chkW8" checked> 我是台灣稅務居民、非美國公民／綠卡持有者（已提交 W-8BEN）</label>
+    <label class="calc-check"><input type="checkbox" id="chkQII"> 我的配息含債券利息（QII）或資本返還（ROC）等非一般股利成分</label>
+  </div>
+
+  <div class="callout warn" id="boxW8" style="display:none;"><strong>身分提醒：</strong>本試算器僅適用非美國稅務居民（NRA）。美國公民、綠卡持有者或美國稅務居民適用全球課稅，美國 30% 就源扣繳與台灣最低稅負制的計算並不適用，請諮詢熟悉美國稅務的會計師（Form 1040）。</div>
+
+  <div class="callout" id="boxQII" style="display:none;">本工具假設輸入金額<strong>全部是 ordinary dividend（30% 扣繳）</strong>。債券 ETF 的利息型配息（QII）、REIT 與高配息 ETF 的資本返還（ROC）、基金的資本利得分配，美國端扣繳從 30% 到 0% 都有。請以券商寄發的 <strong>1042-S 拆解實際扣繳</strong>，把上方「美國股利金額」填為對應 30% 扣繳的股利部分，避免高估稅負。</div>
 
   <noscript><div class="callout warn">本試算器需要啟用 JavaScript 才能運作。規則摘要：美國股利扣 30%；台灣端全戶海外所得達 100 萬全額計入基本所得額，（基本所得額 − 750 萬）× 20% 與一般綜所稅比較補差額，美國已扣稅額可扣抵。</div></noscript>
 
@@ -370,6 +382,14 @@
       render();
     });
   });
+
+  function syncChecks() {
+    document.getElementById('boxW8').style.display = document.getElementById('chkW8').checked ? 'none' : '';
+    document.getElementById('boxQII').style.display = document.getElementById('chkQII').checked ? '' : 'none';
+  }
+  document.getElementById('chkW8').addEventListener('change', syncChecks);
+  document.getElementById('chkQII').addEventListener('change', syncChecks);
+  syncChecks();
 
   render();
 })();
