@@ -322,16 +322,16 @@ nav.main-nav a.lang-switch:hover { background: var(--gold); color: var(--navy); 
   .header-inner:has(.nav-toggle) nav.main-nav.open { display: flex; }
   .header-inner:has(.nav-toggle) nav.main-nav a { margin-left: 0; padding: .4rem 0; font-size: 1rem; }
   .header-inner:has(.nav-toggle) nav.main-nav a.lang-switch {
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
+    display: inline-block;
+    width: auto;
+    align-self: flex-start;
     text-align: center;
-    margin: .55rem 0 .1rem;
-    padding: .45rem .8rem;
+    margin: .5rem 0 .1rem;
+    padding: .3rem .8rem;
     border-radius: 8px;
     font-size: .9rem;
     font-weight: 700;
-    letter-spacing: .05em;
+    letter-spacing: .04em;
   }
   .nav-toggle { display: inline-block; }
 }
