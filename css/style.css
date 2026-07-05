@@ -322,10 +322,12 @@ nav.main-nav a.lang-switch:hover { background: var(--gold); color: var(--navy); 
   .header-inner:has(.nav-toggle) nav.main-nav.open { display: flex; }
   .header-inner:has(.nav-toggle) nav.main-nav a { margin-left: 0; padding: .4rem 0; font-size: 1rem; }
   .header-inner:has(.nav-toggle) nav.main-nav a.lang-switch {
-    align-self: stretch;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
     text-align: center;
     margin: .55rem 0 .1rem;
-    padding: .45rem 0;
+    padding: .45rem .8rem;
     border-radius: 8px;
     font-size: .9rem;
     font-weight: 700;
