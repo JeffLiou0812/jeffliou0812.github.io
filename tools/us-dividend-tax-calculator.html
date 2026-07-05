@@ -111,6 +111,8 @@
     </div>
   </div>
 
+  <noscript><div class="callout warn">本試算器需要啟用 JavaScript 才能運作。規則摘要：美國股利扣 30%；台灣端全戶海外所得達 100 萬全額計入基本所得額，（基本所得額 − 750 萬）× 20% 與一般綜所稅比較補差額，美國已扣稅額可扣抵。</div></noscript>
+
   <div id="verdict" class="verdict" aria-live="polite"></div>
 
   <div class="kpi-row" aria-live="polite">
@@ -276,10 +278,9 @@
     document.getElementById('kpiUsSub').textContent = usd(inp.divUSD * US_WHT_RATE) + '，源頭扣走';
     document.getElementById('kpiTw').textContent = nt(r.twPayable);
     document.getElementById('kpiTotal').textContent = nt(r.total);
-    var totalSubParts = [];
-    if (r.divTWD > 0) totalSubParts.push('股利 ' + nt(r.divTWD));
-    if (r.netProperty > 0 || inp.other > 0) totalSubParts.push(r.divTWD > 0 ? '其他海外項目' : '財產交易／其他海外項目');
-    document.getElementById('kpiTotalSub').textContent = totalSubParts.join(' + ');
+    document.getElementById('kpiTotalSub').textContent = r.total > 0
+      ? '美國 ' + nt(r.usWhtTWD) + ' ＋ 台灣 ' + nt(r.twPayable)
+      : '';
     document.getElementById('kpiRate').textContent = r.overseas > 0 || inp.divUSD > 0 ? pct(r.effRate) : '–';
 
     // 結論句
@@ -319,7 +320,7 @@
     var rows = [
       ['1', '美國股利（毛額）', usd(inp.divUSD) + ' ＝ ' + nt(r.divTWD)],
       ['2', '美國源頭扣繳 30%', nt(r.usWhtTWD)],
-      ['3', '淨財產交易所得 ＝ 所得 − 損失（僅限同年度同類互抵）', nt(inp.propGain) + ' − ' + nt(inp.propLoss) + ' ＝ ' + nt(r.netProperty)],
+      ['3', '淨財產交易所得 ＝ 所得 − 損失（同年度同類互抵，扣除以所得為限）', nt(inp.propGain) + ' − ' + nt(Math.min(inp.propLoss, inp.propGain)) + ' ＝ ' + nt(r.netProperty) + (r.wastedLoss > 0 ? '（超出部分見 3b）' : '')],
       ['4', '全戶海外所得合計 ＝ 股利 ＋ 淨財產交易所得 ＋ 其他', nt(r.overseas)],
       ['5', '達 100 萬計入門檻？', r.included > 0 ? '達到，全額計入 ' + nt(r.included) : '未達，計入 0'],
       ['6', '基本所得額 ＝ 綜合所得淨額 ＋ 計入海外所得', nt(inp.net) + ' ＋ ' + nt(r.included) + ' ＝ ' + nt(r.basicIncome)],
@@ -371,7 +372,5 @@
   render();
 })();
 </script>
-<noscript><div style="max-width:960px;margin:1rem auto;padding:1rem;background:#fdf3f4;border:1px solid #DC3545;border-radius:8px;">本試算器需要啟用 JavaScript 才能運作。規則摘要：美國股利扣 30%；台灣端全戶海外所得達 100 萬全額計入基本所得額，（基本所得額 − 750 萬）× 20% 與一般綜所稅比較補差額，美國已扣稅額可扣抵。</div></noscript>
-
 </body>
 </html>
