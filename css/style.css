@@ -218,3 +218,70 @@ footer.site-footer {
   article.post { padding: 1.4rem 1.2rem; }
   .hero h1 { font-size: 1.6rem; }
 }
+
+/* ===== Language switch ===== */
+nav.main-nav a.lang-switch {
+  display: inline-block;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  border-radius: 999px;
+  padding: 0 .6rem;
+  font-size: .82rem;
+  line-height: 1.6;
+}
+nav.main-nav a.lang-switch:hover { background: var(--gold); color: var(--navy); }
+
+/* ===== Category filter (injected by js/site.js) ===== */
+.filter-bar { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 1.1rem; }
+.filter-bar button {
+  font: inherit;
+  font-size: .84rem;
+  cursor: pointer;
+  color: var(--navy);
+  background: #eef2f7;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: .15rem .8rem;
+}
+.filter-bar button:hover { border-color: var(--navy); }
+.filter-bar button.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+
+/* ===== Related articles ===== */
+.related { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+.related h4 { color: var(--navy); font-size: .95rem; margin-bottom: .5rem; }
+.related ul { margin: 0 0 0 1.4rem; font-size: .92rem; }
+.related li { margin-bottom: .3rem; }
+
+/* ===== Floating coffee button (injected by js/site.js) ===== */
+.coffee-btn {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  background: var(--navy);
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  padding: .55rem 1rem;
+  font-size: .9rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,.22);
+}
+.coffee-btn:hover { background: var(--navy-dark); }
+@media (max-width: 640px) {
+  .coffee-btn {
+    padding: 0;
+    width: 52px;
+    height: 52px;
+    justify-content: center;
+    border-radius: 50%;
+    right: 14px;
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    font-size: 1.25rem;
+  }
+  .coffee-btn .coffee-label { display: none; }
+}
