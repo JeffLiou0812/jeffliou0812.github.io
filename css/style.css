@@ -315,12 +315,21 @@ nav.main-nav a.lang-switch:hover { background: var(--gold); color: var(--navy); 
     border: 1px solid rgba(255,255,255,.15);
     border-radius: 8px;
     padding: .5rem .9rem;
-    min-width: 150px;
+    min-width: 172px;
     box-shadow: 0 10px 28px rgba(0,0,0,.35);
     z-index: 60;
   }
   .header-inner:has(.nav-toggle) nav.main-nav.open { display: flex; }
   .header-inner:has(.nav-toggle) nav.main-nav a { margin-left: 0; padding: .4rem 0; font-size: 1rem; }
-  .header-inner:has(.nav-toggle) nav.main-nav a.lang-switch { margin: .3rem 0 .1rem; }
+  .header-inner:has(.nav-toggle) nav.main-nav a.lang-switch {
+    align-self: stretch;
+    text-align: center;
+    margin: .55rem 0 .1rem;
+    padding: .45rem 0;
+    border-radius: 8px;
+    font-size: .9rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+  }
   .nav-toggle { display: inline-block; }
 }
