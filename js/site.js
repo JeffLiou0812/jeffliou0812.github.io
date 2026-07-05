@@ -69,9 +69,33 @@
     grid.parentNode.insertBefore(bar, grid);
   }
 
+  function initNavToggle() {
+    var btn = document.querySelector(".nav-toggle");
+    var nav = document.querySelector("nav.main-nav");
+    if (!btn || !nav) return;
+    function close() {
+      nav.classList.remove("open");
+      btn.setAttribute("aria-expanded", "false");
+      btn.textContent = "☰"; /* ☰ */
+    }
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var open = nav.classList.toggle("open");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      btn.textContent = open ? "✕" : "☰"; /* ✕ : ☰ */
+    });
+    nav.addEventListener("click", function (e) {
+      if (e.target.tagName === "A") close();
+    });
+    document.addEventListener("click", function (e) {
+      if (nav.classList.contains("open") && !nav.contains(e.target) && e.target !== btn) close();
+    });
+  }
+
   function init() {
     initCoffeeButton();
     initCategoryFilter();
+    initNavToggle();
   }
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
