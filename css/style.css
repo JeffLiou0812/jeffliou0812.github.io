@@ -45,6 +45,7 @@ header.site-header {
   color: #fff;
   text-decoration: none;
   letter-spacing: .02em;
+  margin-right: auto; /* push nav + lang-switch + hamburger to the right */
 }
 .brand .x { color: var(--gold); font-weight: 700; }
 nav.main-nav a {
@@ -220,7 +221,7 @@ footer.site-footer {
 }
 
 /* ===== Language switch ===== */
-nav.main-nav a.lang-switch {
+.lang-switch {
   display: inline-block;
   border: 1px solid var(--gold);
   color: var(--gold);
@@ -228,8 +229,9 @@ nav.main-nav a.lang-switch {
   padding: 0 .6rem;
   font-size: .82rem;
   line-height: 1.6;
+  text-decoration: none;
 }
-nav.main-nav a.lang-switch:hover { background: var(--gold); color: var(--navy); }
+.lang-switch:hover { background: var(--gold); color: var(--navy); }
 
 /* ===== Category filter (injected by js/site.js) ===== */
 .filter-bar { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 1.1rem; }

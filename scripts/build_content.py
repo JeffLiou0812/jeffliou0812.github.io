@@ -49,12 +49,26 @@ def strip_tags(html: str) -> str:
 
 
 def parse_post_meta(meta_text: str) -> dict:
-    """Parse '傑夫哥 · 2026-07-04 · 分類：跨境稅務 · 法規基準日：2026-07-04'."""
+    """Parse post-meta into fields.
+
+    Supports both the legacy single-date form
+        '傑夫哥 · 2026-07-04 · 分類：跨境稅務 · 法規基準日：2026-07-04'
+    and the current split form with explicit publish/update labels
+        '傑夫哥 · 發布 2026-07-04 · 更新 2026-07-06 · 分類：… · 法規基準日：…'.
+    'date' is always the publish date; 'date_modified' is set only when an
+    explicit 更新 date is present.
+    """
     parts = [p.strip() for p in meta_text.split("·")]
     parsed = {"author": parts[0] if parts else "", "date": "", "category": "", "extra": []}
     for part in parts[1:]:
+        pub = re.fullmatch(r"發布\s*(\d{4}-\d{2}-\d{2})", part)
+        mod = re.fullmatch(r"更新\s*(\d{4}-\d{2}-\d{2})", part)
         if re.fullmatch(r"\d{4}-\d{2}-\d{2}", part):
             parsed["date"] = part
+        elif pub:
+            parsed["date"] = pub.group(1)
+        elif mod:
+            parsed["date_modified"] = mod.group(1)
         elif part.startswith("分類："):
             parsed["category"] = part.removeprefix("分類：")
         elif part.startswith("法規基準日："):
@@ -97,6 +111,8 @@ def parse_article(path: Path) -> dict:
         "char_count": char_count,
         "body_html": body_html,
     }
+    if "date_modified" in meta:
+        record["date_modified"] = meta["date_modified"]
     if "law_reference_date" in meta:
         record["law_reference_date"] = meta["law_reference_date"]
     if meta["extra"]:
