@@ -59,6 +59,11 @@
 
     <p>2026 年 7 月，Anthropic 開放新一代旗艦模型 Fable 5 給付費訂閱者使用，但使用期僅限 7 月 12 日前。旗艦模型的 token 燒得很快，拿來做瑣碎無需推理判斷的任務相當浪費。</p>
 
+    <figure style="margin:1rem 0 1.4rem;">
+      <img src="img/claude-code-usage-fable5.png" alt="Claude Code 用量面板截圖：Context window 13%、5 小時限制 5%、Weekly all models 1%、Weekly Fable 獨立額度 2%，並顯示官方提示 Fable 5 is the most capable model and draws down usage much faster" style="max-width:100%;height:auto;border:1px solid var(--line);border-radius:8px;" loading="lazy">
+      <figcaption style="font-size:.85rem;color:var(--muted);margin-top:.4rem;">Claude Code 的用量面板：Fable 5 有獨立的每週額度，且官方明示它消耗額度更快（截圖 2026-07-09）。</figcaption>
+    </figure>
+
     <p>為了節省 token，我用很簡單的指令給 Claude Code：</p>
 
     <div class="callout"><strong>Q：</strong>從今天到7月12日，是我可以使用fable 5模式的期間，設計一套運作模式，當需要整體架構設計、策略制定、重大事項相關的任務，由fable 5執行，其他任務由fable 5指揮Opus(並視複雜度判斷effort level)執行。</div>
