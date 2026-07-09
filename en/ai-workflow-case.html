@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4182088023942573" crossorigin="anonymous"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TRNEWFX3G6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TRNEWFX3G6');
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How I Direct AI: A Hands-On Case | TaxCode x US Stocks x AI</title>
+<meta name="description" content="A look at how an AI-assisted workflow gets designed: the AI flags the blind spots in my design, and the final review stays with me. Jeff's AI research automation method.">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="canonical" href="https://taxcodeusstocks.com/en/ai-workflow-case.html">
+<link rel="alternate" hreflang="zh-Hant" href="https://taxcodeusstocks.com/ai-workflow-case.html">
+<link rel="alternate" hreflang="en" href="https://taxcodeusstocks.com/en/ai-workflow-case.html">
+<link rel="alternate" hreflang="x-default" href="https://taxcodeusstocks.com/ai-workflow-case.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="How I Direct AI: A Hands-On Case | TaxCode x US Stocks x AI">
+<meta property="og:description" content="A look at how an AI-assisted workflow gets designed: the AI flags the blind spots in my design, and the final review stays with me. Jeff's AI research automation method.">
+<meta property="og:url" content="https://taxcodeusstocks.com/en/ai-workflow-case.html">
+<meta property="og:site_name" content="TaxCode x US Stocks x AI">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_TW">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script src="../js/site.js" defer></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">TaxCode <span class="x">x</span> US Stocks <span class="x">x</span> AI</a>
+    <nav class="main-nav" id="main-nav">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="about.html">About</a>
+      <a href="resources.html">Resources</a>
+      <a href="disclaimer.html">Disclaimer</a>
+    </nav>
+    <a class="lang-switch" href="../ai-workflow-case.html" hreflang="zh-Hant" lang="zh-Hant">中文</a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">☰</button>
+  </div>
+</header>
+
+<main>
+  <article class="post">
+    <h1>How I Direct AI: A Real Case</h1>
+    <p class="post-meta">Published 2026-07-09</p>
+
+    <div class="callout">The model and tooling specifics described here reflect July 2026. Those details will change with each release; the layering principles and review discipline will not.</div>
+
+    <h2>Background: Claude Code's top model, included with existing paid subscriptions until July 12</h2>
+
+    <p>In July 2026, Anthropic opened its new flagship model, Fable 5, to paying subscribers, but only until July 12. A flagship model burns tokens fast, and spending it on trivial tasks that require no real reasoning is a waste.</p>
+
+    <p>To conserve tokens, I gave Claude Code a very simple instruction:</p>
+
+    <div class="callout"><strong>Q:</strong> From today until July 12 I can use the Fable 5 mode. Design an operating mode in which tasks involving overall architecture design, strategy setting, and other high-stakes matters are executed by Fable 5 itself, while all other tasks are delegated by Fable 5 to Opus (with the effort level judged by task complexity).</div>
+
+    <h2>The AI did not comply; it audited my design first</h2>
+
+    <p>The AI's answer (excerpted for readability):</p>
+
+    <p>This is a meta architecture-design question (not a tax or technical domain question, so no project files needed; the basis is this harness's actual tool specifications plus your CLAUDE.md and memory). Overall verdict first, then the technical traps and the corrections.</p>
+
+    <h3>Overall verdict</h3>
+
+    <p>The direction is right: this is the orchestrator-worker pattern, and it naturally complements your existing multi-model blind-review rule: Fable × Opus is genuine cross-model review, which catches more blind spots than any model grading its own work. But a literal implementation would hit four technical traps that need fixing first.</p>
+
+    <ol>
+      <li>Delegated subtasks default to running on the main model (meaning a delegation that forgets to specify the executing model still burns flagship quota, so the delegation achieves nothing); every delegation must name its model explicitly.</li>
+      <li>The "scale effort to complexity" parameter I had imagined does not exist on the single-delegation tool at all; it requires a separate batch-orchestration path.</li>
+      <li>A subtask is a brand-new conversation that sees none of the main thread's context, so every delegation needs a self-contained brief; for small tasks, the communication overhead costs more than the main model just doing the work.</li>
+      <li>Framing the task, grading the output, and arbitrating disputes all consume flagship quota too: delegation saves the "execution", never the "judgment".</li>
+    </ol>
+
+    <h2>The key correction: from "by importance" to "by leverage of judgment"</h2>
+
+    <p>The AI then went after the core of my design:</p>
+
+    <table>
+      <tr><th>#</th><th>Technical reality</th><th>Impact on your design</th><th>Countermeasure</th></tr>
+      <tr><td>1</td><td>Sub-agents inherit the main session's model by default (= Fable)</td><td>A delegation that forgets to specify the model still burns Fable quota; the delegation achieves nothing</td><td>Every delegation must explicitly carry model: "opus" (or haiku/sonnet)</td></tr>
+      <tr><td>2</td><td>The Agent tool has no effort parameter (only a model override)</td><td>"Scaling effort to complexity" cannot be done with the Agent tool alone</td><td>Two routes: (a) move batch/multi-task work to Workflow, where agent() can set effort low→max per call; (b) create custom agent definition files (frontmatter can preset model + effort), but creating files needs your authorization</td></tr>
+      <tr><td>3</td><td>A sub-agent is a brand-new context and sees none of this conversation</td><td>Every delegation needs a self-contained brief; for small tasks the overhead costs more than Fable doing it directly</td><td>Delegation threshold (all three must hold): the task is self-contained, the output compresses into a summary, no mid-course judgment is needed</td></tr>
+      <tr><td>4</td><td>The conductor's reading and writing still burn Fable tokens</td><td>Delegation saves the "execution", not the "framing + grading + arbitration"</td><td>Keep the main session lean, per your existing 200k branching rule; calibrate quota with a daily /usage check (I cannot see the Fable allowance)</td></tr>
+    </table>
+
+    <h2>The suggested routing table (corrected)</h2>
+
+    <p>Your split is "by importance"; I suggest "by leverage of judgment": important-but-mechanical work still gets pushed down, and Fable's judgment goes to the two ends, the spec and the review, not to the typing in between.</p>
+
+    <p>The corrected layering:</p>
+
+    <table>
+      <tr><th>Tier</th><th>Executor</th><th>Task type</th></tr>
+      <tr><td>L1</td><td>Flagship model, in person</td><td>Architecture and strategy design, multi-rule interaction judgment, reconciling results across tasks, final wording of key text</td></tr>
+      <tr><td>L2</td><td>Second-tier model, high effort</td><td>Complex execution against a clear spec: report first drafts, non-trivial code, multi-source research synthesis</td></tr>
+      <tr><td>L3</td><td>Second-tier model, low effort</td><td>Mechanical batches: file scans, format conversion, citation checks, data extraction</td></tr>
+    </table>
+
+    <p>With three supporting rules:</p>
+
+    <ul>
+      <li>Delegation threshold: the task is self-contained, the output compresses into a summary, and no mid-course judgment is needed. All three must hold before delegating. Handing work off feels efficient, but because a subtask sees none of the main thread's context, an unclear brief makes the rework cost higher, so the main model is better off doing it directly.</li>
+      <li>Escalation triggers: on any irreversible action, conflicting sources, or low confidence, the delegated task stops and reports back rather than pushing on.</li>
+      <li>Cross-model review: the second-tier model's output is reviewed by the flagship; conversely, the flagship's own output goes to a different model for independent blind review (a model grading its own work does not count, a rule I have kept for years).</li>
+    </ul>
+
+    <h2>Checking the same answer from a second angle</h2>
+
+    <p>The same design can be verified from another direction. From the quota angle, concentrating judgment at the spec and review ends while delegating execution maximizes the yield of a scarce resource. From the quality angle, cross-model review lets two different models catch each other's blind spots, one more layer of protection than any model reviewing itself. Both angles point to the same conclusion, and only then was the corrected version adopted.</p>
+
+    <h2>The final review and sign-off stays with me</h2>
+
+    <p>Across the whole exchange, the AI did two things: it exposed the gap between my design and the system's reality, and it proposed the correction. But some things could not be left to the AI to execute. Where important work with an already-clear spec belongs was my decision: second-tier model drafts, flagship model reviews. Whether to adopt the whole mode, and how far its authorization runs, was also my decision.</p>
+
+    <p>This is the concrete version of the line on my <a href="about.html">About</a> and <a href="services.html">Services</a> pages: the code and the text can come from AI; the value lies in designing the process and verifying the output. Directing AI is not a prompting trick. You need your own standard of judgment first, so the AI's pushback has something to be tested against, and the final call has something to rest on.</p>
+
+    <div class="cta-box">
+      <h4>Need an AI research workflow designed for your team?</h4>
+      <p>Designing and shaping this kind of AI research workflow is one of the services I take on. See <a href="services.html">Services</a>, item 3, "AI Research Automation Advisory".</p>
+    </div>
+  </article>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p><strong>TaxCode x US Stocks x AI</strong> | Jeff · <a href="services.html">Work with me</a> · <a href="disclaimer.html">Disclaimer</a> · <a href="privacy.html">Privacy</a></p>
+    <p class="footer-disclaimer">© 2026 TaxCode x US Stocks x AI</p>
+  </div>
+</footer>
+
+</body>
+</html>

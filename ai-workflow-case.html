@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4182088023942573" crossorigin="anonymous"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TRNEWFX3G6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TRNEWFX3G6');
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我如何指揮 AI：實際操作案例｜稅務 x 美股 x AI</title>
+<meta name="description" content="展示 AI 工作流的設計過程：AI 指出設計盲點、由我做最終審查。傑夫哥的 AI 研究自動化方法。">
+<link rel="stylesheet" href="css/style.css">
+<link rel="canonical" href="https://taxcodeusstocks.com/ai-workflow-case.html">
+<link rel="alternate" hreflang="zh-Hant" href="https://taxcodeusstocks.com/ai-workflow-case.html">
+<link rel="alternate" hreflang="en" href="https://taxcodeusstocks.com/en/ai-workflow-case.html">
+<link rel="alternate" hreflang="x-default" href="https://taxcodeusstocks.com/ai-workflow-case.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="我如何指揮 AI：實際操作案例｜稅務 x 美股 x AI">
+<meta property="og:description" content="展示 AI 工作流的設計過程：AI 指出設計盲點、由我做最終審查。傑夫哥的 AI 研究自動化方法。">
+<meta property="og:url" content="https://taxcodeusstocks.com/ai-workflow-case.html">
+<meta property="og:site_name" content="稅務 x 美股 x AI">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:locale:alternate" content="en_US">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script src="js/site.js" defer></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">稅務 <span class="x">x</span> 美股 <span class="x">x</span> AI</a>
+    <nav class="main-nav" id="main-nav">
+      <a href="index.html">首頁</a>
+      <a href="services.html">服務項目</a>
+      <a href="about.html">關於傑夫哥</a>
+      <a href="resources.html">官方資源</a>
+      <a href="disclaimer.html">免責聲明</a>
+    </nav>
+    <a class="lang-switch" href="en/ai-workflow-case.html" hreflang="en" lang="en">EN</a>
+    <button class="nav-toggle" aria-label="選單" aria-expanded="false" aria-controls="main-nav">☰</button>
+  </div>
+</header>
+
+<main>
+  <article class="post">
+    <h1>我怎麼指揮 AI：實際案例</h1>
+    <p class="post-meta">發布 2026-07-09</p>
+
+    <div class="callout">本文描述的模型與工具規格為 2026 年 7 月當下的狀態，細節會隨版本演進；惟文中的分層原則與把關方法，不隨版本改變。</div>
+
+    <h2>背景：Claude Code 頂尖模型開放到 7 月 12 日可以無需另外付費，可繼續用既有訂閱方式使用</h2>
+
+    <p>2026 年 7 月，Anthropic 開放新一代旗艦模型 Fable 5 給付費訂閱者使用，但使用期僅限 7 月 12 日前。旗艦模型的 token 燒得很快，拿來做瑣碎無需推理判斷的任務相當浪費。</p>
+
+    <p>為了節省 token，我用很簡單的指令給 Claude Code：</p>
+
+    <div class="callout"><strong>Q：</strong>從今天到7月12日，是我可以使用fable 5模式的期間，設計一套運作模式，當需要整體架構設計、策略制定、重大事項相關的任務，由fable 5執行，其他任務由fable 5指揮Opus(並視複雜度判斷effort level)執行。</div>
+
+    <h2>AI 沒有照做，而是先檢查我的設計</h2>
+
+    <p>AI 回答（為方便閱讀，僅摘取重點內容）：</p>
+
+    <p>這是一個 meta 架構設計問題（非稅務/技術領域問題，無需讀專案檔；依據為本 harness 的實際工具規格 + 你的 CLAUDE.md/memory）。先給總評，再列技術陷阱與修正建議。</p>
+
+    <h3>總評</h3>
+
+    <p>方向正確：這就是 orchestrator-worker pattern，且和你既有的多模型盲審規則天然互補：Fable × Opus 是真正的跨模型互審，比同模型自審抓得到更多盲點。但照字面執行會踩到 4 個技術陷阱，需先修正。</p>
+
+    <ol>
+      <li>委派出去的子任務，預設仍由主模型執行（亦即忘記指定執行模型的委派，照樣燒旗艦額度，委派等於白做），故每次委派必須明確指定模型。</li>
+      <li>我想像中「視複雜度調整投入深度」的參數，在單次委派工具上根本不存在，要改走批次編排的路徑才做得到。</li>
+      <li>子任務是一段全新的對話，看不到主對話的任何脈絡，故每次委派都要附一份自包含的任務說明書；小任務委派的溝通成本，反而比主模型直接做更高。</li>
+      <li>指揮者出題、閱卷、裁決本身也消耗旗艦額度：委派省得掉「執行」，省不掉「判斷」。</li>
+    </ol>
+
+    <h2>關鍵修正：從「按重要性」改成「按判斷力槓桿」</h2>
+
+    <p>AI 接著更改我設計的核心：</p>
+
+    <table>
+      <tr><th>#</th><th>技術現實</th><th>對你設計的影響</th><th>對策</th></tr>
+      <tr><td>1</td><td>子 agent 預設繼承主會話 model = Fable</td><td>忘記指定 model 的委派，照樣燒 Fable 額度，委派等於白做</td><td>每次委派必須明帶 model: "opus"（或 haiku/sonnet）</td></tr>
+      <tr><td>2</td><td>Agent tool 沒有 effort 參數（只有 model override）</td><td>「視複雜度調 effort」單靠 Agent tool 做不到</td><td>兩條路：(a) 批次/多工改用 Workflow，agent() 可逐 call 設 effort low→max；(b) 建 custom agent 定義檔（frontmatter 可預設 model+effort），但建檔需你授權</td></tr>
+      <tr><td>3</td><td>子 agent 是全新 context，看不到本對話</td><td>每次委派要寫 self-contained brief；小任務委派的 overhead 反而比 Fable 直接做更貴</td><td>委派門檻（三條全過才委派）：任務自包含、輸出可壓成摘要、過程不需中途判斷</td></tr>
+      <tr><td>4</td><td>指揮者讀寫仍是 Fable token</td><td>委派省的是「執行」，省不掉「出題＋閱卷＋裁決」</td><td>主會話保持精簡，沿用你既有 200k 分支決策；額度以每日 /usage 校準（我看不到 Fable 配額）</td></tr>
+    </table>
+
+    <h2>建議的路由表（修正版）</h2>
+
+    <p>你的分法是「按重要性」，建議改成「按判斷力槓桿」：重要但機械的活照樣下放，Fable 的判斷用在 spec 和驗收兩端，不用在打字上。</p>
+
+    <p>修正後的分層：</p>
+
+    <table>
+      <tr><th>層級</th><th>執行者</th><th>任務類型</th></tr>
+      <tr><td>L1</td><td>旗艦模型親自做</td><td>架構與策略設計、多重規則交互的判斷、跨任務結果的整合裁決、關鍵文字定稿</td></tr>
+      <tr><td>L2</td><td>次級模型（高投入）</td><td>有明確規格的複雜執行：報告初稿、複雜程式、多來源研究彙整</td></tr>
+      <tr><td>L3</td><td>次級模型（低投入）</td><td>機械批次：檔案掃描、格式轉換、引用查核、資料抽取</td></tr>
+    </table>
+
+    <p>配套三條規則：</p>
+
+    <ul>
+      <li>委派門檻：任務自包含、輸出可壓縮成摘要、過程不需中途判斷，三條全過才委派。雖然把工作丟出去很省事，但由於子任務看不到主對話脈絡，說明書寫不清楚時返工成本更高，故不如主模型直接做。</li>
+      <li>上呈觸發器：委派任務遇到不可逆動作、來源互相矛盾、或信心不足時，一律停下來回報，不自行往下做。</li>
+      <li>跨模型互審：次級模型的產出由旗艦模型驗收；反過來，旗艦模型自己的產出，交給另一個模型獨立盲審（自己審自己的東西不算數，這是我行之有年的守則）。</li>
+    </ul>
+
+    <h2>雙視角驗算</h2>
+
+    <p>同一套設計可由另一角度驗算。從額度角度看，判斷集中在規格與驗收兩端、執行下放，稀缺資源的單位產出最大化；從品質角度看，跨模型互審讓兩個不同的模型互抓盲點，比單一模型自產自審多一層保險。兩個角度指向同一結論，這套修正版才定案。</p>
+
+    <h2>最後由我審核定案</h2>
+
+    <p>整段互動裡，AI 做了兩件事：指出我的設計與系統現實的落差，以及提出修正方案。但有幾件事不能給 AI 執行。重要、但規格已經明確的工作該歸哪一層，由我決定走「次級模型產、旗艦模型審」；整套模式要不要採用、授權範圍到哪裡，也是我決定。</p>
+
+    <p>這正是我在〈<a href="about.html">關於傑夫哥</a>〉與〈<a href="services.html">服務項目</a>〉寫的那句話的具體展開：程式與文字可以由 AI 產出，價值在於流程設計與驗證把關。指揮 AI 的核心不是下指令的話術，而是你自己得先有一套判斷標準，讓 AI 的反駁有東西可以對照，讓最終的裁決有依據。</p>
+
+    <div class="cta-box">
+      <h4>需要為你的團隊設計 AI 研究工作流？</h4>
+      <p>這類 AI 研究工作流的設計和構思，是我承接的服務之一，詳見〈<a href="services.html">服務項目</a>〉第 3 項「AI 研究自動化顧問」。</p>
+    </div>
+  </article>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p><strong>稅務 x 美股 x AI</strong>｜傑夫哥　·　<a href="services.html">合作邀約</a>　·　<a href="disclaimer.html">免責聲明</a>　·　<a href="privacy.html">隱私權政策</a></p>
+    <p class="footer-disclaimer">本網站內容為教育性質與個人觀點分享，不構成任何投資建議或稅務專業意見。文中提及的個股、ETF、財務分析皆為說明用途。投資涉及風險，做任何投資決策前請諮詢您的合格財務顧問與稅務專業人員。過去績效不代表未來表現。作者可能持有文中討論的證券部位。© 2026 稅務 x 美股 x AI</p>
+  </div>
+</footer>
+
+</body>
+</html>
