@@ -1,0 +1,52 @@
+# 稅務 x 美股 x AI（TaxCode x US Stocks x AI）
+
+> 國際稅務專業視角的美股投資分析與 AI 研究自動化：如何善用稅法和 AI，提升美股投資報酬。作者傑夫哥（Jeff），國際稅務經驗 20+ 年。主站為繁體中文，英文鏡像在 /en/。
+> US stock analysis through an international tax lens, plus AI-automated research workflows, by Jeff (20+ years in international tax). Primary language: Traditional Chinese; English mirrors live under /en/.
+
+主要受眾：投資美股的台灣個人投資者（股利扣繳、美國遺產稅 USD 60,000 門檻、台灣最低稅負制、ADR 稅務）。
+English audience: nonresident alien (NRA) investors in US stocks, and expats dealing with Taiwan tax residency.
+
+## 文章（繁體中文）
+
+- [TSM ADR vs 2330：台灣投資人的稅務差異，多數人講錯的兩件事](https://taxcodeusstocks.com/articles/tsm-adr-tax.html)：TSM ADR 股利被扣 21% 拿不拿得回來？TSM ADR 算不算美國遺產稅資產？用發行人測試一次講清楚。
+- [散戶買美股最容易忽略的稅務成本：美國遺產稅 USD 60,000 門檻完整說明](https://taxcodeusstocks.com/articles/us-estate-tax-60k.html)：美國公民遺產稅免稅額 USD 15M，外國投資人只有 USD 60k。哪些資產算 US-situs、正確的稅額算法、三個合法規劃方向。
+- [海外所得 750 萬免稅？個人投資美股最常見的五個迷思，一次拆掉](https://taxcodeusstocks.com/articles/overseas-income-750-myth.html)：100 萬門檻是懸崖不是起徵點、750 萬扣的是基本所得額不是海外所得、超過也未必要繳。五個迷思配計算例。
+- [外國人在台灣：住滿 183 天成為稅務居民，境外投資損益怎麼課稅](https://taxcodeusstocks.com/articles/foreigner-taiwan-tax-resident.html)：天數怎麼算（始日不計末日計）、滿 183 天後海外投資損益進入最低稅負制的完整機制，以及年度規劃、租稅協定、遺產稅三個外國人特有的細節。
+- [SK 海力士要來美股了：台灣人該買 ADR 還是買韓股？](https://taxcodeusstocks.com/articles/sk-hynix-adr-tax.html)：SK Hynix 預計在 Nasdaq 掛牌 ADR（代碼 SKHY）。台灣投資人買 ADR 與直接買韓股，股利稅、資本利得、兩邊的遺產稅差在哪，一次算清楚。
+- [美國公債免遺產稅，但公債 ETF 不是](https://taxcodeusstocks.com/articles/treasury-etf-estate-tax.html)：直接持有 T-Bill 與持有美國掛牌公債 ETF，在美國遺產稅上是兩個世界。差在哪裡、怎麼安排。
+- [愛爾蘭 ETF 會被全球最低稅 15% 課到嗎？一個 Pillar Two 從業者的拆解](https://taxcodeusstocks.com/articles/irish-etf-pillar-two.html)：VWRA、CSPX 這些愛爾蘭 ETF 會不會被課？用 GloBE 規則的三層檢驗講清楚：不會，而且是規則設計本來就排除。
+- [Apple 的稅務密碼：ETR 從 14.7% 飆到 24.1%，再回到 15.6%](https://taxcodeusstocks.com/articles/apple-etr.html)：Apple 五年有效稅率完整拆解：四個結構性密碼、歐盟 State Aid 一次性補稅 USD 10.2B、Pillar Two 之後的新常態。
+- [散戶版 13F 追蹤系統：用 Python + SEC EDGAR 免費自動化](https://taxcodeusstocks.com/articles/diy-13f-tracker.html)：不用付訂閱費，直接從 SEC 原始資料抓 Buffett、Burry 的持股變動。完整 SOP 與程式碼。
+- [我如何用 AI 打造投資研究流程：從財報到結論的自動化管線](https://taxcodeusstocks.com/articles/ai-research-workflow.html)：Python 抓數據、AI 深讀文件、多來源交叉驗證防幻覺。一套實際在用的研究工作流。
+- [我如何指揮 AI：實際操作案例](https://taxcodeusstocks.com/ai-workflow-case.html)：展示 AI 工作流的設計過程：AI 指出設計盲點、由我做最終審查。
+
+## Articles (English)
+
+- [TSM ADR vs 2330: Two Tax Facts Most Investors Get Wrong](https://taxcodeusstocks.com/en/articles/tsm-adr-tax.html): Is the 21% Taiwan withholding on TSM ADR dividends recoverable? Are TSM ADRs US-situs assets for US estate tax? The issuer test settles both questions.
+- [The Tax Most Foreign Investors in US Stocks Overlook: The USD 60,000 Estate Tax Threshold](https://taxcodeusstocks.com/en/articles/us-estate-tax-60k.html): US citizens get a USD 15M estate tax exemption; nonresident aliens get USD 60,000. What counts as US-situs, the correct computation, and three planning routes.
+- [SK Hynix Is Coming to Nasdaq (SKHY): Should Taiwan Investors Buy the ADR or the Korean Shares?](https://taxcodeusstocks.com/en/articles/sk-hynix-adr-tax.html): Dividend withholding (treaty 10% vs 22%), capital gains, transaction tax, and estate tax on both sides: ADR vs the Korean shares, worked through.
+- [Taiwan's 183-Day Rule: When Foreigners Become Tax Residents](https://taxcodeusstocks.com/en/articles/foreigner-taiwan-tax-resident.html): At 183 days you become a Taiwan tax resident: how the days are counted, how offshore dividends and capital gains enter Taiwan's minimum tax, and the details expats miss.
+- [Will the 15% Global Minimum Tax Hit Your Irish-Domiciled ETF?](https://taxcodeusstocks.com/en/articles/irish-etf-pillar-two.html): Will VWRA, CSPX and other Irish-domiciled ETFs get caught by Pillar Two? A GloBE three-layer test shows why the answer is no, by design.
+- [Apple's Tax Code, Decoded: ETR from 14.7% to 24.1% to 15.6%](https://taxcodeusstocks.com/en/articles/apple-etr.html): Apple's five-year effective tax rate decoded: four structural drivers, the USD 10.2B EU State Aid one-off, and the new normal under Pillar Two.
+- [How I Direct AI: A Hands-On Case](https://taxcodeusstocks.com/en/ai-workflow-case.html): How an AI-assisted workflow gets designed: the AI flags the blind spots in my design, and the final review stays with me.
+
+## 互動工具 Tools
+
+- [美股股利稅負試算器：美國扣 30% 之後，台灣還要補多少？](https://taxcodeusstocks.com/tools/us-dividend-tax-calculator.html)：輸入美國股利與海外財產交易損益，自動算出美國 30% 扣繳、台灣最低稅負制補繳與總稅負。含 1042-S 扣抵教學，115 年度（2026）參數。
+
+## 關於本站 About
+
+- [關於傑夫哥](https://taxcodeusstocks.com/about.html)：作者背景：國際稅務 20+ 年、會計與財金學位、美股實戰投資人。
+- [About Jeff](https://taxcodeusstocks.com/en/about.html): Author background: 20+ years in international tax, US stock investor.
+- [服務項目](https://taxcodeusstocks.com/services.html)：合作邀約與服務範圍。
+- [官方資源](https://taxcodeusstocks.com/resources.html)：本站文章引用的一手來源：台灣財政部、IRS、SEC EDGAR、OECD Pillar Two 官方頁面。
+
+## Feeds
+
+- [RSS Feed](https://taxcodeusstocks.com/feed.xml)
+- [Sitemap](https://taxcodeusstocks.com/sitemap.xml)
+
+## 引用注意 Citation notes
+
+- 內容為教育性質，非投資或稅務專業意見。Content is educational, not investment or tax advice.
+- 文章皆標示發布與更新日期；引用時請以文內標示的更新日期為準。Articles carry visible publish/update dates; cite against the stated update date.
