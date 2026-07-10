@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4182088023942573" crossorigin="anonymous"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TRNEWFX3G6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TRNEWFX3G6');
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build Your Own 13F Tracker: Free Automation with Python + SEC EDGAR | TaxCode x US Stocks x AI</title>
+<meta name="description" content="Skip the subscription fees: pull Buffett's and Burry's position changes straight from SEC source data. Full SOP with code, plus the pitfalls beginners hit.">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="canonical" href="https://taxcodeusstocks.com/en/articles/diy-13f-tracker.html">
+<link rel="alternate" hreflang="zh-Hant" href="https://taxcodeusstocks.com/articles/diy-13f-tracker.html">
+<link rel="alternate" hreflang="en" href="https://taxcodeusstocks.com/en/articles/diy-13f-tracker.html">
+<link rel="alternate" hreflang="x-default" href="https://taxcodeusstocks.com/articles/diy-13f-tracker.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Build Your Own 13F Tracker: Free Automation with Python + SEC EDGAR | TaxCode x US Stocks x AI">
+<meta property="og:description" content="Skip the subscription fees: pull Buffett's and Burry's position changes straight from SEC source data. Full SOP with code, plus the pitfalls beginners hit.">
+<meta property="og:url" content="https://taxcodeusstocks.com/en/articles/diy-13f-tracker.html">
+<meta property="og:site_name" content="TaxCode x US Stocks x AI">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_TW">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script src="../../js/site.js" defer></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Build Your Own 13F Tracker: Free Automation with Python + SEC EDGAR",
+  "description": "Skip the subscription fees: pull Buffett's and Burry's position changes straight from SEC source data. Full SOP with code, plus the pitfalls beginners hit.",
+  "inLanguage": "en",
+  "author": {"@type": "Person", "name": "Jeff", "url": "https://taxcodeusstocks.com/en/about.html"},
+  "publisher": {"@type": "Organization", "name": "TaxCode x US Stocks x AI", "logo": {"@type": "ImageObject", "url": "https://taxcodeusstocks.com/favicon-512.png"}},
+  "datePublished": "2026-07-04",
+  "dateModified": "2026-07-10",
+  "mainEntityOfPage": "https://taxcodeusstocks.com/en/articles/diy-13f-tracker.html",
+  "image": "https://taxcodeusstocks.com/favicon-512.png"
+}
+</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../index.html">TaxCode <span class="x">x</span> US Stocks <span class="x">x</span> AI</a>
+    <nav class="main-nav" id="main-nav">
+      <a href="../index.html">Home</a>
+      <a href="../services.html">Services</a>
+      <a href="../about.html">About</a>
+      <a href="../resources.html">Resources</a>
+      <a href="../disclaimer.html">Disclaimer</a>
+    </nav>
+    <a class="lang-switch" href="../../articles/diy-13f-tracker.html" hreflang="zh-Hant" lang="zh-Hant">中文</a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">☰</button>
+  </div>
+</header>
+
+<main>
+<article class="post">
+  <h1>Build Your Own 13F Tracker: Free Automation with Python + SEC EDGAR</h1>
+  <div class="post-meta">Jeff · Published 2026-07-04 · Updated 2026-07-10 · Category: AI x US Stocks · Code tested on Python 3.13</div>
+
+  <p>Want to know what Buffett added last quarter, or what Burry loaded up on? Most people reach for Whalewisdom (USD 300 per year, roughly USD 25 per month) or the free but slower-to-update Dataroma. But these sites all draw on the same source: SEC EDGAR, which is public, free, and has an API. This piece shows you how to pull straight from the source, and along the way spells out how to read 13F data correctly and where its limits lie.</p>
+
+  <h2>What a 13F Is</h2>
+
+  <ul>
+    <li><strong>Who has to file</strong>: institutional investment managers with at least USD 100M in US equity positions (measured by market value on the last trading day of any month; crossing the threshold triggers the filing duty)</li>
+    <li><strong>What gets reported</strong>: long positions, including purchased put/call options (the table marks each PUT or CALL); short positions are invisible</li>
+    <li><strong>Frequency</strong>: quarterly, filed within 45 days after quarter end</li>
+    <li><strong>Format</strong>: XML, machine-readable, which is exactly where the automation opportunity lies</li>
+  </ul>
+
+  <h2>Limits First, Method Second</h2>
+
+  <p>A 13F has three structural limits you have to understand up front:</p>
+  <ol>
+    <li><strong>45-day lag</strong>: what you see is the position as of quarter end; the manager may already have reversed course by now.</li>
+    <li><strong>No shorts</strong>: hedge funds often run paired long/short trades, and the short leg never shows up on a 13F, so reading the long side alone can point you in the wrong direction. Purchased puts, by contrast, do show up (marked PUT): Burry's famous bearish bets were read straight out of the PUT column of his 13F.</li>
+    <li><strong>Position size carries different meaning</strong>: USD 10M is pocket change for Berkshire but a heavy bet for a small fund. Changes tell you more than absolute holdings, and portfolio weight tells you more than dollar amounts.</li>
+  </ol>
+
+  <h2>The Core Workflow: Four Steps</h2>
+
+  <h3>Step 1: Pull the filer's filing list by CIK</h3>
+  <p>Every filer has a CIK number (Berkshire's is 0001067983). SEC's submissions API returns all of that filer's filings in a single call:</p>
+  <pre><code>import requests
+
+HEADERS = {"User-Agent": "YourName your@email.com"}  # SEC requires this
+CIK = "0001067983"  # Berkshire Hathaway
+
+url = f"https://data.sec.gov/submissions/CIK{CIK}.json"
+data = requests.get(url, headers=HEADERS).json()
+
+filings = data["filings"]["recent"]
+idx = [i for i, f in enumerate(filings["form"]) if f == "13F-HR"]</code></pre>
+
+  <h3>Step 2: Parse the 13F XML holdings table</h3>
+  <pre><code>import xml.etree.ElementTree as ET
+
+ns = {"ns": "http://www.sec.gov/edgar/document/thirteenf/informationtable"}
+root = ET.fromstring(xml_text)
+
+positions = []
+for it in root.findall(".//ns:infoTable", ns):
+    positions.append({
+        "name":  it.find("ns:nameOfIssuer", ns).text,
+        "cusip": it.find("ns:cusip", ns).text,
+        "value": int(it.find("ns:value", ns).text),
+        "shares": int(it.find("ns:shrsOrPrnAmt/ns:sshPrnamt", ns).text),
+    })</code></pre>
+
+  <h3>Step 3: Map CUSIP to ticker</h3>
+  <p>A 13F identifies securities by CUSIP, not ticker. Maintain a lookup table (or lean on SEC's company_tickers.json), and once you have built out the common large caps you can reuse it.</p>
+
+  <h3>Step 4: Quarter-over-quarter diff</h3>
+  <p>Align this quarter's and last quarter's holdings tables by CUSIP, compute the change in share counts, and you get four kinds of signal (added, trimmed, new position, exited), output sorted by the dollar value of the change.</p>
+
+  <h2>The Four Pitfalls Beginners Hit Most</h2>
+
+  <table>
+    <tr><th>Pitfall</th><th>Consequence</th><th>Fix</th></tr>
+    <tr><td>No User-Agent set</td><td>SEC rejects the request outright</td><td>Put "name + email" in the header</td></tr>
+    <tr><td>Requests too fast</td><td>Exceeding 10 req/sec gets you temporarily blocked (SEC's official wording is a "brief period"; access resumes once you drop back below the limit)</td><td>Add rate limiting: sleep 0.15 seconds before fetching the next one</td></tr>
+    <tr><td>value unit mix-up</td><td>Filings before 2023 are denominated in thousands of USD, USD thereafter. Mixing them across years throws your numbers off by 1000x</td><td>Determine the unit from the filing period, then normalize</td></tr>
+    <tr><td>Comparing only the latest two quarters</td><td>You miss the accumulation trend (three consecutive quarters of adding is a stronger signal than a single quarter)</td><td>Keep at least four to eight quarters of history</td></tr>
+  </table>
+
+  <h2>Scheduling the Automation</h2>
+
+  <p>13F filings cluster in a flood between day 40 and day 45 after quarter end. My setup: Windows Task Scheduler runs the script once a week, switching to daily during the filing peak; output writes to Excel, and when a change clears a threshold it emails a notice to me. The variable cost of the whole system is zero; the only investment is the few hours it takes to build it the first time.</p>
+
+  <p>The next level up is wiring 13F signals into an AI research pipeline: when two or more of your tracked managers add the same stock in the same quarter, automatically trigger a deep read of that company's filings. I wrote up how that part works in <a href="../../articles/ai-research-workflow.html">the AI research workflow article (in Chinese)</a>.</p>
+
+  <div class="cta-box">
+    <h4>Thoughts after reading?</h4>
+    <p>Questions about this piece, or a different take? Email <a href="mailto:hello@taxcodeusstocks.com?subject=Re:%20diy-13f-tracker">hello@taxcodeusstocks.com</a>.</p>
+  </div>
+
+  <div class="sources">
+    <h4>Sources</h4>
+    <ul>
+      <li>SEC EDGAR full-text search and submissions API (data.sec.gov)</li>
+      <li>SEC Form 13F official instructions and XML technical specification</li>
+      <li>The code is a simplified version of what the author actually runs, tested on Python 3.13</li>
+    </ul>
+  </div>
+
+  <div class="related">
+    <h4>Related reading</h4>
+    <ul>
+      <li><a href="../../articles/ai-research-workflow.html">How I built an AI-powered investment research pipeline: from filings to conclusions (in Chinese)</a></li>
+      <li><a href="apple-etr.html">Apple's Tax Code, Decoded: ETR Spiked from 14.7% to 24.1%, Then Settled at 15.6%</a></li>
+      <li><a href="us-estate-tax-60k.html">The Tax Most Foreign Investors in US Stocks Overlook: The USD 60,000 Estate Tax Threshold</a></li>
+    </ul>
+  </div>
+
+  <div class="disclaimer-box">This article is educational content, not investment advice. 13F data lags up to 45 days and covers long positions only; do not blindly copy institutional holdings. Full disclaimer <a href="../disclaimer.html">here</a>.</div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p><strong>TaxCode x US Stocks x AI</strong> | Jeff · <a href="../services.html">Work with me</a> · <a href="../disclaimer.html">Disclaimer</a> · <a href="../privacy.html">Privacy</a></p>
+    <p class="footer-disclaimer">© 2026 TaxCode x US Stocks x AI</p>
+  </div>
+</footer>
+
+</body>
+</html>
