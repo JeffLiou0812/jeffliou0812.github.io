@@ -37,6 +37,7 @@ English audience: nonresident alien (NRA) investors in US stocks, and expats dea
 ## 互動工具 Tools
 
 - [美股股利稅負試算器：美國扣 30% 之後，台灣還要補多少？](https://taxcodeusstocks.com/tools/us-dividend-tax-calculator.html)：輸入美國股利與海外財產交易損益，自動算出美國 30% 扣繳、台灣最低稅負制補繳與總稅負。含 1042-S 扣抵教學，115 年度（2026）參數。
+- [US Dividend Tax Calculator: After the 30% US Withholding, How Much More Does Taiwan Collect?](https://taxcodeusstocks.com/en/tools/us-dividend-tax-calculator.html): Enter your US dividends and realized overseas gains or losses; get the 30% US withholding, Taiwan's AMT top-up, and total tax, plus a Form 1042-S credit walkthrough. 2026 (ROC year 115) parameters.
 
 ## 關於本站 About
 

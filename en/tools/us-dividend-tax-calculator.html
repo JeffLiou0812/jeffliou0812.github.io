@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4182088023942573" crossorigin="anonymous"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TRNEWFX3G6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TRNEWFX3G6');
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>US Dividend Tax Calculator: After the 30% US Withholding, How Much More Does Taiwan Collect? | TaxCode x US Stocks x AI</title>
+<meta name="description" content="Enter your US dividends and realized overseas gains or losses; get the 30% US withholding, Taiwan's AMT top-up, and total tax, plus a Form 1042-S credit walkthrough. 2026 (ROC year 115) parameters.">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="canonical" href="https://taxcodeusstocks.com/en/tools/us-dividend-tax-calculator.html">
+<link rel="alternate" hreflang="zh-Hant" href="https://taxcodeusstocks.com/tools/us-dividend-tax-calculator.html">
+<link rel="alternate" hreflang="en" href="https://taxcodeusstocks.com/en/tools/us-dividend-tax-calculator.html">
+<link rel="alternate" hreflang="x-default" href="https://taxcodeusstocks.com/tools/us-dividend-tax-calculator.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="US Dividend Tax Calculator: After the 30% US Withholding, How Much More Does Taiwan Collect? | TaxCode x US Stocks x AI">
+<meta property="og:description" content="Enter your US dividends and overseas gains or losses; get the 30% US withholding, Taiwan's AMT top-up, and total tax, plus how to claim the credit with Form 1042-S.">
+<meta property="og:url" content="https://taxcodeusstocks.com/en/tools/us-dividend-tax-calculator.html">
+<meta property="og:site_name" content="TaxCode x US Stocks x AI">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_TW">
+<style>
+  .calc-panel { background: #f0f3f7; border: 1px solid var(--line); border-radius: 8px; padding: 1.2rem 1.3rem; margin: 1.2rem 0; }
+  .calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: .9rem 1.1rem; }
+  .calc-field label { display: block; font-size: .85rem; font-weight: 700; color: var(--navy); margin-bottom: .25rem; }
+  .calc-field input { width: 100%; padding: .5rem .7rem; font-size: 1rem; border: 1px solid var(--line); border-radius: 6px; font-family: inherit; }
+  .calc-field input:focus { outline: 2px solid var(--gold); border-color: var(--gold); }
+  .calc-field .hint { font-size: .76rem; color: var(--muted); margin-top: .2rem; line-height: 1.5; }
+  .preset-row { margin-top: .35rem; display: flex; flex-wrap: wrap; gap: .35rem; }
+  .preset-row button { font-size: .78rem; padding: .15rem .55rem; border: 1px solid var(--line); background: #fff; border-radius: 4px; cursor: pointer; color: var(--navy); font-family: inherit; }
+  .preset-row button:hover { border-color: var(--gold); background: #faf6ee; }
+  .verdict { border-radius: 8px; padding: 1rem 1.2rem; margin: 1.2rem 0; font-size: 1rem; line-height: 1.8; border-left: 5px solid var(--gold); background: #faf6ee; }
+  .verdict.pay { border-left-color: var(--red); background: #fdf3f4; }
+  .verdict strong { color: var(--navy); }
+  .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .8rem; margin: 1rem 0; }
+  .kpi { background: var(--card); border: 1px solid var(--line); border-top: 4px solid var(--navy); border-radius: 8px; padding: .8rem 1rem; text-align: center; }
+  .kpi.total { border-top-color: var(--gold); }
+  .kpi .kpi-label { font-size: .78rem; color: var(--muted); }
+  .kpi .kpi-value { font-size: 1.25rem; font-weight: 700; color: var(--navy); margin-top: .15rem; white-space: nowrap; }
+  .kpi .kpi-sub { font-size: .74rem; color: #8a97a5; margin-top: .1rem; }
+  @media (max-width: 640px) { .kpi .kpi-value { font-size: 1.05rem; } }
+  .calc-checks { display: flex; flex-direction: column; gap: .4rem; margin: 0 0 .5rem; }
+  .calc-check { font-size: .88rem; color: var(--ink); cursor: pointer; display: flex; align-items: flex-start; gap: .45rem; }
+  .calc-check input { margin-top: .3rem; flex: none; }
+</style>
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script src="../../js/site.js" defer></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../index.html">TaxCode <span class="x">x</span> US Stocks <span class="x">x</span> AI</a>
+    <nav class="main-nav" id="main-nav">
+      <a href="../index.html">Home</a>
+      <a href="../services.html">Services</a>
+      <a href="../about.html">About</a>
+      <a href="../disclaimer.html">Disclaimer</a>
+    </nav>
+    <a class="lang-switch" href="../../tools/us-dividend-tax-calculator.html" hreflang="zh-Hant" lang="zh-Hant">中文</a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">☰</button>
+  </div>
+</header>
+
+<main>
+<article class="post">
+  <h1>US Dividend Tax Calculator: After the 30% US Withholding, How Much More Does Taiwan Collect?</h1>
+  <div class="post-meta">Jeff · 2026-07-04 · Category: Interactive Tool · Parameters: 2026 (ROC year 115) · Law checked 2026-07-04</div>
+
+  <p>For a Taiwan investor, tax on US dividends comes in two layers. On the US side, 30% is withheld at source (there is no US-Taiwan tax treaty, so a W-8BEN cannot reduce it). On the Taiwan side, the dividend is treated as overseas income and runs through Taiwan's alternative minimum tax (AMT) under the Income Basic Tax Act. This calculator works out both layers at once: enter your dividend amount and your same-year overseas property transaction gains or losses, and it returns the US withholding, the Taiwan top-up, the total tax, and how to claim the credit with the Form 1042-S your broker mails you. It also spells out the three principles people most often get wrong: losses cannot offset dividends, only realized income is taxed, and remittance is not the taxable event.</p>
+
+  <h2>Enter your scenario</h2>
+
+  <div class="calc-panel">
+    <div class="calc-grid">
+      <div class="calc-field">
+        <label for="inDividend">US dividend amount (USD, full year)</label>
+        <input type="number" id="inDividend" value="20000" min="0" step="1000" inputmode="decimal">
+        <div class="hint">Total ordinary dividend under 1042-S income code 06 (gross, before withholding)</div>
+      </div>
+      <div class="calc-field">
+        <label for="inFx">Exchange rate (USD/TWD)</label>
+        <input type="number" id="inFx" value="30.0" min="1" step="0.1" inputmode="decimal">
+        <div class="hint">Filing practice uses the payment-date rate or the tax authority's announced annual average rate; adjust here as you like</div>
+      </div>
+      <div class="calc-field">
+        <label for="inPropGain">Overseas property transaction gain (TWD, realized)</label>
+        <input type="number" id="inPropGain" value="0" min="0" step="100000" inputmode="decimal">
+        <div class="hint">Same-year realized gains from selling or redeeming overseas securities and funds (paper gains do not count)</div>
+      </div>
+      <div class="calc-field">
+        <label for="inPropLoss">Overseas property transaction loss (TWD, realized)</label>
+        <input type="number" id="inPropLoss" value="0" min="0" step="100000" inputmode="decimal">
+        <div class="hint">Offsets same-year overseas property transaction gains only; cannot offset dividends or interest, and cannot carry forward</div>
+      </div>
+      <div class="calc-field">
+        <label for="inOther">Other overseas income (TWD, full year, whole household)</label>
+        <input type="number" id="inOther" value="0" min="0" step="100000" inputmode="decimal">
+        <div class="hint">Overseas interest, offshore fund distributions, and other categories (assumed not taxed abroad)</div>
+      </div>
+      <div class="calc-field">
+        <label for="inNet">Net consolidated income (TWD, whole household)</label>
+        <input type="number" id="inNet" value="1000000" min="0" step="100000" inputmode="decimal">
+        <div class="hint">Total income minus exemptions and deductions; see last year's tax return</div>
+        <div class="preset-row">
+          <button type="button" data-net="500000">Retiree NT$500K</button>
+          <button type="button" data-net="1000000">Employee NT$1M</button>
+          <button type="button" data-net="2000000">Dual income NT$2M</button>
+          <button type="button" data-net="4000000">High earner NT$4M</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="calc-checks">
+    <label class="calc-check"><input type="checkbox" id="chkW8" checked> I am a Taiwan tax resident, not a US citizen or green card holder (W-8BEN filed)</label>
+    <label class="calc-check"><input type="checkbox" id="chkQII"> My distributions include non-ordinary-dividend components such as bond interest (QII) or return of capital (ROC)</label>
+  </div>
+
+  <div class="callout warn" id="boxW8" style="display:none;"><strong>Identity note:</strong> This calculator only applies to nonresident aliens (NRA). US citizens, green card holders, and US tax residents are taxed on worldwide income; the US 30% withholding and the Taiwan AMT calculation here do not apply to them. Consult an accountant familiar with US tax (Form 1040).</div>
+
+  <div class="callout" id="boxQII" style="display:none;">This tool assumes the amount you enter is <strong>entirely ordinary dividend (30% withholding)</strong>. For the interest-type distributions of bond ETFs (QII), the return of capital (ROC) from REITs and high-yield ETFs, and capital gain distributions from funds, US withholding ranges anywhere from 30% down to 0%. Use the <strong>1042-S your broker sends to break out the actual withholding</strong>, and enter only the portion subject to 30% withholding in the "US dividend amount" field above to avoid overstating your tax.</div>
+
+  <noscript><div class="callout warn">This calculator needs JavaScript enabled to run. Rules in brief: US dividends are withheld at 30%; on the Taiwan side, once whole-household overseas income reaches NT$1M the full amount counts toward the basic income amount, then (basic income amount − NT$7.5M) × 20% is compared with the regular income tax and only the difference is topped up, with the US tax already withheld available as a credit.</div></noscript>
+
+  <div id="verdict" class="verdict" aria-live="polite"></div>
+
+  <div class="kpi-row" aria-live="polite">
+    <div class="kpi"><div class="kpi-label">US withholding 30%</div><div class="kpi-value" id="kpiUs">–</div><div class="kpi-sub" id="kpiUsSub"></div></div>
+    <div class="kpi"><div class="kpi-label">Taiwan top-up</div><div class="kpi-value" id="kpiTw">–</div><div class="kpi-sub">difference after credit</div></div>
+    <div class="kpi total"><div class="kpi-label">Total tax (US + Taiwan)</div><div class="kpi-value" id="kpiTotal">–</div><div class="kpi-sub" id="kpiTotalSub"></div></div>
+    <div class="kpi"><div class="kpi-label">Effective rate</div><div class="kpi-value" id="kpiRate">–</div><div class="kpi-sub">total tax ÷ overseas income</div></div>
+  </div>
+
+  <h2>Calculation detail</h2>
+  <table>
+    <thead><tr><th>Step</th><th>Item</th><th style="text-align:right;">Amount</th></tr></thead>
+    <tbody id="detailBody"></tbody>
+  </table>
+
+  <div class="callout" id="filingNote" style="display:none;"><strong>Filing note:</strong> Your basic income amount already exceeds NT$7.5M. <strong>Even if the amount payable is 0, you must still complete the individual basic tax return.</strong> No tax due does not mean no filing due; underreporting means back tax plus a penalty.</div>
+
+  <h2>Scenario comparison: total tax at different dividend levels</h2>
+  <p>Holding your current exchange rate, property transaction gains and losses, other overseas income, and net consolidated income fixed, here is how the two layers of tax change as the dividend scales up:</p>
+  <table>
+    <thead><tr><th>Dividend (USD)</th><th>Total overseas income (TWD)</th><th>US withholding (TWD)</th><th>Taiwan top-up (TWD)</th><th>Total tax (TWD)</th><th>Share of overseas income</th></tr></thead>
+    <tbody id="scenarioBody"></tbody>
+  </table>
+
+  <h2>Reading the result: three rules decide everything</h2>
+  <ol>
+    <li><strong>NT$1M is a cliff:</strong> if whole-household overseas income for the year does not reach NT$1M, Taiwan counts none of it; once it reaches NT$1M, the full amount counts (not just the portion above the line). But the US 30% is withheld at source and has nothing to do with this threshold.</li>
+    <li><strong>The NT$7.5M comes off the basic income amount:</strong> this tool simplifies it to "basic income amount = net consolidated income + counted overseas income." Note the common misunderstanding here: the full basic income amount also includes other categories, such as the portion of death benefits exceeding NT$30M (currently adjusted to NT$37.4M) on life and annuity policies where the beneficiary is not the policyholder, gains on unlisted share transactions, and non-cash donations (see "Three things this tool does not cover" below). The higher your salary, the more of the NT$7.5M of room your domestic income eats up. Basic tax = (basic income amount − NT$7.5M) × 20%, then compared against the regular consolidated income tax, with only the difference topped up.</li>
+    <li><strong>The US 30% can be credited:</strong> because 30% is higher than Taiwan's 20% rate, <strong>a pure-dividend investor tops up 0 in the vast majority of scenarios, and the total tax is simply the US 30%</strong>. What Taiwan really bites on is overseas income that was never taxed abroad, most typically realized property transaction gains (the US does not tax nonresidents' securities capital gains). Try entering a few million in the "Overseas property transaction gain" field above and watch the Taiwan top-up appear.</li>
+  </ol>
+
+  <div class="callout">Counterintuitive but important: the "excess withholding" on US dividends is useful. The credit cap is measured against the incremental basic tax from all overseas income, so the extra 30% the US withheld can also absorb the basic tax generated by same-year overseas property transaction gains. When dividends and property transaction gains are realized in the same filing household and the same year, the credit works most efficiently.</div>
+
+  <h2>The three tax principles people most often get wrong</h2>
+  <ol>
+    <li><strong>Losses cannot offset dividends, and cannot be carried to next year:</strong> overseas property transaction losses can only offset "same-year" overseas property transaction gains, an offset within the same category. If you lose NT$3M on a stock sale and collect NT$3M in dividends the same year, your overseas income is still NT$3M and that loss is forfeited entirely. A big loss this year and a big gain next year are each counted on their own. So one of the few legal planning moves for an overseas position is to arrange gains and losses to be realized in the same year and offset each other; both sides must be computed on actual cost, so keep your statements.</li>
+    <li><strong>Only "realized" income is taxed; paper gains are not:</strong> the Taiwan side recognizes realized income. Hold without selling and no matter how much the position rises on paper it is 0; only a sale, a redemption, or an FX gain realized on conversion enters overseas income. A reminder in the other direction: holding for many years and then selling all at once concentrates many years of gains into a single year, and it is easy to blow past both the NT$1M and the NT$7.5M thresholds in one go, so spreading realizations across years is basic practice. US dividends are the opposite: they are withheld 30% the moment they are paid, with no choice about whether to realize.</li>
+    <li><strong>Remittance is not the taxable event (people get this wrong in both directions):</strong> "if I leave the money in a US brokerage account and do not remit it to Taiwan, I do not have to report it" is wrong. Overseas income turns on the year of realization, not where the money sits; gains parked in an overseas account still count, and the tax authority's visibility keeps improving year by year through channels such as sub-brokerage filing data and the automatic exchange of financial account information (CRS, which covers non-US accounts). The reverse, "bringing the money home to Taiwan will get it taxed," is also wrong: the act of remitting is not itself income; what you bring home is your principal plus income already realized in prior years (which should have been reported in the year it arose), and it is not taxed again just because you remitted it. What you should do is keep your statements and your filing records over the years, so that on a large FX settlement you can explain the nature of the funds to the bank and the tax authority.</li>
+  </ol>
+
+  <h2>How to claim the US withholding as a credit back in Taiwan: five steps</h2>
+  <ol>
+    <li><strong>Keep the Form 1042-S:</strong> US brokers mail it by March 15 each year (most can be downloaded from the broker's website). Confirm income code 06 (dividends) and the amount in the withholding field. Sub-brokerage investors should ask their Taiwan broker for the relevant withholding certificate.</li>
+    <li><strong>At the May filing, complete the individual basic tax return:</strong> enter your overseas income into the basic income amount, compute the basic tax, and compare it with the regular consolidated income tax.</li>
+    <li><strong>Enter the US withholding in the "foreign tax credit" field:</strong> converted to New Taiwan dollars at the payment-date rate or the annual average rate.</li>
+    <li><strong>Attach the 1042-S as proof of tax paid in the source country:</strong> the tax authority may require additional documents where necessary.</li>
+    <li><strong>Know the two limits:</strong> the credit cannot exceed "the incremental basic tax caused by adding the overseas income," and <strong>any excess is not refunded</strong> (Taiwan will not refund what the US over-withheld; whether you can get a refund from the US is a separate question, and for an ordinary retail investor a correct withholding leaves no room for a refund).</li>
+  </ol>
+
+  <h2>Three things this tool does not cover</h2>
+  <ul>
+    <li><strong>Distribution composition:</strong> this tool assumes the amount you enter is entirely ordinary dividend (30% withholding). For the interest-type distributions of bond ETFs (QII), the return of capital (ROC) from REITs and high-yield ETFs, and capital gain distributions from funds, US withholding ranges from 30% down to 0%; for your actual tax, break it out from the 1042-S.</li>
+    <li><strong>Progress on a US-Taiwan tax arrangement:</strong> the United States-Taiwan Expedited Double-Tax Relief Act in the US Congress (the House passed H.R. 33 on 2025-01-15; the Senate's S. 199 had not been voted on as of 2026-07-04) would, if it becomes law and takes effect on a reciprocal basis, cut individual dividend withholding to 15%. Until then, 30% is the reality; do not plan your investment math around 15% before it is law.</li>
+    <li><strong>Special items:</strong> separately taxed domestic dividends, certain insurance payouts, gains on unlisted share transactions, CFC income, and other items counted in the basic income amount all change the calculation and are not built into this tool. Also keep in mind the rule that where you cannot substantiate the cost of overseas securities, income is deemed at 20% of the sale proceeds.</li>
+  </ul>
+
+  <p>For a fuller picture of the framework, pair this with two pieces: <a href="../articles/overseas-income-750-myth.html">Is overseas income under NT$7.5M tax-free? Five myths, dismantled</a> and <a href="../articles/tsm-adr-tax.html">the TSM ADR vs 2330 tax comparison</a> (the ADR's 21% is Taiwan withholding, not foreign tax, so do not confuse the two).</p>
+
+  <div class="assumption">Assumptions: this tool is based on the ordinary case of a Taiwan tax resident individual (not a US person, W-8BEN filed, present in the US for fewer than 183 days in the year) receiving US-source dividends through a US broker or a Taiwan sub-brokerage account. The Taiwan side uses 2026 (ROC year 115) parameters: a basic income deduction of NT$7.5M, a 20% rate, an overseas income inclusion threshold of NT$1M (whole household), and consolidated income tax bracket cutoffs of NT$610,000 / NT$1.38M / NT$2.77M / NT$5.19M (quick-deduction amounts of NT$42,700 / NT$153,100 / NT$430,100 / NT$949,100). Overseas income is recognized on a "realized" basis; property transaction losses are limited to the same year, the same category, and actual-cost computation. Property transaction gains and other overseas income are assumed not taxed abroad (the US does not tax nonresidents' securities capital gains). The regular income tax is a bracket-based estimate that does not factor in investment credits, home-repurchase tax refunds, or other individual adjustments. All calculations run entirely in your browser; this site collects and transmits none of the numbers you enter. For your own situation, consult a qualified tax professional.</div>
+
+  <div class="sources">
+    <h4>Sources</h4>
+    <ul>
+      <li>IRC §871(a)(1), §1441 (30% withholding at source on US-source dividends paid to nonresident aliens); IRS Form 1042-S and its instructions (income code 06, March 15 mailing deadline)</li>
+      <li>Income Basic Tax Act §3, §5 (filing threshold), §12 (NT$1M overseas income inclusion threshold), §13 (NT$7.5M deduction, 20% rate, foreign tax credit and its cap)</li>
+      <li>Ministry of Finance eTax portal: rules on assessing the basic tax on individual overseas income (realized-basis recognition; overseas property transaction losses limited to same-year overseas property transaction gains; where cost cannot be shown, income is computed at 20% of sale proceeds)</li>
+      <li>Ministry of Finance ruling (Tai-Cai-Shui No. 11204674390, 2023-11-23): from 2024 (ROC year 113) the individual basic income deduction rises to NT$7.5M; confirmed unchanged for 2026 (ROC year 115) (announced 2025-11-27)</li>
+      <li>Ministry of Finance 2026 (ROC year 115) consolidated income tax bracket announcement (2025-11-27, adjusted for cumulative CPI rise of 4.13%): five brackets of 5% / 12% / 20% / 30% / 40%, with cutoffs of NT$610,000 / NT$1.38M / NT$2.77M / NT$5.19M</li>
+      <li>H.R. 33 (119th Congress, passed the House 2025-01-15), S. 199 (Senate version, not voted on as of 2026-07-04): United States-Taiwan Expedited Double-Tax Relief Act</li>
+      <li>IRS, United States Income Tax Treaties A to Z (Taiwan is not on the list); IRS Instructions for Form W-8BEN</li>
+      <li>Law checked: 2026-07-04</li>
+    </ul>
+  </div>
+
+  <div class="disclaimer-box">This tool is an educational, simplified estimate, not professional tax advice, and the results must not be used as the basis of a tax filing. For your own situation, consult a qualified tax professional. Full disclaimer <a href="../disclaimer.html">here</a>.</div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p><strong>TaxCode x US Stocks x AI</strong> | Jeff · <a href="../services.html">Work with me</a> · <a href="../disclaimer.html">Disclaimer</a> · <a href="../privacy.html">Privacy</a></p>
+    <p class="footer-disclaimer">© 2026 TaxCode x US Stocks x AI</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  // 2026 (ROC year 115) parameters, law checked 2026-07-04
+  var US_WHT_RATE = 0.30;          // IRC §871(a)(1)
+  var AMT_DEDUCTION = 7500000;     // basic income deduction
+  var AMT_RATE = 0.20;
+  var OVERSEAS_CLIFF = 1000000;    // overseas income inclusion threshold (whole household)
+  var BRACKETS = [                 // consolidated income tax quick calc: rate, quick-deduction amount
+    { max: 610000,   rate: 0.05, sub: 0 },
+    { max: 1380000,  rate: 0.12, sub: 42700 },
+    { max: 2770000,  rate: 0.20, sub: 153100 },
+    { max: 5190000,  rate: 0.30, sub: 430100 },
+    { max: Infinity, rate: 0.40, sub: 949100 }
+  ];
+
+  function regularTax(net) {
+    if (net <= 0) return 0;
+    for (var i = 0; i < BRACKETS.length; i++) {
+      if (net <= BRACKETS[i].max) return Math.max(0, Math.round(net * BRACKETS[i].rate - BRACKETS[i].sub));
+    }
+    return 0;
+  }
+
+  function calc(divUSD, fx, propGain, propLoss, otherOverseas, netIncome) {
+    var divTWD = Math.round(divUSD * fx);
+    var usWhtTWD = Math.round(divUSD * US_WHT_RATE * fx);
+    // overseas property transaction losses only offset "same-year" overseas property transaction gains; cannot offset dividends or interest, and cannot carry forward
+    var netProperty = Math.max(0, propGain - propLoss);
+    var wastedLoss = Math.max(0, propLoss - propGain);
+    var overseas = divTWD + netProperty + otherOverseas;
+    var included = overseas >= OVERSEAS_CLIFF ? overseas : 0;
+    var basicIncome = netIncome + included;
+    var basicTax = Math.max(0, Math.round((basicIncome - AMT_DEDUCTION) * AMT_RATE));
+    var regTax = regularTax(netIncome);
+    var gap = Math.max(0, basicTax - regTax);
+    // credit cap = incremental basic tax from adding overseas income; overseas income is the only item counted here, so the cap equals the full gap
+    var creditLimit = included > 0 ? gap : 0;
+    var credit = Math.min(usWhtTWD, creditLimit);
+    var twPayable = Math.max(0, gap - credit);
+    var total = usWhtTWD + twPayable;
+    return {
+      divTWD: divTWD, usWhtTWD: usWhtTWD, netProperty: netProperty, wastedLoss: wastedLoss,
+      overseas: overseas, included: included,
+      basicIncome: basicIncome, basicTax: basicTax, regTax: regTax, gap: gap,
+      creditLimit: creditLimit, credit: credit, twPayable: twPayable, total: total,
+      // filing obligation two conditions: overseas income reaches NT$1M and is counted "and" basic income amount exceeds NT$7.5M (no other counted items here)
+      mustFile: included > 0 && basicIncome > AMT_DEDUCTION,
+      effRate: overseas > 0 ? total / overseas : (divUSD > 0 ? US_WHT_RATE : 0)
+    };
+  }
+
+  function nt(n) { return 'NT$' + Math.round(n).toLocaleString('zh-TW'); }
+  function usd(n) { return 'USD ' + Math.round(n).toLocaleString('en-US'); }
+  function pct(x) { return (x * 100).toFixed(1) + '%'; }
+
+  var hasTracked = false;
+
+  function readInputs() {
+    var fxRaw = parseFloat(document.getElementById('inFx').value);
+    return {
+      divUSD: Math.max(0, parseFloat(document.getElementById('inDividend').value) || 0),
+      fx: isNaN(fxRaw) ? 30 : Math.max(1, fxRaw),
+      propGain: Math.max(0, parseFloat(document.getElementById('inPropGain').value) || 0),
+      propLoss: Math.max(0, parseFloat(document.getElementById('inPropLoss').value) || 0),
+      other: Math.max(0, parseFloat(document.getElementById('inOther').value) || 0),
+      net: Math.max(0, parseFloat(document.getElementById('inNet').value) || 0)
+    };
+  }
+
+  function render() {
+    var inp = readInputs();
+    var r = calc(inp.divUSD, inp.fx, inp.propGain, inp.propLoss, inp.other, inp.net);
+
+    // KPI cards
+    document.getElementById('kpiUs').textContent = nt(r.usWhtTWD);
+    document.getElementById('kpiUsSub').textContent = usd(inp.divUSD * US_WHT_RATE) + ', withheld at source';
+    document.getElementById('kpiTw').textContent = nt(r.twPayable);
+    document.getElementById('kpiTotal').textContent = nt(r.total);
+    document.getElementById('kpiTotalSub').textContent = r.total > 0
+      ? 'US ' + nt(r.usWhtTWD) + ' + Taiwan ' + nt(r.twPayable)
+      : '';
+    document.getElementById('kpiRate').textContent = r.overseas > 0 || inp.divUSD > 0 ? pct(r.effRate) : '–';
+
+    // verdict line
+    var v = document.getElementById('verdict');
+    v.classList.remove('pay');
+    if (inp.divUSD <= 0 && r.overseas <= 0 && r.wastedLoss <= 0) {
+      v.innerHTML = 'Enter a dividend amount to start.';
+    } else if (r.included === 0) {
+      v.innerHTML = (r.overseas > 0
+        ? 'Household overseas income of <strong>' + nt(r.overseas) + '</strong> is below the NT$1M inclusion threshold: Taiwan counts none of it and no filing is required.' +
+          (r.usWhtTWD > 0
+            ? ' Your total tax is the <strong>' + nt(r.usWhtTWD) + '</strong> the US already withheld at source (30% of the dividend). Note: the threshold only governs the Taiwan side; the US 30% is withheld regardless of how small the amount is.'
+            : ' This scenario has no US dividend withholding; total tax is <strong>NT$0</strong>.')
+        : 'No overseas income counts this year: no Taiwan tax, and no filing obligation.');
+    } else if (r.twPayable === 0) {
+      v.innerHTML = 'Overseas income of <strong>' + nt(r.overseas) + '</strong> is counted, but ' +
+        (r.gap === 0
+          ? 'the basic tax (' + nt(r.basicTax) + ') does not exceed the regular income tax (' + nt(r.regTax) + '), so '
+          : 'the basic tax gap of ' + nt(r.gap) + ' is fully absorbed by the ' + nt(r.usWhtTWD) + ' the US already withheld, so ') +
+        '<strong>Taiwan collects 0</strong>.' +
+        (r.usWhtTWD > 0 ? ' Total tax = the US withholding of <strong>' + nt(r.usWhtTWD) + '</strong>.' : ' Total tax <strong>NT$0</strong>.') +
+        (r.mustFile ? '<br>But your basic income amount exceeds NT$7.5M, so <strong>you still must file</strong> (see the note below).' : '');
+    } else {
+      v.classList.add('pay');
+      v.innerHTML = (r.usWhtTWD > 0
+        ? 'The US withholds <strong>' + nt(r.usWhtTWD) + '</strong> first, and after the credit Taiwan still collects <strong>' + nt(r.twPayable) + '</strong>' +
+          ' (gap of ' + nt(r.gap) + ', of which ' + nt(r.credit) + ' was absorbed by the US withholding).'
+        : 'Taiwan collects <strong>' + nt(r.twPayable) + '</strong> (basic tax gap of ' + nt(r.gap) + '; this scenario has no foreign tax paid to credit).') +
+        ' Total tax <strong>' + nt(r.total) + '</strong>, about ' + pct(r.effRate) + ' of overseas income.' +
+        ' A top-up usually means part of your overseas income was never taxed abroad (typically capital gains).';
+    }
+    if (r.wastedLoss > 0) {
+      v.innerHTML += '<br><strong>Loss warning:</strong> ' + nt(r.wastedLoss) + ' of overseas capital losses cannot be used. Losses only offset same-year overseas property transaction gains; they cannot offset dividends or interest, and cannot carry forward.';
+    }
+
+    // calculation detail
+    var rows = [
+      ['1', 'US dividend (gross)', usd(inp.divUSD) + ' = ' + nt(r.divTWD)],
+      ['2', 'US withholding at source, 30%', nt(r.usWhtTWD)],
+      ['3', 'Net property transaction gain = gains − losses (same-year, same-class offset, capped at gains)', nt(inp.propGain) + ' − ' + nt(Math.min(inp.propLoss, inp.propGain)) + ' = ' + nt(r.netProperty) + (r.wastedLoss > 0 ? ' (excess: see 3b)' : '')],
+      ['4', 'Household overseas income = dividends + net property gain + other', nt(r.overseas)],
+      ['5', 'Reaches the NT$1M inclusion threshold?', r.included > 0 ? 'Yes, counted in full: ' + nt(r.included) : 'No, counted as 0'],
+      ['6', 'Basic income amount = net consolidated income + counted overseas income', nt(inp.net) + ' + ' + nt(r.included) + ' = ' + nt(r.basicIncome)],
+      ['7', 'Basic tax = (basic income amount − NT$7.5M) × 20%', nt(r.basicTax)],
+      ['8', 'Regular income tax (estimated, 2026 brackets)', nt(r.regTax)],
+      ['9', 'Gap = basic tax − regular income tax (floored at 0)', nt(r.gap)],
+      ['10', 'Foreign tax credit = min(US withholding, credit cap ' + nt(r.creditLimit) + ')', nt(r.credit)],
+      ['11', 'Taiwan top-up = gap − credit', nt(r.twPayable)],
+      ['12', 'Total tax = US withholding + Taiwan top-up', nt(r.total)]
+    ];
+    if (r.wastedLoss > 0) {
+      rows.splice(3, 0, ['3b', 'Unusable loss (cannot offset dividends or interest, cannot carry forward; forfeited)', nt(r.wastedLoss)]);
+    }
+    document.getElementById('detailBody').innerHTML = rows.map(function (x) {
+      return '<tr><td>' + x[0] + '</td><td>' + x[1] + '</td><td style="text-align:right;white-space:nowrap;">' + x[2] + '</td></tr>';
+    }).join('');
+
+    document.getElementById('filingNote').style.display = r.mustFile ? '' : 'none';
+
+    // scenario comparison table
+    var levels = [10000, 30000, 50000, 100000, 300000, 1000000];
+    document.getElementById('scenarioBody').innerHTML = levels.map(function (d) {
+      var s = calc(d, inp.fx, inp.propGain, inp.propLoss, inp.other, inp.net);
+      return '<tr><td>' + d.toLocaleString('en-US') + '</td><td>' + nt(s.overseas) + (s.included === 0 ? ' (not counted)' : '') + '</td><td>' +
+        nt(s.usWhtTWD) + '</td><td>' + nt(s.twPayable) + '</td><td><strong>' + nt(s.total) + '</strong></td><td>' + pct(s.effRate) + '</td></tr>';
+    }).join('');
+
+  }
+
+  // GA event: fired once on the user's first real interaction, not on page load
+  function trackOnce() {
+    if (!hasTracked && typeof gtag === 'function') {
+      gtag('event', 'calculator_use', { calculator: 'us_dividend_tax' });
+      hasTracked = true;
+    }
+  }
+
+  ['inDividend', 'inFx', 'inPropGain', 'inPropLoss', 'inOther', 'inNet'].forEach(function (id) {
+    document.getElementById(id).addEventListener('input', function () { trackOnce(); render(); });
+  });
+  document.querySelectorAll('.preset-row button').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.getElementById('inNet').value = btn.getAttribute('data-net');
+      trackOnce();
+      render();
+    });
+  });
+
+  function syncChecks() {
+    document.getElementById('boxW8').style.display = document.getElementById('chkW8').checked ? 'none' : '';
+    document.getElementById('boxQII').style.display = document.getElementById('chkQII').checked ? '' : 'none';
+  }
+  document.getElementById('chkW8').addEventListener('change', syncChecks);
+  document.getElementById('chkQII').addEventListener('change', syncChecks);
+  syncChecks();
+
+  render();
+})();
+</script>
+</body>
+</html>
