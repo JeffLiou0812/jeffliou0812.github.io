@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4182088023942573" crossorigin="anonymous"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TRNEWFX3G6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TRNEWFX3G6');
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How I Built an AI-Powered Investment Research Pipeline: From Filings to Conclusions | TaxCode x US Stocks x AI</title>
+<meta name="description" content="Python pulls the data, AI deep-reads the filings, and multi-source cross-checks guard against hallucination. A research workflow in daily use, tools and rules fully public.">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="canonical" href="https://taxcodeusstocks.com/en/articles/ai-research-workflow.html">
+<link rel="alternate" hreflang="zh-Hant" href="https://taxcodeusstocks.com/articles/ai-research-workflow.html">
+<link rel="alternate" hreflang="en" href="https://taxcodeusstocks.com/en/articles/ai-research-workflow.html">
+<link rel="alternate" hreflang="x-default" href="https://taxcodeusstocks.com/articles/ai-research-workflow.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How I Built an AI-Powered Investment Research Pipeline: From Filings to Conclusions | TaxCode x US Stocks x AI">
+<meta property="og:description" content="Python pulls the data, AI deep-reads the filings, and multi-source cross-checks guard against hallucination. A research workflow in daily use, tools and rules fully public.">
+<meta property="og:url" content="https://taxcodeusstocks.com/en/articles/ai-research-workflow.html">
+<meta property="og:site_name" content="TaxCode x US Stocks x AI">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_TW">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script src="../../js/site.js" defer></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How I Built an AI-Powered Investment Research Pipeline: From Filings to Conclusions",
+  "description": "Python pulls the data, AI deep-reads the filings, and multi-source cross-checks guard against hallucination. A research workflow in daily use, tools and rules fully public.",
+  "inLanguage": "en",
+  "author": {"@type": "Person", "name": "Jeff", "url": "https://taxcodeusstocks.com/en/about.html"},
+  "publisher": {"@type": "Organization", "name": "TaxCode x US Stocks x AI", "logo": {"@type": "ImageObject", "url": "https://taxcodeusstocks.com/favicon-512.png"}},
+  "datePublished": "2026-07-04",
+  "dateModified": "2026-07-05",
+  "mainEntityOfPage": "https://taxcodeusstocks.com/en/articles/ai-research-workflow.html",
+  "image": "https://taxcodeusstocks.com/favicon-512.png"
+}
+</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../index.html">TaxCode <span class="x">x</span> US Stocks <span class="x">x</span> AI</a>
+    <nav class="main-nav" id="main-nav">
+      <a href="../index.html">Home</a>
+      <a href="../services.html">Services</a>
+      <a href="../about.html">About</a>
+      <a href="../resources.html">Resources</a>
+      <a href="../disclaimer.html">Disclaimer</a>
+    </nav>
+    <a class="lang-switch" href="../../articles/ai-research-workflow.html" hreflang="zh-Hant" lang="zh-Hant">中文</a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">☰</button>
+  </div>
+</header>
+
+<main>
+<article class="post">
+  <h1>How I Built an AI-Powered Investment Research Pipeline: From Filings to Conclusions</h1>
+  <div class="post-meta">Jeff · Published 2026-07-04 · Updated 2026-07-05 · Category: AI Automation</div>
+
+  <p>Doing investment research alone, there is never enough time: filings run hundreds of pages, then the earnings call transcripts, the 13F filings, the news flow. Over the past two years I rebuilt my entire research process into one pipeline where humans own judgment and machines own repetition. This post makes the whole architecture public, along with something more important than the tools: the verification rules that keep AI hallucination out.</p>
+
+  <h2>The overall architecture: five stages</h2>
+
+  <table>
+    <tr><th>Stage</th><th>What it does</th><th>Tools</th><th>The human's role</th></tr>
+    <tr><td>1. Data collection</td><td>Prices, financial data, 13F, raw filing text</td><td>Python (yfinance, SEC EDGAR API)</td><td>Set the watchlist</td></tr>
+    <tr><td>2. Document deep-reading</td><td>Extract the key points from 10-Ks, earnings call transcripts, and industry reports, and answer questions on them</td><td>Source-grounded AI Q&A tools</td><td>Design the questions, verify the citations</td></tr>
+    <tr><td>3. Cross-verification</td><td>Check every key number against the primary source, line by line</td><td>Verification checklist + multi-source comparison</td><td>Final gatekeeping (cannot be outsourced to AI)</td></tr>
+    <tr><td>4. Synthesis</td><td>Combine the data, the tax angle, and the industry read into conclusions</td><td>AI-assisted drafting</td><td>Judgment and the final stance (where the core value is)</td></tr>
+    <tr><td>5. Output & maintenance</td><td>Analysis reports, tracking dashboards, scheduled periodic updates</td><td>Automation scripts + scheduler</td><td>Review before publishing</td></tr>
+  </table>
+
+  <p>The principle is simple: AI handles volume, humans handle quality. Any number that directly feeds a conclusion gets a final human check against the primary source.</p>
+
+  <h2>Stage one: automating the data layer</h2>
+
+  <p>The foundation is two Python pipelines. The first pulls market and financial data (yfinance covers most of what you need). The second pulls the raw filings from SEC EDGAR (I wrote up my approach to 13F tracking <a href="diy-13f-tracker.html">here</a>). Both pipelines sit on a scheduler and run automatically on a set cadence, and both output a uniform format, so every downstream analysis references the same data source. That keeps the same number from showing up in three different versions across different documents.</p>
+
+  <h2>Stage two: AI deep-reading, but source-grounded</h2>
+
+  <p>To read a 10-K I use a source-grounded AI Q&A tool: feed in the filing PDF, and the AI can only answer from the uploaded document, with a citation attached to every answer. The difference from an open-ended chatbot is fundamental. An open chatbot fills the gaps from its training memory, and the filled-in numbers look convincing but may be three years old, or simply invented.</p>
+
+  <p>Question design is a method of its own. Instead of asking "how is this company doing financially," break it into a chain of questions that each have a definite answer: "what is this year's effective tax rate, what drove the change versus last year, what is management's guidance for next year's rate." The more verifiable the question, the more reliable the AI output.</p>
+
+  <h2>Stage three: the anti-hallucination rules (the soul of the whole process)</h2>
+
+  <p>The losses I have taken and the pitfalls I have watched others fall into distill down to four iron rules:</p>
+
+  <ol>
+    <li><strong>Prices and market caps always get real-time, multi-source verification.</strong> An AI-remembered price is treated as stale by default. Any price that goes into a report is cross-checked against at least two independent real-time sources.</li>
+    <li><strong>Any YoY or growth rate: verify numerator and denominator against the primary source.</strong> AI fails most often on rates of change: mismatched periods, mixed definitions. When you verify, require the calculation and the source reference for both numbers.</li>
+    <li><strong>Cited page numbers must be checked against the original document.</strong> The "page 24" an AI gives you may come from a document that is only 5 pages long. If citation verification fails, redo the whole conclusion.</li>
+    <li><strong>Find one error, sweep for every same-class error.</strong> Hallucination is not a point event. One wrong number means the same batch of output may contain more errors from the same source, so re-verify the whole batch instead of fixing one spot and moving on.</li>
+  </ol>
+
+  <div class="callout">The shared logic across all four: AI output is a first draft, verification is an independent process step, and the verification sources must be independent of the AI itself. Letting AI check itself is no check at all.</div>
+
+  <h2>Stages four and five: humans make the call, machines do the upkeep</h2>
+
+  <p>The verified data and deep-reading notes flow into the synthesis stage, where AI helps me draft the structure and list the counterarguments, but the buy/sell decision, position sizing, and risk tolerance are not outsourced. Tracking after publication runs on scheduled automation: earnings season auto-pulls the new 10-Q to trigger an update, 13F filing season auto-diffs the holdings changes, and price moves beyond a threshold trigger an alert.</p>
+
+  <h2>Where to start if you want to build your own</h2>
+
+  <ol>
+    <li>Automate your single biggest pain point first (for most people that is "periodically pulling data into a spreadsheet"); one yfinance script already makes a difference.</li>
+    <li>Add AI deep-reading second, but stand up the verification rules the same day. Do not wait until you get burned to add them.</li>
+    <li>The tools keep changing; the architecture mostly does not: data layer, deep-reading layer, verification layer, judgment layer, maintenance layer. Stack them in that order and each layer can be swapped and upgraded independently.</li>
+  </ol>
+
+  <div class="cta-box">
+    <h4>Thoughts after reading?</h4>
+    <p>Questions about this piece, or a different take? Email <a href="mailto:hello@taxcodeusstocks.com?subject=Re:%20ai-research-workflow">hello@taxcodeusstocks.com</a>.</p>
+  </div>
+
+  <div class="sources">
+    <h4>Notes</h4>
+    <ul>
+      <li>The workflow described here is the author's actual research architecture; the tool chain keeps evolving as needs change</li>
+      <li>Nothing here amounts to an investment conclusion about any specific security</li>
+    </ul>
+  </div>
+
+  <div class="related">
+    <h4>Related reading</h4>
+    <ul>
+      <li><a href="diy-13f-tracker.html">Build Your Own 13F Tracker: Free Automation with Python + SEC EDGAR</a></li>
+      <li><a href="apple-etr.html">Apple's Tax Code, Decoded: ETR Spiked from 14.7% to 24.1%, Then Settled at 15.6%. What Happened?</a></li>
+      <li><a href="irish-etf-pillar-two.html">Will the 15% Global Minimum Tax Hit Your Irish-Domiciled ETF?</a></li>
+    </ul>
+  </div>
+
+  <div class="disclaimer-box">This article is educational content and personal experience, not investment advice. AI tool output requires independent verification, and users bear responsibility for checking it themselves. Full disclaimer <a href="../disclaimer.html">here</a>.</div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p><strong>TaxCode x US Stocks x AI</strong> | Jeff · <a href="../services.html">Work with me</a> · <a href="../disclaimer.html">Disclaimer</a> · <a href="../privacy.html">Privacy</a></p>
+    <p class="footer-disclaimer">© 2026 TaxCode x US Stocks x AI</p>
+  </div>
+</footer>
+
+</body>
+</html>
