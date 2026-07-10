@@ -52,7 +52,7 @@
   }
  },
  "datePublished": "2026-07-04",
- "dateModified": "2026-07-05",
+ "dateModified": "2026-07-10",
  "mainEntityOfPage": "https://taxcodeusstocks.com/articles/diy-13f-tracker.html",
  "image": "https://taxcodeusstocks.com/favicon-512.png"
 }
@@ -78,26 +78,26 @@
 <main>
 <article class="post">
   <h1>散戶版 13F 追蹤系統：用 Python + SEC EDGAR 免費自動化</h1>
-  <div class="post-meta">傑夫哥 · 發布 2026-07-04 · 更新 2026-07-05 · 分類：AI x 美股 · 程式碼以 Python 3.13 測試</div>
+  <div class="post-meta">傑夫哥 · 發布 2026-07-04 · 更新 2026-07-10 · 分類：AI x 美股 · 程式碼以 Python 3.13 測試</div>
 
-  <p>想知道 Buffett 上季加碼了什麼、Burry 又重壓了什麼，多數人用 Whalewisdom（月費 USD 25）或免費但更新慢的 Dataroma。其實這些網站的資料源都是同一個：SEC EDGAR，公開、免費、有 API。這篇教你直接從源頭抓，順便講清楚 13F 這個數據的正確用法與限制。</p>
+  <p>想知道 Buffett 上季加碼了什麼、Burry 又重壓了什麼，多數人用 Whalewisdom（年繳 USD 300，折合月費 USD 25）或免費但更新慢的 Dataroma。其實這些網站的資料源都是同一個：SEC EDGAR，公開、免費、有 API。這篇教你直接從源頭抓，順便講清楚 13F 這個數據的正確用法與限制。</p>
 
   <h2>13F 是什麼</h2>
 
   <ul>
-    <li><strong>誰要申報</strong>：管理美股部位超過 USD 100M 的機構投資人</li>
-    <li><strong>報什麼</strong>：多頭部位（long only），選擇權與空頭基本看不到</li>
+    <li><strong>誰要申報</strong>：管理美股部位達 USD 100M 的機構投資人（以任一月份最後交易日市值計，達標即須申報）</li>
+    <li><strong>報什麼</strong>：多頭部位，含買進的 put/call 選擇權（表上會標 PUT 或 CALL）；空頭部位看不到</li>
     <li><strong>頻率</strong>：每季，季末後 45 天內申報</li>
     <li><strong>格式</strong>：XML，機器可讀，這就是自動化的機會</li>
   </ul>
 
   <h2>先講限制，再講方法</h2>
 
-  <p>13F 有三個結構性限制，不先弄懂就用，比不用還危險：</p>
+  <p>13F 有三個結構性限制，必須先搞懂：</p>
   <ol>
-    <li><strong>45 天延遲</strong>：你看到的是季末快照，機構現在可能已反向操作。</li>
-    <li><strong>只有 long</strong>：對沖基金可能同時做多做空配對交易，只看 long 會誤判方向。</li>
-    <li><strong>部位規模語意不同</strong>：USD 10M 對 Berkshire 是零錢，對小型基金是重押。看變動比看存量有意義，看佔組合比重比看金額有意義。</li>
+    <li><strong>45 天延遲</strong>：你看到的是季末的部位，機構現在可能已經反向操作。</li>
+    <li><strong>沒有空頭</strong>：對沖基金常做多做空配對交易，空頭那一隻腳 13F 上看不到，只看多頭會誤判方向。反倒是買進的 put 看得到（會標 PUT），Burry 那些出名的看空部位，市場就是從 13F 的 PUT 欄位讀出來的。</li>
+    <li><strong>部位規模語意不同</strong>：USD 10M 對 Berkshire 是小錢，對小型基金是重押。看變動比看存量有意義，看佔組合比重比看金額有意義。</li>
   </ol>
 
   <h2>核心流程：四步驟</h2>
@@ -141,7 +141,7 @@ for it in root.findall(".//ns:infoTable", ns):
   <table>
     <tr><th>地雷</th><th>後果</th><th>解法</th></tr>
     <tr><td>沒設 User-Agent</td><td>直接被 SEC 拒絕</td><td>Header 填「姓名 + email」</td></tr>
-    <tr><td>請求太快</td><td>超過 10 req/sec 會被封 24 小時</td><td>加 rate limiting，睡 0.15 秒再抓下一筆</td></tr>
+    <tr><td>請求太快</td><td>超過 10 req/sec 會被暫時封鎖（SEC 官方說法是 brief period，降回限速以下才恢復）</td><td>加 rate limiting，睡 0.15 秒再抓下一筆</td></tr>
     <tr><td>value 單位搞錯</td><td>2023 年前申報以千美元為單位，之後改為美元。跨年度比對時混用，數字差一千倍</td><td>依申報期間判斷單位再正規化</td></tr>
     <tr><td>只比對最新兩季</td><td>錯過建倉趨勢（連續三季加碼比單季加碼訊號強）</td><td>至少保留四到八季的歷史</td></tr>
   </table>
