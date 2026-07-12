@@ -53,6 +53,7 @@
     <a class="brand" href="../index.html">TaxCode <span class="x">x</span> US Stocks <span class="x">x</span> AI</a>
     <nav class="main-nav" id="main-nav">
       <a href="../index.html">Home</a>
+      <a href="../index.html#articles">Articles</a>
       <a href="../services.html">Services</a>
       <a href="../about.html">About</a>
       <a href="../resources.html">Resources</a>
@@ -66,7 +67,7 @@
 <main>
 <article class="post">
   <h1>Build Your Own 13F Tracker: Free Automation with Python + SEC EDGAR</h1>
-  <div class="post-meta">Jeff · Published 2026-07-04 · Updated 2026-07-10 · Category: AI x US Stocks · Code tested on Python 3.13</div>
+  <div class="post-meta"><a href="../about.html" rel="author">Jeff</a> · Published 2026-07-04 · Updated 2026-07-10 · Category: AI x US Stocks · Code tested on Python 3.13</div>
 
   <p>Want to know what Buffett added last quarter, or what Burry loaded up on? Most people reach for Whalewisdom (USD 300 per year, roughly USD 25 per month) or the free but slower-to-update Dataroma. But these sites all draw on the same source: SEC EDGAR, which is public, free, and has an API. This piece shows you how to pull straight from the source, and along the way spells out how to read 13F data correctly and where its limits lie.</p>
 
@@ -148,8 +149,8 @@ for it in root.findall(".//ns:infoTable", ns):
   <div class="sources">
     <h4>Sources</h4>
     <ul>
-      <li>SEC EDGAR full-text search and submissions API (data.sec.gov)</li>
-      <li>SEC Form 13F official instructions and XML technical specification</li>
+      <li><a href="https://www.sec.gov/edgar/search/" target="_blank" rel="noopener">SEC EDGAR full-text search<span class="sr-only"> (opens in new tab)</span></a> and submissions API (data.sec.gov)</li>
+      <li><a href="https://www.sec.gov/rules-regulations/staff-guidance/division-investment-management-frequently-asked-questions/frequently-asked-questions-about-form-13f" target="_blank" rel="noopener">SEC Form 13F official instructions<span class="sr-only"> (opens in new tab)</span></a> and XML technical specification</li>
       <li>The code is a simplified version of what the author actually runs, tested on Python 3.13</li>
     </ul>
   </div>

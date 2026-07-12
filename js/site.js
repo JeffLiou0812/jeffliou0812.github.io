@@ -15,6 +15,7 @@
   var IS_EN = (document.documentElement.lang || "").toLowerCase().indexOf("en") === 0;
 
   function initCoffeeButton() {
+    if (!DONATE_URL) return; /* placeholder hidden until a donation platform is set */
     var href = DONATE_URL || SITE_ROOT + (IS_EN ? "en/" : "") + "services.html#support";
     var a = document.createElement("a");
     a.className = "coffee-btn";
@@ -54,11 +55,14 @@
       b.type = "button";
       b.textContent = label;
       if (i === 0) b.className = "active";
+      b.setAttribute("aria-pressed", i === 0 ? "true" : "false");
       b.addEventListener("click", function () {
         Array.prototype.forEach.call(bar.querySelectorAll("button"), function (x) {
           x.classList.remove("active");
+          x.setAttribute("aria-pressed", "false");
         });
         b.classList.add("active");
+        b.setAttribute("aria-pressed", "true");
         cards.forEach(function (c) {
           var show = i === 0 || c.getAttribute("data-category") === label;
           c.style.display = show ? "" : "none";
@@ -89,6 +93,9 @@
     });
     document.addEventListener("click", function (e) {
       if (nav.classList.contains("open") && !nav.contains(e.target) && e.target !== btn) close();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && nav.classList.contains("open")) close();
     });
   }
 
