@@ -37,8 +37,12 @@
   function initCategoryFilter() {
     var cards = Array.prototype.slice.call(document.querySelectorAll(".card[data-category]"));
     if (!cards.length) return;
-    var grid = cards[0].closest(".card-grid");
-    if (!grid) return;
+    /* Prefer the featured grid when present so the bar sits above flagship posts. */
+    var anchor =
+      document.querySelector(".featured-grid") ||
+      cards[0].closest(".card-grid") ||
+      cards[0];
+    if (!anchor || !anchor.parentNode) return;
 
     var cats = [];
     cards.forEach(function (c) {
@@ -70,7 +74,7 @@
       });
       bar.appendChild(b);
     });
-    grid.parentNode.insertBefore(bar, grid);
+    anchor.parentNode.insertBefore(bar, anchor);
   }
 
   function initNavToggle() {
