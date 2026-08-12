@@ -42,7 +42,6 @@
       <a href="services.html">Services</a>
       <a href="about.html">About</a>
       <a href="resources.html">Resources</a>
-      <a href="disclaimer.html">Disclaimer</a>
     </nav>
     <a class="lang-switch" href="../index.html" hreflang="zh-Hant" lang="zh-Hant">中文</a>
     <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">☰</button>
@@ -50,54 +49,93 @@
 </header>
 
 <section class="hero">
-  <h1>TaxCode <span class="x">x</span> US Stocks <span class="x">x</span> AI</h1>
-  <p class="tagline">The Tax Layer You're Missing in US Stock Investing</p>
-  <p class="sub">20+ years of international tax practice applied to US stock analysis, with the research workflow automated by Python and AI</p>
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <span class="hero-eyebrow">20+ years in international tax · Hands-on US stocks · AI research automation</span>
+      <h1>Clear tax thinking so more of your US stock returns stay yours</h1>
+      <p class="tagline">The Tax Layer You're Missing in US Stock Investing</p>
+      <p class="sub">20+ years of international tax practice applied to US stock analysis, with the research workflow automated by Python and AI</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="tools/us-dividend-tax-calculator.html">Try the dividend tax calculator</a>
+        <a class="btn btn-secondary" href="ai-workflow-case.html">Read a featured piece</a>
+      </div>
+    </div>
+    <aside class="hero-card" aria-label="About Jeff">
+      <div class="hero-card-top">
+        <div class="avatar-mono" aria-hidden="true">J</div>
+        <div>
+          <div class="hero-card-name">Jeff</div>
+          <div class="hero-card-role">Accounting / Finance · Cross-border tax · AI workflows</div>
+        </div>
+      </div>
+      <p class="hero-card-bio">20+ years in international tax. BA/MS in Accounting, MS in Finance. Cross-border tax, AI research automation, and hands-on US stock investing.</p>
+      <div class="hero-chips">
+        <span class="chip">Pillar Two</span>
+        <span class="chip">Estate tax 60k</span>
+        <span class="chip">13F automation</span>
+      </div>
+    </aside>
+  </div>
 </section>
 
 <main>
   <h2 class="section-title">Three Pillars</h2>
   <div class="pillars">
     <div class="pillar">
+      <div class="pillar-icon" aria-hidden="true">Tx</div>
       <h3>Tax</h3>
       <p>Why did Apple's effective tax rate sit at 12-16% for years? How does the OECD Pillar Two global minimum tax change Big Tech's earnings? I read the 10-K income tax footnote the way practitioners do, and decode it for you.</p>
     </div>
     <div class="pillar">
+      <div class="pillar-icon" aria-hidden="true">US</div>
       <h3>US Stocks</h3>
       <p>The blind spots for non-US investors: the USD 60,000 estate tax threshold, ADR dividend withholding, after-tax returns that differ by fund domicile. Cross-border details most finance content never touches.</p>
     </div>
     <div class="pillar">
+      <div class="pillar-icon" aria-hidden="true">AI</div>
       <h3>AI Automation</h3>
       <p>I design the workflow and AI generates the code (Python, pulling from SEC EDGAR) to automate investment research: 13F tracking, deep-reading filings, multi-source verification against hallucination, with a human checking the output. Methods fully public, so you can build your own.</p>
     </div>
   </div>
 
   <h2 class="section-title">Interactive Tool</h2>
-  <div class="card-grid">
-    <div class="card">
-      <span class="tag">Interactive Tool</span>
+  <div class="tool-promo">
+    <div>
+      <div class="tool-promo-kicker">Live calculator</div>
       <h3><a href="tools/us-dividend-tax-calculator.html">US dividend tax calculator: after the 30% US withholding, how much more does Taiwan collect?</a></h3>
       <p>Enter your US dividends and realized overseas gains or losses; get the 30% US withholding, Taiwan's AMT top-up, and total tax, plus a Form 1042-S credit walkthrough.</p>
-      <div class="meta">2026-07-04 · Live calculator</div>
     </div>
-
-    <div class="card">
-      <span class="tag">Resources</span>
-      <h3><a href="resources.html">Official resources: filing portals, statute texts, and primary sources from the IRS and OECD</a></h3>
-      <p>The primary sources this site's articles cite, in one place: Taiwan's Ministry of Finance, the IRS, SEC EDGAR, and the official OECD Pillar Two pages, each link with a one-line guide.</p>
-      <div class="meta">Continuously updated</div>
-    </div>
+    <a class="btn" href="tools/us-dividend-tax-calculator.html">Calculate now</a>
+  </div>
+  <div class="tool-secondary">
+    <span class="tag">Resources</span>
+    <h3><a href="resources.html">Official resources: filing portals, statute texts, and primary sources from the IRS and OECD</a></h3>
+    <p>The primary sources this site's articles cite, in one place: Taiwan's Ministry of Finance, the IRS, SEC EDGAR, and the official OECD Pillar Two pages, each link with a one-line guide.</p>
+    <div class="meta">Continuously updated</div>
   </div>
 
   <h2 class="section-title" id="articles">Articles in English</h2>
-  <div class="card-grid">
+  <p class="section-lead">Start with the featured pieces, then browse the rest by topic.</p>
 
-    <div class="card" data-category="AI x Tax">
+  <div class="featured-grid">
+    <div class="card featured" data-category="AI x Tax">
+      <div class="featured-label">Featured</div>
       <span class="tag">AI x Tax</span>
       <h3><a href="ai-workflow-case.html">How I Direct AI: A Hands-On Case</a></h3>
       <p>Four days of flagship-model access and a scarce quota: the AI audited my delegation design, flagged four traps, and the layering was rebuilt around leverage of judgment, with the final sign-off staying human.</p>
       <div class="meta">2026-07-09 · 5 min read</div>
     </div>
+
+    <div class="card featured" data-category="Cross-Border Tax">
+      <div class="featured-label">Must-read</div>
+      <span class="tag">Cross-Border Tax</span>
+      <h3><a href="articles/us-estate-tax-60k.html">The tax most foreign investors in US stocks overlook: the USD 60,000 estate tax threshold</a></h3>
+      <p>US citizens get a USD 15M exemption; nonresident aliens get USD 60,000. What counts as US-situs, the correct computation, and three planning routes.</p>
+      <div class="meta">2026-07-04 · 9 min read</div>
+    </div>
+  </div>
+
+  <div class="card-grid">
 
     <div class="card" data-category="Cross-Border Tax">
       <span class="tag">Cross-Border Tax</span>
@@ -127,11 +165,11 @@
       <div class="meta">2026-07-04 · 4 min read</div>
     </div>
 
-    <div class="card" data-category="Cross-Border Tax">
-      <span class="tag">Cross-Border Tax</span>
-      <h3><a href="articles/us-estate-tax-60k.html">The tax most foreign investors in US stocks overlook: the USD 60,000 estate tax threshold</a></h3>
-      <p>US citizens get a USD 15M exemption; nonresident aliens get USD 60,000. What counts as US-situs, the correct computation, and three planning routes.</p>
-      <div class="meta">2026-07-04 · 9 min read</div>
+    <div class="card" data-category="Tax x US Stocks">
+      <span class="tag">Tax x US Stocks</span>
+      <h3><a href="articles/apple-etr.html">Apple's tax code, decoded: ETR spiked from 14.7% to 24.1%, then settled at 15.6%</a></h3>
+      <p>Five years of effective tax rate in one read: four structural drivers, the USD 10.2B EU State Aid one-off, and the new normal under Pillar Two.</p>
+      <div class="meta">2026-07-04 · 5 min read</div>
     </div>
 
     <div class="card" data-category="Cross-Border Tax">
@@ -155,13 +193,6 @@
       <div class="meta">2026-07-04 · 10 min read</div>
     </div>
 
-    <div class="card" data-category="Tax x US Stocks">
-      <span class="tag">Tax x US Stocks</span>
-      <h3><a href="articles/apple-etr.html">Apple's tax code, decoded: ETR spiked from 14.7% to 24.1%, then settled at 15.6%</a></h3>
-      <p>Five years of effective tax rate in one read: four structural drivers, the USD 10.2B EU State Aid one-off, and the new normal under Pillar Two.</p>
-      <div class="meta">2026-07-04 · 5 min read</div>
-    </div>
-
     <div class="card" data-category="AI Automation">
       <span class="tag">AI Automation</span>
       <h3><a href="articles/ai-research-workflow.html">How I built an AI-powered investment research pipeline: from filings to conclusions</a></h3>
@@ -176,10 +207,16 @@
   </div>
 
   <h2 class="section-title">About Jeff</h2>
-  <div class="profile-box">
-    <p>20+ years in international tax. BA in Accounting, MS in Accounting, MS in Finance. Specialized in global minimum tax (OECD Pillar 2), cross-border investment tax planning, and AI-automated tax analysis / investment research workflows (the code is AI-generated; the judgment and fact-checking are his). Also a hands-on US stock investor, holding twenty-plus individual stocks and ETFs for the long term.</p>
-    <p style="margin-top:.6rem;">This site covers what I want to read but cannot find: the intersection of tax expertise and US stock investing, plus the AI workflow that automates it all.</p>
-    <p style="margin-top:.8rem;"><a href="about.html" style="color:var(--navy);font-weight:700;">Full introduction →</a>　<a href="services.html" style="color:var(--navy);font-weight:700;">Services and collaboration →</a></p>
+  <div class="profile-box about-strip">
+    <div class="avatar-mono" aria-hidden="true">J</div>
+    <div>
+      <p>20+ years in international tax. BA in Accounting, MS in Accounting, MS in Finance. Specialized in global minimum tax (OECD Pillar 2), cross-border investment tax planning, and AI-automated tax analysis / investment research workflows (the code is AI-generated; the judgment and fact-checking are his). Also a hands-on US stock investor, holding twenty-plus individual stocks and ETFs for the long term.</p>
+      <p style="margin-top:.6rem;">This site covers what I want to read but cannot find: the intersection of tax expertise and US stock investing, plus the AI workflow that automates it all.</p>
+      <div class="about-strip-links">
+        <a href="about.html">Full introduction →</a>
+        <a href="services.html">Services and collaboration →</a>
+      </div>
+    </div>
   </div>
 </main>
 
