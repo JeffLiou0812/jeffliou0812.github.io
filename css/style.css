@@ -527,14 +527,37 @@ article.post .cta-box p { font-size: .95rem; margin-bottom: 0; }
 
 /* ===== Footer ===== */
 footer.site-footer {
-  background: var(--navy-dark);
-  color: #9db1c8;
-  padding: 2rem 1.2rem;
+  background:
+    linear-gradient(180deg, rgba(243, 232, 220, 0.55) 0%, var(--surface-warm) 28%, #EDE0D0 100%);
+  color: var(--muted);
+  padding: 2.1rem 1.2rem 2.2rem;
   font-size: .85rem;
+  border-top: 1px solid var(--line);
 }
 .footer-inner { max-width: 1040px; margin: 0 auto; }
-.footer-inner a { color: #c9d6e5; }
-.footer-disclaimer { margin-top: .8rem; font-size: .78rem; line-height: 1.7; }
+.footer-inner p:first-child {
+  color: var(--ink);
+}
+.footer-inner strong {
+  color: var(--navy);
+}
+.footer-inner a {
+  color: var(--navy);
+  text-decoration: underline;
+  text-decoration-color: var(--gold-soft);
+  text-underline-offset: 0.18em;
+}
+.footer-inner a:hover {
+  color: var(--navy-hover);
+  text-decoration-color: var(--gold);
+}
+.footer-disclaimer {
+  margin-top: .85rem;
+  font-size: .78rem;
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 58rem;
+}
 
 @media (max-width: 860px) {
   .hero-inner { grid-template-columns: 1fr; gap: 1.6rem; }
