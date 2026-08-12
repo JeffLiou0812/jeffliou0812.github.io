@@ -6,13 +6,13 @@
   --navy-dark: #1A2B3D;
   --gold: #C9955A;
   --gold-soft: #E8D4B8;
-  --surface-warm: #F3E8DC;
+  --surface-warm: #F0E4DE;
   --red: #DC3545;
   --ink: #2A3340;
   --muted: #6B7785;
-  --bg: #F7F3EE;
-  --card: #FFFCF8;
-  --line: #E8DFD4;
+  --bg: #F4ECE8;
+  --card: #FFFFFF;
+  --line: #E6DBD4;
   --radius: 18px;
   --radius-sm: 12px;
   --shadow: 0 8px 28px rgba(36, 59, 85, 0.08);
@@ -26,8 +26,8 @@ body {
   font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", -apple-system, "Segoe UI", sans-serif;
   color: var(--ink);
   background:
-    radial-gradient(ellipse 80% 50% at 100% -10%, rgba(232, 212, 184, 0.45), transparent 55%),
-    radial-gradient(ellipse 60% 40% at 0% 20%, rgba(243, 232, 220, 0.7), transparent 50%),
+    radial-gradient(ellipse 80% 50% at 100% -10%, rgba(232, 212, 184, 0.35), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 0% 20%, rgba(246, 238, 241, 0.55), transparent 50%),
     var(--bg);
   line-height: 1.8;
   font-size: 17px;
@@ -35,7 +35,7 @@ body {
 
 /* ===== Header / Nav ===== */
 header.site-header {
-  background: rgba(247, 243, 238, 0.92);
+  background: rgba(244, 236, 232, 0.92);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   color: var(--ink);
@@ -79,7 +79,7 @@ nav.main-nav a.active {
 /* ===== Hero ===== */
 .hero {
   background:
-    linear-gradient(160deg, var(--surface-warm) 0%, rgba(247, 243, 238, 0.4) 55%, transparent 100%);
+    linear-gradient(160deg, var(--surface-warm) 0%, rgba(244, 236, 232, 0.45) 55%, transparent 100%);
   color: var(--ink);
   padding: 2.8rem 1.2rem 2.4rem;
   text-align: left;
@@ -389,7 +389,7 @@ main { max-width: 1040px; margin: 0 auto; padding: 2.2rem 1.2rem 3rem; }
   margin-bottom: 1.15rem;
 }
 .card.featured {
-  background: linear-gradient(180deg, #FFFCF8 0%, var(--surface-warm) 100%);
+  background: linear-gradient(180deg, #FFFFFF 0%, var(--surface-warm) 100%);
   border-color: var(--gold-soft);
   padding: 1.45rem 1.5rem;
 }
@@ -528,7 +528,7 @@ article.post .cta-box p { font-size: .95rem; margin-bottom: 0; }
 /* ===== Footer ===== */
 footer.site-footer {
   background:
-    linear-gradient(180deg, rgba(243, 232, 220, 0.55) 0%, var(--surface-warm) 28%, #EDE0D0 100%);
+    linear-gradient(180deg, rgba(240, 228, 222, 0.55) 0%, var(--surface-warm) 28%, #E8DBD4 100%);
   color: var(--muted);
   padding: 2.1rem 1.2rem 2.2rem;
   font-size: .85rem;
