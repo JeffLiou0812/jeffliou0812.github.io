@@ -13,7 +13,7 @@
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>How I Direct AI: A Hands-On Case | TaxCode x US Stocks x AI</title>
-<meta name="description" content="A look at how an AI-assisted workflow gets designed: the AI flags the blind spots in my design, and the final review stays with me. Jeff's AI research automation method.">
+<meta name="description" content="A flagship model belongs on architecture, specs, and review, not on typing out every piece of execution. The AI first showed where the design met the system's limits; layering moved from importance to leverage of judgment, and the final sign-off stayed with me.">
 <link rel="stylesheet" href="../css/style.css">
 <link rel="canonical" href="https://taxcodeusstocks.com/en/ai-workflow-case.html">
 <link rel="alternate" hreflang="zh-Hant" href="https://taxcodeusstocks.com/ai-workflow-case.html">
@@ -21,7 +21,7 @@
 <link rel="alternate" hreflang="x-default" href="https://taxcodeusstocks.com/ai-workflow-case.html">
 <meta property="og:type" content="website">
 <meta property="og:title" content="How I Direct AI: A Hands-On Case | TaxCode x US Stocks x AI">
-<meta property="og:description" content="A look at how an AI-assisted workflow gets designed: the AI flags the blind spots in my design, and the final review stays with me. Jeff's AI research automation method.">
+<meta property="og:description" content="A flagship model belongs on architecture, specs, and review, not on typing out every piece of execution. The AI first showed where the design met the system's limits; layering moved from importance to leverage of judgment, and the final sign-off stayed with me.">
 <meta property="og:url" content="https://taxcodeusstocks.com/en/ai-workflow-case.html">
 <meta property="og:site_name" content="TaxCode x US Stocks x AI">
 <meta property="og:locale" content="en_US">
@@ -51,32 +51,30 @@
 <main>
   <article class="post">
     <h1>How I Direct AI: A Real Case</h1>
-    <p class="post-meta">Published 2026-07-09</p>
+    <p class="post-meta">Published 2026-07-09 · Updated 2026-08-13</p>
 
     <div class="callout">The model and tooling specifics described here reflect July 2026. Those details will change with each release; the layering principles and review discipline will not.</div>
 
-    <h2>Background: Claude Code's top model, included with existing paid subscriptions until July 12</h2>
+    <p>The conclusion first: a flagship model belongs on architecture, specs, and review, not on typing out every piece of execution. In July 2026 Anthropic opened Fable 5 to paying subscribers (through 12 July). It burns tokens faster than the second-tier models, so using it on trivial work that needs no real judgment is a waste.</p>
 
-    <p>In July 2026, Anthropic opened its new flagship model, Fable 5, to paying subscribers, but only until July 12. A flagship model burns tokens fast, and spending it on trivial tasks that require no real reasoning is a waste.</p>
+    <h2>Background: a time-limited flagship, and the quota burns fast</h2>
+
+    <p>Access ran only through 12 July, and the official notice says Fable 5 draws down usage faster (it has its own weekly quota). So I asked it to design a split: high-stakes judgment stays with Fable 5; everything else is directed to Opus.</p>
 
     <figure style="margin:1rem 0 1.4rem;">
       <img src="../img/claude-code-usage-fable5.png" alt="Screenshot of Claude Code's usage panel showing the context window at 13%, the 5-hour limit at 5%, weekly all-models at 1%, a separate weekly Fable quota at 2%, and the official notice that Fable 5 is the most capable model and draws down usage much faster" style="max-width:100%;height:auto;border:1px solid var(--line);border-radius:8px;" loading="lazy">
       <figcaption style="font-size:.85rem;color:var(--muted);margin-top:.4rem;">Claude Code's usage panel: Fable 5 draws from its own weekly quota, and the official notice says it draws down usage much faster (screenshot taken July 9, 2026).</figcaption>
     </figure>
 
-    <p>To conserve tokens, I gave Claude Code a very simple instruction:</p>
+    <p>To keep the quota on judgment, the instruction I gave Claude Code was short:</p>
 
     <div class="callout"><strong>Q:</strong> From today until July 12 I can use the Fable 5 mode. Design an operating mode in which tasks involving overall architecture design, strategy setting, and other high-stakes matters are executed by Fable 5 itself, while all other tasks are delegated by Fable 5 to Opus (with the effort level judged by task complexity).</div>
 
     <h2>The AI did not comply; it audited my design first</h2>
 
-    <p>The AI's answer (excerpted for readability):</p>
+    <p>It did not produce a roster. It first named this as a meta architecture question (not a tax or technical domain question, so no project files needed; the basis is this harness's actual tool specifications plus my CLAUDE.md and memory), then listed the gaps and the corrections. The excerpt below is the substance.</p>
 
-    <p>This is a meta architecture-design question (not a tax or technical domain question, so no project files needed; the basis is this harness's actual tool specifications plus your CLAUDE.md and memory). Overall verdict first, then the technical traps and the corrections.</p>
-
-    <h3>Overall verdict</h3>
-
-    <p>The direction is right: this is the orchestrator-worker pattern, and it naturally complements your existing multi-model blind-review rule: Fable × Opus is genuine cross-model review, which catches more blind spots than any model grading its own work. But a literal implementation would hit four technical traps that need fixing first.</p>
+    <p>I agree with the direction: this is orchestrator-worker, and it can sit on top of the multi-model blind-review rule I already use (Fable against Opus is genuine cross-model review, which catches more than any model grading its own work). A literal implementation would still hit four technical gaps that have to be fixed first.</p>
 
     <ol>
       <li>Delegated subtasks default to running on the main model (meaning a delegation that forgets to specify the executing model still burns flagship quota, so the delegation achieves nothing); every delegation must name its model explicitly.</li>
@@ -99,7 +97,7 @@
 
     <h2>The suggested routing table (corrected)</h2>
 
-    <p>Your split is "by importance"; I suggest "by leverage of judgment": important-but-mechanical work still gets pushed down, and Fable's judgment goes to the two ends, the spec and the review, not to the typing in between.</p>
+    <p>My original split was "by importance"; it suggested "by leverage of judgment": important-but-mechanical work still gets pushed down, and Fable's judgment goes to the two ends, the spec and the review, not to the typing in between.</p>
 
     <p>The corrected layering:</p>
 
@@ -114,17 +112,17 @@
 
     <ul>
       <li>Delegation threshold: the task is self-contained, the output compresses into a summary, and no mid-course judgment is needed. All three must hold before delegating. Handing work off feels efficient, but because a subtask sees none of the main thread's context, an unclear brief makes the rework cost higher, so the main model is better off doing it directly.</li>
-      <li>Escalation triggers: on any irreversible action, conflicting sources, or low confidence, the delegated task stops and reports back rather than pushing on.</li>
+      <li>On any irreversible action, conflicting sources, or low confidence, the delegated task stops and reports back rather than pushing on.</li>
       <li>Cross-model review: the second-tier model's output is reviewed by the flagship; conversely, the flagship's own output goes to a different model for independent blind review (a model grading its own work does not count, a rule I have kept for years).</li>
     </ul>
 
     <h2>Checking the same answer from a second angle</h2>
 
-    <p>The same design can be verified from another direction. From the quota angle, concentrating judgment at the spec and review ends while delegating execution maximizes the yield of a scarce resource. From the quality angle, cross-model review lets two different models catch each other's blind spots, one more layer of protection than any model reviewing itself. Both angles point to the same conclusion, and only then was the corrected version adopted.</p>
+    <p>The same correction can be checked from another direction. From the quota side, concentrating judgment at spec and review while pushing execution down keeps flagship tokens off typing. From the quality side, the second-tier model drafts, the flagship reviews, and a second model blind-reviews the flagship: one more check than any model reviewing itself. Both angles point to the same conclusion, so this corrected version is the one that was adopted.</p>
 
     <h2>The final review and sign-off stays with me</h2>
 
-    <p>Across the whole exchange, the AI did two things: it exposed the gap between my design and the system's reality, and it proposed the correction. But some things could not be left to the AI to execute. Where important work with an already-clear spec belongs was my decision: second-tier model drafts, flagship model reviews. Whether to adopt the whole mode, and how far its authorization runs, was also my decision.</p>
+    <p>Across the exchange, the AI showed where my design met the system's limits and proposed the correction. Where important work with an already-clear spec belongs was still my decision: second-tier model drafts, flagship model reviews. Whether to adopt the whole mode, and how far its authorization runs, was also my decision.</p>
 
     <p>This is the concrete version of the line on my <a href="about.html">About</a> and <a href="services.html">Services</a> pages: the code and the text can come from AI; the value lies in designing the process and verifying the output. Directing AI is not a prompting trick. You need your own standard of judgment first, so the AI's pushback has something to be tested against, and the final call has something to rest on.</p>
 
