@@ -1,0 +1,8 @@
+{
+  "name": "TaxCode x US Stocks x AI (static site)",
+  "install": "python3 --version\npython3 -c \"import ast, glob, json; [ast.parse(open(f, encoding='utf-8').read()) for f in glob.glob('scripts/*.py')]; [json.load(open(f, encoding='utf-8')) for f in glob.glob('content/*.json')]; print('scripts + content validated')\"",
+  "start": "python3 -m http.server 8000",
+  "ports": [
+    { "name": "static site", "port": 8000 }
+  ]
+}
