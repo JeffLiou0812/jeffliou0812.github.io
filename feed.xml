@@ -2,14 +2,14 @@
 <rss version="2.0"><channel>
   <title>稅務 x 美股 x AI｜傑夫哥</title>
   <link>https://taxcodeusstocks.com/</link>
-  <description>國際稅務專業視角的美股投資分析與 AI 研究自動化。看不懂的稅務密碼，影響你看不見的投資報酬。</description>
+  <description>國際稅務專業視角的美股投資分析與 AI 研究自動化。如何善用稅法和AI，提升美股投資報酬。</description>
   <language>zh-tw</language>
   <item>
     <title>我如何指揮 AI：實際操作案例</title>
     <link>https://taxcodeusstocks.com/ai-workflow-case.html</link>
     <guid>https://taxcodeusstocks.com/ai-workflow-case.html</guid>
     <pubDate>Thu, 09 Jul 2026 02:00:00 +0000</pubDate>
-    <description>旗艦模型限時四天、額度稀缺，怎麼分工？AI 沒照做，先指出設計會踩的四個坑：分層標準從「按重要性」改成「按判斷力槓桿」，最後由我審核定案。</description>
+    <description>旗艦模型限時至 7 月 12 日，額度燒得快。我要它按重要性分層，它先指出四個技術落差，把標準改成按判斷力槓桿；最後由我審核定案。</description>
   </item>
   <item>
     <title>外國人在台灣：住滿 183 天成為稅務居民，境外投資損益怎麼課稅</title>
@@ -30,7 +30,7 @@
     <link>https://taxcodeusstocks.com/articles/apple-etr.html</link>
     <guid>https://taxcodeusstocks.com/articles/apple-etr.html</guid>
     <pubDate>Sat, 04 Jul 2026 09:00:00 +0000</pubDate>
-    <description>Apple 五年有效稅率完整拆解：四個結構性密碼、歐盟 State Aid 一次性補稅 USD 10.2B、Pillar Two 之後的新常態。</description>
+    <description>Apple 五年有效稅率：四個結構因素、歐盟 State Aid 一次性補稅 USD 10.2B、Pillar Two 之後的新常態。</description>
   </item>
   <item>
     <title>散戶版 13F 追蹤系統：用 Python + SEC EDGAR 免費自動化</title>
@@ -47,18 +47,18 @@
     <description>全球最低稅上路，愛爾蘭被迫加稅，那 VWRA、CSPX 這些愛爾蘭 ETF 會不會中槍？用三層檢驗講清楚：不會，規則設計本來就排除投資基金。</description>
   </item>
   <item>
-    <title>海外所得 750 萬免稅？個人投資美股最常見的五個迷思，一次拆掉</title>
+    <title>海外所得 750 萬免稅？個人投資美股最常見的五個迷思</title>
     <link>https://taxcodeusstocks.com/articles/overseas-income-750-myth.html</link>
     <guid>https://taxcodeusstocks.com/articles/overseas-income-750-myth.html</guid>
     <pubDate>Sat, 04 Jul 2026 09:00:00 +0000</pubDate>
-    <description>「海外所得 750 萬以下免稅」這句話錯在哪？100 萬門檻是懸崖不是起徵點、750 萬扣的是基本所得額不是海外所得、超過也未必要繳。五個迷思配計算例，一次講清楚。</description>
+    <description>「海外所得 750 萬以下免稅」這句話錯在哪？100 萬是計入門檻而非起徵點、750 萬扣的是基本所得額不是海外所得、超過也未必要繳。五個迷思配計算例。</description>
   </item>
   <item>
     <title>SK 海力士要來美股了：台灣人該買 ADR 還是買韓股？</title>
     <link>https://taxcodeusstocks.com/articles/sk-hynix-adr-tax.html</link>
     <guid>https://taxcodeusstocks.com/articles/sk-hynix-adr-tax.html</guid>
     <pubDate>Sat, 04 Jul 2026 09:00:00 +0000</pubDate>
-    <description>SK Hynix 預計在 Nasdaq 掛牌 ADR（代碼 SKHY），史上最大 ADR 發行案。台灣投資人買 ADR 與直接買韓股，股利稅、資本利得、兩邊的遺產稅差在哪，一次算清楚。</description>
+    <description>SK Hynix 預計在 Nasdaq 掛牌 ADR（代碼 SKHY），史上最大 ADR 發行案。台灣投資人買 ADR 與直接買韓股，股利稅、資本利得、兩邊的遺產稅差在哪，用對照表說明。</description>
   </item>
   <item>
     <title>美國公債免遺產稅，但公債 ETF 要繳遺產稅：非居民投資人必須知道的重點差異</title>
@@ -72,7 +72,7 @@
     <link>https://taxcodeusstocks.com/articles/tsm-adr-tax.html</link>
     <guid>https://taxcodeusstocks.com/articles/tsm-adr-tax.html</guid>
     <pubDate>Sat, 04 Jul 2026 09:00:00 +0000</pubDate>
-    <description>TSM ADR 股利被扣 21% 拿不拿得回來？TSM ADR 算不算美國遺產稅資產？用發行人測試一次講清楚。</description>
+    <description>TSM ADR 股利被扣 21% 拿不拿得回來？台積電 ADR 算不算美國遺產稅資產？用發行人測試把兩件事分開看。</description>
   </item>
   <item>
     <title>散戶買美股最容易忽略的稅務成本：美國遺產稅 USD 60,000 門檻完整說明</title>

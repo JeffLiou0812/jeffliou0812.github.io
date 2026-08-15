@@ -8,23 +8,23 @@ English audience: nonresident alien (NRA) investors in US stocks, and expats dea
 
 ## 文章（繁體中文）
 
-- [TSM ADR vs 2330：台灣投資人的稅務差異，多數人講錯的兩件事](https://taxcodeusstocks.com/articles/tsm-adr-tax.html)：TSM ADR 股利被扣 21% 拿不拿得回來？TSM ADR 算不算美國遺產稅資產？用發行人測試一次講清楚。
+- [TSM ADR vs 2330：台灣投資人的稅務差異，多數人講錯的兩件事](https://taxcodeusstocks.com/articles/tsm-adr-tax.html)：TSM ADR 股利被扣 21% 拿不拿得回來？台積電 ADR 算不算美國遺產稅資產？用發行人測試把兩件事分開看。
 - [散戶買美股最容易忽略的稅務成本：美國遺產稅 USD 60,000 門檻完整說明](https://taxcodeusstocks.com/articles/us-estate-tax-60k.html)：美國公民遺產稅免稅額 USD 15M，外國投資人只有 USD 60k。哪些資產算 US-situs、正確的稅額算法、三個合法規劃方向。
-- [海外所得 750 萬免稅？個人投資美股最常見的五個迷思，一次拆掉](https://taxcodeusstocks.com/articles/overseas-income-750-myth.html)：100 萬門檻是懸崖不是起徵點、750 萬扣的是基本所得額不是海外所得、超過也未必要繳。五個迷思配計算例。
+- [海外所得 750 萬免稅？個人投資美股最常見的五個迷思](https://taxcodeusstocks.com/articles/overseas-income-750-myth.html)：100 萬是計入門檻而非起徵點、750 萬扣的是基本所得額不是海外所得、超過也未必要繳。五個迷思配計算例。
 - [外國人在台灣：住滿 183 天成為稅務居民，境外投資損益怎麼課稅](https://taxcodeusstocks.com/articles/foreigner-taiwan-tax-resident.html)：天數怎麼算（始日不計末日計）、滿 183 天後海外投資損益進入最低稅負制的完整機制，以及年度規劃、租稅協定、遺產稅三個外國人特有的細節。
-- [SK 海力士要來美股了：台灣人該買 ADR 還是買韓股？](https://taxcodeusstocks.com/articles/sk-hynix-adr-tax.html)：SK Hynix 預計在 Nasdaq 掛牌 ADR（代碼 SKHY）。台灣投資人買 ADR 與直接買韓股，股利稅、資本利得、兩邊的遺產稅差在哪，一次算清楚。
+- [SK 海力士要來美股了：台灣人該買 ADR 還是買韓股？](https://taxcodeusstocks.com/articles/sk-hynix-adr-tax.html)：SK Hynix 預計在 Nasdaq 掛牌 ADR（代碼 SKHY）。台灣投資人買 ADR 與直接買韓股，股利稅、資本利得、兩邊的遺產稅差在哪，用對照表說明。
 - [美國公債免遺產稅，但公債 ETF 要繳遺產稅：非居民投資人必須知道的重點差異](https://taxcodeusstocks.com/articles/treasury-etf-estate-tax.html)：直接持有 T-Bill 與持有美國掛牌公債 ETF，在美國遺產稅上是兩個世界。差在哪裡、怎麼安排。
-- [愛爾蘭 ETF 會被全球最低稅 15% 課到嗎？一個 Pillar Two 從業者的拆解](https://taxcodeusstocks.com/articles/irish-etf-pillar-two.html)：VWRA、CSPX 這些愛爾蘭 ETF 會不會被課？用 GloBE 規則的三層檢驗講清楚：不會，而且是規則設計本來就排除。
-- [Apple 的稅務密碼：ETR 從 14.7% 飆到 24.1%，再回到 15.6%](https://taxcodeusstocks.com/articles/apple-etr.html)：Apple 五年有效稅率完整拆解：四個結構性密碼、歐盟 State Aid 一次性補稅 USD 10.2B、Pillar Two 之後的新常態。
+- [愛爾蘭 ETF 會被全球最低稅 15% 課到嗎？一個 Pillar Two 從業者的拆解](https://taxcodeusstocks.com/articles/irish-etf-pillar-two.html)：VWRA、CSPX 這些愛爾蘭 ETF 會不會被課？用 GloBE 規則的三層檢驗：不會，而且是規則設計本來就排除。
+- [Apple 的稅務密碼：ETR 從 14.7% 飆到 24.1%，再回到 15.6%](https://taxcodeusstocks.com/articles/apple-etr.html)：Apple 五年有效稅率：四個結構因素、歐盟 State Aid 一次性補稅 USD 10.2B、Pillar Two 之後的新常態。
 - [散戶版 13F 追蹤系統：用 Python + SEC EDGAR 免費自動化](https://taxcodeusstocks.com/articles/diy-13f-tracker.html)：不用付訂閱費，直接從 SEC 原始資料抓 Buffett、Burry 的持股變動。完整 SOP 與程式碼。
 - [我如何用 AI 打造投資研究流程：從財報到結論的自動化管線](https://taxcodeusstocks.com/articles/ai-research-workflow.html)：Python 抓數據、AI 深讀文件、多來源交叉驗證防幻覺。一套實際在用的研究工作流。
-- [我如何指揮 AI：實際操作案例](https://taxcodeusstocks.com/ai-workflow-case.html)：展示 AI 工作流的設計過程：AI 指出設計盲點、由我做最終審查。
+- [我如何指揮 AI：實際操作案例](https://taxcodeusstocks.com/ai-workflow-case.html)：旗艦模型該做架構、規格與驗收。AI 先指出設計與系統現實的落差，分層從按重要性改成按判斷力槓桿，最後由我審核定案。
 
 ## Articles (English)
 
 - [TSM ADR vs 2330: Two Tax Facts Most Investors Get Wrong](https://taxcodeusstocks.com/en/articles/tsm-adr-tax.html): Is the 21% Taiwan withholding on TSM ADR dividends recoverable? Are TSM ADRs US-situs assets for US estate tax? The issuer test settles both questions.
 - [The Tax Most Foreign Investors in US Stocks Overlook: The USD 60,000 Estate Tax Threshold](https://taxcodeusstocks.com/en/articles/us-estate-tax-60k.html): US citizens get a USD 15M estate tax exemption; nonresident aliens get USD 60,000. What counts as US-situs, the correct computation, and three planning routes.
-- [Is Overseas Income Under NT$7.5M Tax-Free? The Five Most Common Myths for US Stock Investors, Dismantled](https://taxcodeusstocks.com/en/articles/overseas-income-750-myth.html): The NT$1M threshold is a cliff not a floor, the NT$7.5M deduction comes off basic income not overseas income, and crossing it does not always mean paying. Five myths, worked examples.
+- [Is Overseas Income Under NT$7.5M Tax-Free? The Five Most Common Myths for US Stock Investors](https://taxcodeusstocks.com/en/articles/overseas-income-750-myth.html): The NT$1M figure is an inclusion threshold, not a floor, the NT$7.5M deduction comes off basic income not overseas income, and crossing it does not always mean paying. Five myths, worked examples.
 - [SK Hynix Is Coming to Nasdaq (SKHY): Should Taiwan Investors Buy the ADR or the Korean Shares?](https://taxcodeusstocks.com/en/articles/sk-hynix-adr-tax.html): Dividend withholding (treaty 10% vs 22%), capital gains, transaction tax, and estate tax on both sides: ADR vs the Korean shares, worked through.
 - [US Treasuries Are Exempt from US Estate Tax, but Treasury ETFs Are Taxed: What Nonresident Investors Must Know](https://taxcodeusstocks.com/en/articles/treasury-etf-estate-tax.html): Holding T-Bills directly and holding a US-listed Treasury ETF are two different worlds for US estate tax. Where the line falls, and how to plan.
 - [Taiwan's 183-Day Rule: When Foreigners Become Tax Residents](https://taxcodeusstocks.com/en/articles/foreigner-taiwan-tax-resident.html): At 183 days you become a Taiwan tax resident: how the days are counted, how offshore dividends and capital gains enter Taiwan's minimum tax, and the details expats miss.
@@ -32,7 +32,7 @@ English audience: nonresident alien (NRA) investors in US stocks, and expats dea
 - [Apple's Tax Code, Decoded: ETR from 14.7% to 24.1% to 15.6%](https://taxcodeusstocks.com/en/articles/apple-etr.html): Apple's five-year effective tax rate decoded: four structural drivers, the USD 10.2B EU State Aid one-off, and the new normal under Pillar Two.
 - [Build Your Own 13F Tracker: Free Automation with Python + SEC EDGAR](https://taxcodeusstocks.com/en/articles/diy-13f-tracker.html): Skip the subscription fees: pull Buffett's and Burry's position changes straight from SEC source data. Full SOP with code, plus the pitfalls beginners hit.
 - [How I Built an AI-Powered Investment Research Pipeline: From Filings to Conclusions](https://taxcodeusstocks.com/en/articles/ai-research-workflow.html): Python pulls the data, AI deep-reads the filings, and multi-source cross-checks guard against hallucination. A research workflow in daily use, tools and rules fully public.
-- [How I Direct AI: A Hands-On Case](https://taxcodeusstocks.com/en/ai-workflow-case.html): How an AI-assisted workflow gets designed: the AI flags the blind spots in my design, and the final review stays with me.
+- [How I Direct AI: A Hands-On Case](https://taxcodeusstocks.com/en/ai-workflow-case.html): Flagship models belong on architecture, specs, and review. The AI first showed where my design met the system's limits; layering moved from importance to leverage of judgment, and the final sign-off stayed with me.
 
 ## 互動工具 Tools
 

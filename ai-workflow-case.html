@@ -13,7 +13,7 @@
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>我如何指揮 AI：實際操作案例｜稅務 x 美股 x AI</title>
-<meta name="description" content="展示 AI 工作流的設計過程：AI 指出設計盲點、由我做最終審查。傑夫哥的 AI 研究自動化方法。">
+<meta name="description" content="旗艦模型該做架構、規格與驗收，不是把執行自己打完。AI 先指出設計與系統現實的落差，分層從按重要性改成按判斷力槓桿，最後由我審核定案。">
 <link rel="stylesheet" href="css/style.css">
 <link rel="canonical" href="https://taxcodeusstocks.com/ai-workflow-case.html">
 <link rel="alternate" hreflang="zh-Hant" href="https://taxcodeusstocks.com/ai-workflow-case.html">
@@ -21,7 +21,7 @@
 <link rel="alternate" hreflang="x-default" href="https://taxcodeusstocks.com/ai-workflow-case.html">
 <meta property="og:type" content="website">
 <meta property="og:title" content="我如何指揮 AI：實際操作案例｜稅務 x 美股 x AI">
-<meta property="og:description" content="展示 AI 工作流的設計過程：AI 指出設計盲點、由我做最終審查。傑夫哥的 AI 研究自動化方法。">
+<meta property="og:description" content="旗艦模型該做架構、規格與驗收，不是把執行自己打完。AI 先指出設計與系統現實的落差，分層從按重要性改成按判斷力槓桿，最後由我審核定案。">
 <meta property="og:url" content="https://taxcodeusstocks.com/ai-workflow-case.html">
 <meta property="og:site_name" content="稅務 x 美股 x AI">
 <meta property="og:locale" content="zh_TW">
@@ -51,32 +51,30 @@
 <main>
   <article class="post">
     <h1>我怎麼指揮 AI：實際案例</h1>
-    <p class="post-meta">發布 2026-07-09</p>
+    <p class="post-meta">發布 2026-07-09 · 更新 2026-08-13</p>
 
     <div class="callout">本文描述的模型與工具規格為 2026 年 7 月當下的狀態，細節會隨版本演進；惟文中的分層原則與把關方法，不隨版本改變。</div>
 
-    <h2>背景：Claude Code 頂尖模型開放到 7 月 12 日可以無需另外付費，可繼續用既有訂閱方式使用</h2>
+    <p>結論先講：旗艦模型該做的是架構、規格與驗收，不是把每一段執行都自己打完。2026 年 7 月 Anthropic 把新一代旗艦模型 Fable 5 開放給付費訂閱者（使用期至 7 月 12 日），token 消耗明顯快於次級模型，故瑣碎、無需推理判斷的任務拿它來做，相當浪費。</p>
 
-    <p>2026 年 7 月，Anthropic 開放新一代旗艦模型 Fable 5 給付費訂閱者使用，但使用期僅限 7 月 12 日前。旗艦模型的 token 燒得很快，拿來做瑣碎無需推理判斷的任務相當浪費。</p>
+    <h2>背景：旗艦模型限時開放，額度燒得快</h2>
+
+    <p>使用期僅限 7 月 12 日前，且官方明示 Fable 5 消耗額度更快（有獨立的每週額度）。爰此，我要它設計一套分層：重大判斷自己做，其餘指揮 Opus 執行。</p>
 
     <figure style="margin:1rem 0 1.4rem;">
       <img src="img/claude-code-usage-fable5.png" alt="Claude Code 用量面板截圖：Context window 13%、5 小時限制 5%、Weekly all models 1%、Weekly Fable 獨立額度 2%，並顯示官方提示 Fable 5 is the most capable model and draws down usage much faster" style="max-width:100%;height:auto;border:1px solid var(--line);border-radius:8px;" loading="lazy">
       <figcaption style="font-size:.85rem;color:var(--muted);margin-top:.4rem;">Claude Code 的用量面板：Fable 5 有獨立的每週額度，且官方明示它消耗額度更快（截圖 2026-07-09）。</figcaption>
     </figure>
 
-    <p>為了節省 token，我用很簡單的指令給 Claude Code：</p>
+    <p>為了把額度留在判斷上，我給 Claude Code 的指令其實很短：</p>
 
     <div class="callout"><strong>Q：</strong>從今天到7月12日，是我可以使用fable 5模式的期間，設計一套運作模式，當需要整體架構設計、策略制定、重大事項相關的任務，由fable 5執行，其他任務由fable 5指揮Opus(並視複雜度判斷effort level)執行。</div>
 
     <h2>AI 沒有照做，而是先檢查我的設計</h2>
 
-    <p>AI 回答（為方便閱讀，僅摘取重點內容）：</p>
+    <p>它沒有直接排出一張分工表。先指出這是 meta 架構問題（非稅務或技術領域問題，無需讀專案檔；依據為 harness 的實際工具規格，加上我的 CLAUDE.md 與 memory），再列技術落差與修正。以下為其重點摘錄。</p>
 
-    <p>這是一個 meta 架構設計問題（非稅務/技術領域問題，無需讀專案檔；依據為本 harness 的實際工具規格 + 你的 CLAUDE.md/memory）。先給總評，再列技術陷阱與修正建議。</p>
-
-    <h3>總評</h3>
-
-    <p>方向正確：這就是 orchestrator-worker pattern，且和你既有的多模型盲審規則天然互補：Fable × Opus 是真正的跨模型互審，比同模型自審抓得到更多盲點。但照字面執行會踩到 4 個技術陷阱，需先修正。</p>
+    <p>大方向我認同：這就是 orchestrator-worker，且與我既有的多模型盲審可以接上（Fable 對 Opus 是真正的跨模型互審，比同模型自審抓得到更多盲點）。但照字面執行會踩到 4 個技術落差，須先修正。</p>
 
     <ol>
       <li>委派出去的子任務，預設仍由主模型執行（亦即忘記指定執行模型的委派，照樣燒旗艦額度，委派等於白做），故每次委派必須明確指定模型。</li>
@@ -99,7 +97,7 @@
 
     <h2>建議的路由表（修正版）</h2>
 
-    <p>你的分法是「按重要性」，建議改成「按判斷力槓桿」：重要但機械的活照樣下放，Fable 的判斷用在 spec 和驗收兩端，不用在打字上。</p>
+    <p>我原本的分法是「按重要性」；它建議改成「按判斷力槓桿」：重要但機械的活照樣下放，Fable 的判斷用在 spec 和驗收兩端，不用在打字上。</p>
 
     <p>修正後的分層：</p>
 
@@ -113,18 +111,18 @@
     <p>配套三條規則：</p>
 
     <ul>
-      <li>委派門檻：任務自包含、輸出可壓縮成摘要、過程不需中途判斷，三條全過才委派。雖然把工作丟出去很省事，但由於子任務看不到主對話脈絡，說明書寫不清楚時返工成本更高，故不如主模型直接做。</li>
-      <li>上呈觸發器：委派任務遇到不可逆動作、來源互相矛盾、或信心不足時，一律停下來回報，不自行往下做。</li>
+      <li>委派門檻：任務自包含、輸出可壓縮成摘要、過程不需中途判斷，三條全過才委派。雖把工作丟出去很省事，但由於子任務看不到主對話脈絡，說明書寫不清楚時返工成本更高，故不如主模型直接做。</li>
+      <li>委派任務遇到不可逆動作、來源互相矛盾、或信心不足時，一律停下來回報，不自行往下做。</li>
       <li>跨模型互審：次級模型的產出由旗艦模型驗收；反過來，旗艦模型自己的產出，交給另一個模型獨立盲審（自己審自己的東西不算數，這是我行之有年的守則）。</li>
     </ul>
 
     <h2>雙視角驗算</h2>
 
-    <p>同一套設計可由另一角度驗算。從額度角度看，判斷集中在規格與驗收兩端、執行下放，稀缺資源的單位產出最大化；從品質角度看，跨模型互審讓兩個不同的模型互抓盲點，比單一模型自產自審多一層保險。兩個角度指向同一結論，這套修正版才定案。</p>
+    <p>同一套修正亦可由另一角度驗算。從額度看，判斷集中在規格與驗收、執行下放，旗艦 token 才不會耗在打字上；從品質看，次級模型產、旗艦模型審，再加跨模型盲審，比單一模型自產自審多一層把關。兩個角度指向同一結論，故這套修正版才定案。</p>
 
     <h2>最後由我審核定案</h2>
 
-    <p>整段互動裡，AI 做了兩件事：指出我的設計與系統現實的落差，以及提出修正方案。但有幾件事不能給 AI 執行。重要、但規格已經明確的工作該歸哪一層，由我決定走「次級模型產、旗艦模型審」；整套模式要不要採用、授權範圍到哪裡，也是我決定。</p>
+    <p>整段互動裡，AI 指出我的設計與系統現實的落差，並提出修正方案。惟重要、但規格已經明確的工作該歸哪一層，由我決定走「次級模型產、旗艦模型審」；整套模式要不要採用、授權範圍到哪裡，也是我決定。</p>
 
     <p>這正是我在〈<a href="about.html">關於傑夫哥</a>〉與〈<a href="services.html">服務項目</a>〉寫的那句話的具體展開：程式與文字可以由 AI 產出，價值在於流程設計與驗證把關。指揮 AI 的核心不是下指令的話術，而是你自己得先有一套判斷標準，讓 AI 的反駁有東西可以對照，讓最終的裁決有依據。</p>
 
