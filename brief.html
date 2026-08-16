@@ -339,15 +339,15 @@
 (function () {
   "use strict";
 
-  /* TODO(Jeff): replace this placeholder with the live Cloudflare Worker base URL.
-     Jeff is creating the Worker outside this repo. Until that URL is set, this
-     page must keep rendering chrome plus an empty or error state. Do not invent
-     ruling numbers or official titles if the Worker is not ready. */
-  var WORKER_BASE = "https://tax-brief.example.workers.dev";
+  /* Live Cloudflare Worker. Jeff is still filling the feed.
+     Hello World HTML, non-JSON, and health-only stubs are "API not ready".
+     Do not invent ruling numbers or official titles. */
+  var WORKER_BASE = "https://tax-brief.fengyen0812.workers.dev";
 
-  /* Expected JSON (either shape is fine):
+  /* Feed JSON (either shape is fine):
      1) { generatedAt, items: [{ title, source, date, url, country, kind, live }] }
      2) { generatedAt, snapshot:[], rulings:[], drafts:[], today:[], yesterday:[], live:[] }
+     Advertised path today: /feed
      country: tw | us | hk | sg | jp | kr | cn
      kind: ruling | draft | live | highlight
      title stays in the official language. This page never translates titles. */
@@ -375,6 +375,7 @@
       empty: "今日尚無新發布",
       loading: "讀取中…",
       error: "目前讀不到資料來源，請稍後再試。本頁不會自行編造函釋字號。",
+      notReady: "資料來源尚未就緒。本頁不會自行編造函釋字號。",
       updated: "資料時間",
       tw: "台灣", us: "美國", apac: "亞太區",
       hk: "香港", sg: "新加坡", jp: "日本", kr: "韓國", cn: "中國",
@@ -402,6 +403,7 @@
       empty: "No new releases today",
       loading: "Loading…",
       error: "The data source could not be read. Try again later. This page will not invent ruling numbers.",
+      notReady: "The API is not ready yet. This page will not invent ruling numbers.",
       updated: "Source time",
       tw: "Taiwan", us: "United States", apac: "Asia Pacific",
       hk: "Hong Kong", sg: "Singapore", jp: "Japan", kr: "Korea", cn: "China",
@@ -416,6 +418,7 @@
     window: "today",
     payload: null,
     error: false,
+    notReady: false,
     loading: true
   };
 
@@ -547,23 +550,73 @@
 
   function workerPaths() {
     var base = String(WORKER_BASE || "").replace(/\/+$/, "");
-    return [base + "/releases.json", base];
+    return [base + "/feed", base + "/releases.json", base];
+  }
+
+  function looksLikeHelloWorld(text) {
+    var s = String(text || "").replace(/^\uFEFF/, "").trim();
+    if (!s) return true;
+    if (/^<!doctype html/i.test(s) || /^<html[\s>]/i.test(s)) return true;
+    if (/hello\s*world/i.test(s) && s.length < 400) return true;
+    return false;
+  }
+
+  function isFeedPayload(data) {
+    if (Array.isArray(data)) return true;
+    if (!data || typeof data !== "object") return false;
+    if (Array.isArray(data.items)) return true;
+    var keys = ["snapshot", "highlights", "rulings", "drafts", "today", "yesterday", "live", "releases"];
+    for (var i = 0; i < keys.length; i++) {
+      if (Array.isArray(data[keys[i]])) return true;
+    }
+    return false;
+  }
+
+  function parseWorkerBody(text) {
+    if (looksLikeHelloWorld(text)) {
+      var err = new Error("api-not-ready");
+      err.code = "not-ready";
+      throw err;
+    }
+    var data;
+    try {
+      data = JSON.parse(text);
+    } catch (e) {
+      var bad = new Error("non-json");
+      bad.code = "not-ready";
+      throw bad;
+    }
+    if (!isFeedPayload(data)) {
+      var stub = new Error("api-not-ready");
+      stub.code = "not-ready";
+      throw stub;
+    }
+    return data;
   }
 
   function fetchBrief() {
     var paths = workerPaths();
     var i = 0;
+    var lastCode = "error";
     function next() {
-      if (i >= paths.length) return Promise.reject(new Error("worker-unavailable"));
+      if (i >= paths.length) {
+        var done = new Error("worker-unavailable");
+        done.code = lastCode;
+        return Promise.reject(done);
+      }
       var url = paths[i++];
       var ctrl = new AbortController();
       var timer = setTimeout(function () { ctrl.abort(); }, 8000);
       return fetch(url, { credentials: "omit", signal: ctrl.signal }).then(function (res) {
-        if (!res.ok) throw new Error("http-" + res.status);
-        return res.json();
+        return res.text().then(function (text) {
+          var data = parseWorkerBody(text);
+          if (!res.ok) throw new Error("http-" + res.status);
+          return data;
+        });
       }).finally(function () {
         clearTimeout(timer);
-      }).catch(function () {
+      }).catch(function (err) {
+        if (err && err.code === "not-ready") lastCode = "not-ready";
         return next();
       });
     }
@@ -583,10 +636,16 @@
     return true;
   }
 
+  function failMessage() {
+    if (state.notReady) return t("notReady");
+    if (state.error) return t("error");
+    return t("empty");
+  }
+
   function emptyBox() {
     var d = document.createElement("div");
     d.className = "brief-empty";
-    d.textContent = state.error ? t("error") : t("empty");
+    d.textContent = failMessage();
     return d;
   }
 
@@ -690,6 +749,20 @@
   }
 
   function renderAll() {
+    try {
+      renderAllUnsafe();
+    } catch (e) {
+      state.error = !state.notReady;
+      var banner = document.getElementById("brief-banner");
+      if (banner) {
+        banner.hidden = false;
+        banner.className = "brief-banner error";
+        banner.textContent = failMessage();
+      }
+    }
+  }
+
+  function renderAllUnsafe() {
     var banner = document.getElementById("brief-banner");
     var status = document.getElementById("brief-status");
     var items = state.payload ? state.payload.items : [];
@@ -700,10 +773,10 @@
     if (state.loading) {
       banner.hidden = true;
       status.textContent = t("loading");
-    } else if (state.error) {
+    } else if (state.notReady || state.error) {
       banner.hidden = false;
       banner.className = "brief-banner error";
-      banner.textContent = t("error");
+      banner.textContent = failMessage();
       status.textContent = "";
     } else {
       banner.hidden = true;
@@ -766,11 +839,18 @@
     fetchBrief().then(function (data) {
       state.loading = false;
       state.error = false;
-      state.payload = normalizePayload(data);
+      state.notReady = false;
+      try {
+        state.payload = normalizePayload(data);
+      } catch (e) {
+        state.notReady = true;
+        state.payload = { generatedAt: "", items: [] };
+      }
       renderAll();
-    }).catch(function () {
+    }).catch(function (err) {
       state.loading = false;
-      state.error = true;
+      state.notReady = !!(err && err.code === "not-ready");
+      state.error = !state.notReady;
       state.payload = { generatedAt: "", items: [] };
       renderAll();
     });
