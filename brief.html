@@ -6,6 +6,7 @@
 <title>稅訊｜官方函釋與法規草案速覽｜稅務 x 美股 x AI</title>
 <meta name="description" content="整理台灣、美國與亞太官方稅務發布的標題、來源與日期。點列後開官方原文。教育整理，不是稅務意見。">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/brief.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gelasio:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -29,304 +30,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script src="js/site.js" defer></script>
-<style>
-  body.brief-page {
-    font-family: "Noto Sans TC", "PingFang TC", -apple-system, "Segoe UI", sans-serif;
-    background: #F4ECE8;
-  }
-  .brief-serif { font-family: Gelasio, "Times New Roman", serif; }
-  .brief-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
-  }
-  .brief-date {
-    font-family: Gelasio, "Times New Roman", serif;
-    font-size: 1.02rem;
-    color: var(--muted);
-    letter-spacing: .01em;
-  }
-  .brief-top h1 {
-    margin-top: .2rem;
-    font-size: clamp(2rem, 4.2vw, 2.7rem);
-    color: var(--navy);
-    line-height: 1.15;
-    font-weight: 700;
-  }
-  .brief-lead {
-    margin-top: .45rem;
-    max-width: 36rem;
-    color: var(--ink);
-    font-size: .95rem;
-  }
-  .brief-actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: flex-end;
-    gap: .55rem;
-  }
-  .brief-lang {
-    display: inline-flex;
-    align-items: center;
-    gap: .35rem;
-    border: 1px solid var(--gold);
-    background: #fff;
-    border-radius: 999px;
-    padding: .28rem .7rem;
-    font-size: .82rem;
-    font-weight: 700;
-    color: var(--navy);
-  }
-  .brief-lang button {
-    font: inherit;
-    border: 0;
-    background: transparent;
-    color: var(--muted);
-    cursor: pointer;
-    padding: 0 .12rem;
-  }
-  .brief-lang button.active { color: var(--navy); }
-  .brief-lang button:hover { color: var(--gold); }
-  .brief-refresh {
-    font: inherit;
-    font-size: .88rem;
-    font-weight: 700;
-    cursor: pointer;
-    color: #fff;
-    background: #1F8A4C;
-    border: 0;
-    border-radius: 999px;
-    padding: .48rem 1.15rem;
-    box-shadow: 0 6px 16px rgba(31, 138, 76, 0.22);
-  }
-  .brief-refresh:hover { background: #187541; }
-  .brief-refresh[aria-expanded="true"] { background: #0F766E; }
-  .brief-pills { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 1.15rem; }
-  .brief-chip {
-    font: inherit;
-    font-size: .92rem;
-    font-weight: 700;
-    cursor: pointer;
-    color: var(--navy);
-    background: #fff;
-    border: 1px solid #E6DBD4;
-    border-radius: 999px;
-    padding: .38rem 1.05rem;
-  }
-  .brief-chip:hover { border-color: var(--gold); }
-  .brief-chip.active { background: var(--navy); color: #fff; border-color: var(--navy); }
-  .brief-chip.sub { font-weight: 500; background: #FFF6D4; border-color: #F0E2A8; }
-  .brief-chip.sub.active { background: var(--navy); color: #fff; border-color: var(--navy); }
-  .brief-chip.window { background: #E7F6EE; border-color: #C6E6D3; }
-  .brief-chip.window.active { background: #1F8A4C; color: #fff; border-color: #1F8A4C; }
-  .brief-snap {
-    background:
-      radial-gradient(circle at 92% 12%, rgba(255, 246, 212, 0.95), transparent 42%),
-      linear-gradient(145deg, #E7F6EE 0%, #F3FBF6 48%, #FFF6D4 100%);
-    border-radius: 28px;
-    padding: 1.45rem 1.5rem 1.55rem;
-    box-shadow: 0 12px 34px rgba(36, 59, 85, 0.07);
-    margin-bottom: 1.15rem;
-  }
-  .brief-kicker {
-    display: inline-block;
-    font-size: .74rem;
-    font-weight: 700;
-    letter-spacing: .04em;
-    color: #1F8A4C;
-    background: rgba(255,255,255,.72);
-    border-radius: 999px;
-    padding: .18rem .7rem;
-    margin-bottom: .55rem;
-  }
-  .brief-snap h2,
-  .brief-daily h2,
-  .brief-drawer h2 {
-    font-size: 1.28rem;
-    color: var(--navy);
-    margin: 0 0 .85rem;
-    line-height: 1.3;
-  }
-  .brief-daily {
-    background: #fff;
-    border-radius: 28px;
-    padding: 1.35rem 1.4rem 1.5rem;
-    box-shadow: 0 10px 30px rgba(36, 59, 85, 0.06);
-  }
-  .brief-daily-head {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: .7rem;
-    margin-bottom: .35rem;
-  }
-  .brief-window { display: flex; flex-wrap: wrap; gap: .4rem; }
-  .brief-note {
-    font-size: .82rem;
-    color: var(--muted);
-    margin: 0 0 .9rem;
-  }
-  .brief-list { display: flex; flex-direction: column; gap: .7rem; }
-  .brief-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: .75rem;
-  }
-  .brief-row,
-  .brief-card {
-    display: flex;
-    align-items: center;
-    gap: .9rem;
-    text-decoration: none;
-    color: inherit;
-    border-radius: 22px;
-    padding: 1.05rem 1.15rem;
-    min-height: 78px;
-    box-shadow: 0 4px 16px rgba(36, 59, 85, 0.05);
-    transition: transform .15s ease, box-shadow .15s ease;
-  }
-  .brief-card { min-height: 0; }
-  .brief-row:hover,
-  .brief-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 26px rgba(36, 59, 85, 0.1);
-  }
-  .brief-row.mint,
-  .brief-card.mint { background: #E7F6EE; }
-  .brief-row.yellow,
-  .brief-card.yellow { background: #FFF6D4; }
-  .brief-row.teal,
-  .brief-card.teal { background: #DDF4F2; }
-  .brief-row.gazette,
-  .brief-card.gazette { background: #E3F7EE; }
-  .brief-row.cream,
-  .brief-card.cream { background: #FFFCF7; }
-  .brief-type {
-    display: inline-block;
-    flex: none;
-    font-size: .72rem;
-    font-weight: 700;
-    border-radius: 999px;
-    padding: .16rem .58rem;
-  }
-  .brief-type.ruling { background: #1F8A4C; color: #fff; }
-  .brief-type.draft { background: #E3B341; color: #3D2E00; }
-  .brief-type.ir { background: #0F766E; color: #fff; }
-  .brief-type.gazette { background: #5BB89A; color: #08382C; }
-  .brief-type.live { background: #0F766E; color: #fff; }
-  .brief-type.other { background: var(--navy); color: #fff; }
-  .brief-grow { flex: 1; min-width: 0; }
-  .brief-row .title,
-  .brief-card .title {
-    font-size: 1.02rem;
-    font-weight: 700;
-    color: var(--navy);
-    line-height: 1.45;
-  }
-  .brief-meta {
-    margin-top: .22rem;
-    font-family: Gelasio, "Times New Roman", serif;
-    font-size: .86rem;
-    color: var(--muted);
-  }
-  .brief-chevron {
-    flex: none;
-    font-family: Gelasio, "Times New Roman", serif;
-    font-size: 1.55rem;
-    line-height: 1;
-    color: var(--gold);
-  }
-  .brief-empty {
-    border-radius: 22px;
-    padding: 1.5rem 1.2rem 1.55rem;
-    text-align: center;
-    background:
-      radial-gradient(circle at 20% 20%, rgba(231, 246, 238, 0.95), transparent 46%),
-      radial-gradient(circle at 86% 80%, rgba(255, 246, 212, 0.95), transparent 42%),
-      #FFFCF7;
-    box-shadow: inset 0 0 0 1px rgba(201, 149, 90, 0.12);
-  }
-  .brief-empty-art {
-    display: flex;
-    justify-content: center;
-    gap: .45rem;
-    margin-bottom: .7rem;
-  }
-  .brief-empty-art span {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    display: inline-block;
-  }
-  .brief-empty-art .a { background: #1F8A4C; }
-  .brief-empty-art .b { background: #E3B341; }
-  .brief-empty-art .c { background: #0F766E; }
-  .brief-empty-title {
-    font-size: 1.12rem;
-    font-weight: 700;
-    color: var(--navy);
-  }
-  .brief-empty-hint {
-    margin-top: .35rem;
-    font-size: .88rem;
-    color: var(--muted);
-  }
-  .brief-edu {
-    margin-top: 1.5rem;
-    font-size: .82rem;
-    color: var(--muted);
-    background: var(--surface-warm);
-    border-radius: 18px;
-    padding: .95rem 1.15rem;
-  }
-  .brief-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(36, 59, 85, 0.28);
-    z-index: 70;
-  }
-  .brief-drawer {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: min(420px, 100%);
-    height: 100%;
-    z-index: 80;
-    background:
-      linear-gradient(180deg, #E7F6EE 0%, #FFFCF7 38%, #FFF6D4 100%);
-    box-shadow: -12px 0 40px rgba(36, 59, 85, 0.16);
-    padding: 1.25rem 1.2rem 1.6rem;
-    overflow: auto;
-  }
-  .brief-drawer-head {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: .7rem;
-    margin-bottom: .85rem;
-  }
-  .brief-close {
-    font: inherit;
-    font-weight: 700;
-    cursor: pointer;
-    border: 0;
-    background: #fff;
-    color: var(--navy);
-    border-radius: 999px;
-    padding: .35rem .8rem;
-  }
-  [hidden] { display: none !important; }
-  @media (max-width: 720px) {
-    .brief-top { flex-direction: column; align-items: flex-start; }
-    .brief-actions { justify-content: flex-start; }
-    .brief-snap,
-    .brief-daily { padding: 1.15rem 1.05rem 1.25rem; border-radius: 22px; }
-  }
-</style>
+<script src="js/brief.js" defer></script>
 </head>
 <body class="brief-page" data-no-ads="true">
 
@@ -341,592 +45,140 @@
       <a href="resources.html" data-i18n="navResources">官方資源</a>
       <a href="brief.html" class="active" data-nav="brief" data-i18n="navBrief">稅訊</a>
     </nav>
+    <div class="brief-lang" role="group" aria-label="語言">
+      <button type="button" id="lang-zh" class="active" aria-pressed="true">繁</button>
+      <span aria-hidden="true">|</span>
+      <button type="button" id="lang-en" aria-pressed="false">EN</button>
+    </div>
     <button class="nav-toggle" aria-label="選單" aria-expanded="false" aria-controls="main-nav">☰</button>
   </div>
 </header>
 
 <main>
-  <div class="brief-top">
-    <div>
-      <p class="brief-date" id="brief-date"></p>
-      <h1 class="brief-serif" data-i18n="pageTitle">稅訊</h1>
-      <p class="brief-lead" data-i18n="lead">整理台灣、美國與亞太官方稅務發布的標題、來源與日期。點列後另開官方原文，本頁不代管全文。</p>
-    </div>
-    <div class="brief-actions">
-      <div class="brief-lang" role="group" aria-label="語言">
-        <button type="button" id="lang-zh" class="active" aria-pressed="true">繁</button>
-        <span aria-hidden="true">|</span>
-        <button type="button" id="lang-en" aria-pressed="false">EN</button>
+  <section class="brief-head">
+    <p class="brief-date" id="brief-date"></p>
+    <h1 class="brief-serif" data-i18n="pageTitle">稅訊</h1>
+    <div class="brief-toolbar">
+      <div>
+        <div class="brief-pills" id="country-filters" role="group" aria-label="國家篩選"></div>
+        <div class="brief-apac" id="apac-filters" hidden></div>
       </div>
-      <button type="button" class="brief-refresh" id="live-open" aria-expanded="false" aria-controls="live-panel" data-i18n="refresh">更新</button>
+      <button type="button" class="brief-refresh" id="refresh-btn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.2-5.5"/><path d="M20 4v6h-6"/></svg>
+        <span data-i18n="refresh">更新</span>
+      </button>
     </div>
-  </div>
-
-  <div class="brief-pills" id="country-filters" role="group" aria-label="國家篩選"></div>
-  <div class="brief-pills" id="apac-filters" hidden></div>
-
-  <section class="brief-snap" aria-labelledby="snap-title">
-    <div class="brief-kicker" data-i18n="kicker">官方發布速覽 · 免費閱讀</div>
-    <h2 id="snap-title" data-i18n="snapshot">當日重點快照</h2>
-    <div class="brief-cards" id="snap-list"></div>
+    <p class="brief-scope" data-i18n="scope">教育用途，不是諮詢。</p>
+    <p class="brief-hint" data-i18n="hint">點標題開官方原文</p>
   </section>
 
-  <section class="brief-daily" aria-labelledby="tw-title">
-    <div class="brief-daily-head">
-      <h2 id="tw-title" data-i18n="twKinds">新頒函釋 / 法規草案</h2>
-      <div class="brief-window" role="group" aria-label="日期視窗">
-        <button type="button" class="brief-chip window active" data-window="today" data-i18n="today">今天</button>
-        <button type="button" class="brief-chip window" data-window="yesterday" data-i18n="yesterday">昨天</button>
-      </div>
-    </div>
-    <p class="brief-note" data-i18n="windowNote">視窗以台北時間計算。內容為教育整理，不是稅務意見。</p>
-    <div class="brief-list" id="daily-list"></div>
-  </section>
-
-  <div class="brief-edu" data-i18n="footerEdu">本頁只做官方標題索引，請以各機關網站的原文與生效日為準。個案請詢問你的合格稅務專業人員。</div>
-</main>
-
-<div class="brief-overlay" id="live-overlay" hidden></div>
-<aside class="brief-drawer" id="live-panel" hidden role="dialog" aria-modal="true" aria-labelledby="live-title">
-  <div class="brief-drawer-head">
-    <div>
-      <div class="brief-kicker" data-i18n="liveKicker">獨立面板</div>
+  <section class="brief-live" id="live-panel" aria-labelledby="live-title">
+    <div class="brief-live-top">
       <h2 id="live-title" data-i18n="liveTitle">即時更新</h2>
+      <p class="brief-live-meta" id="live-meta"></p>
     </div>
-    <button type="button" class="brief-close" id="live-close" data-i18n="close">關閉</button>
+    <div class="brief-live-grid">
+      <div class="brief-live-col">
+        <h3 data-i18n="rulings">新頒函釋</h3>
+        <div class="brief-list" id="live-rulings"></div>
+      </div>
+      <div class="brief-live-col">
+        <h3 data-i18n="drafts">法規草案</h3>
+        <div class="brief-list" id="live-drafts"></div>
+      </div>
+    </div>
+  </section>
+
+  <div id="brief-banner" class="brief-banner" hidden></div>
+
+  <div class="brief-reader">
+    <section class="brief-snap" aria-labelledby="snap-title">
+      <h2 id="snap-title" data-i18n="snapshot">當日重點快照</h2>
+      <div class="brief-snap-list" id="snap-list"></div>
+    </section>
+
+    <section class="brief-block" id="block-rulings" aria-labelledby="ruling-title">
+      <h2 id="ruling-title" data-i18n="rulings">新頒函釋</h2>
+      <div class="brief-day">
+        <div class="brief-day-label" data-i18n="today">今天</div>
+        <div class="brief-list" id="ruling-today"></div>
+      </div>
+      <div class="brief-day">
+        <div class="brief-day-label" data-i18n="yesterday">昨天</div>
+        <div class="brief-list" id="ruling-yesterday"></div>
+      </div>
+    </section>
+
+    <section class="brief-block" id="block-drafts" aria-labelledby="draft-title">
+      <h2 id="draft-title" data-i18n="drafts">法規草案</h2>
+      <div class="brief-day">
+        <div class="brief-day-label" data-i18n="today">今天</div>
+        <div class="brief-list" id="draft-today"></div>
+      </div>
+      <div class="brief-day">
+        <div class="brief-day-label" data-i18n="yesterday">昨天</div>
+        <div class="brief-list" id="draft-yesterday"></div>
+      </div>
+    </section>
+
+    <section class="brief-block" id="block-gazette" hidden aria-labelledby="gazette-title">
+      <h2 id="gazette-title" data-i18n="gazette">公報</h2>
+      <div class="brief-day">
+        <div class="brief-day-label" data-i18n="today">今天</div>
+        <div class="brief-list" id="gazette-today"></div>
+      </div>
+      <div class="brief-day">
+        <div class="brief-day-label" data-i18n="yesterday">昨天</div>
+        <div class="brief-list" id="gazette-yesterday"></div>
+      </div>
+    </section>
+
+    <section class="brief-block" id="block-ir" hidden aria-labelledby="ir-title">
+      <h2 id="ir-title" data-i18n="ir">IRS 新聞</h2>
+      <div class="brief-day">
+        <div class="brief-day-label" data-i18n="today">今天</div>
+        <div class="brief-list" id="ir-today"></div>
+      </div>
+      <div class="brief-day">
+        <div class="brief-day-label" data-i18n="yesterday">昨天</div>
+        <div class="brief-list" id="ir-yesterday"></div>
+      </div>
+    </section>
+
+    <section class="brief-block" id="block-fr" hidden aria-labelledby="fr-title">
+      <h2 id="fr-title" data-i18n="fr">聯邦公報</h2>
+      <div class="brief-day">
+        <div class="brief-day-label" data-i18n="today">今天</div>
+        <div class="brief-list" id="fr-today"></div>
+      </div>
+      <div class="brief-day">
+        <div class="brief-day-label" data-i18n="yesterday">昨天</div>
+        <div class="brief-list" id="fr-yesterday"></div>
+      </div>
+    </section>
+
+    <section class="brief-block" id="block-news" hidden aria-labelledby="news-title">
+      <h2 id="news-title" data-i18n="news">官方發布</h2>
+      <div class="brief-day">
+        <div class="brief-day-label" data-i18n="today">今天</div>
+        <div class="brief-list" id="news-today"></div>
+      </div>
+      <div class="brief-day">
+        <div class="brief-day-label" data-i18n="yesterday">昨天</div>
+        <div class="brief-list" id="news-yesterday"></div>
+      </div>
+    </section>
+
+    <p class="brief-status" id="brief-status"></p>
   </div>
-  <p class="brief-note" data-i18n="liveNote">不混進今日或昨日清單。點列後另開官方原文。</p>
-  <div class="brief-list" id="live-list"></div>
-</aside>
+</main>
 
 <footer class="site-footer">
   <div class="footer-inner">
     <p><strong>稅務 x 美股 x AI</strong>｜傑夫哥　·　<a href="disclaimer.html" data-i18n="footerDisclaimer">免責聲明</a></p>
-    <p class="footer-disclaimer" data-i18n="footerLine">本網站內容為教育性質與個人觀點分享，不構成任何投資建議或稅務專業意見。© 2026 稅務 x 美股 x AI</p>
+    <p class="footer-disclaimer">© 2026 稅務 x 美股 x AI</p>
   </div>
 </footer>
 
-<script>
-(function () {
-  "use strict";
-
-  /* Live Cloudflare Worker. Hello World, non-JSON, and [] all show the designed empty state. */
-  var WORKER_BASE = "https://tax-brief.fengyen0812.workers.dev";
-
-  var I18N = {
-    zh: {
-      navHome: "首頁", navArticles: "文章", navServices: "服務項目", navAbout: "關於傑夫哥",
-      navResources: "官方資源", navBrief: "稅訊",
-      kicker: "官方發布速覽 · 免費閱讀",
-      pageTitle: "稅訊",
-      lead: "整理台灣、美國與亞太官方稅務發布的標題、來源與日期。點列後另開官方原文，本頁不代管全文。",
-      snapshot: "當日重點快照",
-      twKinds: "新頒函釋 / 法規草案",
-      today: "今天", yesterday: "昨天",
-      windowNote: "視窗以台北時間計算。內容為教育整理，不是稅務意見。",
-      refresh: "更新",
-      liveKicker: "獨立面板",
-      liveTitle: "即時更新",
-      liveNote: "不混進今日或昨日清單。點列後另開官方原文。",
-      close: "關閉",
-      footerEdu: "本頁只做官方標題索引，請以各機關網站的原文與生效日為準。個案請詢問你的合格稅務專業人員。",
-      footerDisclaimer: "免責聲明",
-      footerLine: "本網站內容為教育性質與個人觀點分享，不構成任何投資建議或稅務專業意見。© 2026 稅務 x 美股 x AI",
-      empty: "今日尚無新發布",
-      emptyHint: "官方一有新發布，標題就會出現在這裡。本頁不會自行編造函釋字號。",
-      loading: "讀取中…",
-      tw: "台灣", us: "美國", apac: "亞太區",
-      hk: "香港", sg: "新加坡", jp: "日本", kr: "韓國", cn: "中國",
-      typeRuling: "函釋", typeDraft: "草案", typeIR: "IR", typeGazette: "公報",
-      typeLive: "即時", typeOther: "發布"
-    },
-    en: {
-      navHome: "Home", navArticles: "Articles", navServices: "Services", navAbout: "About",
-      navResources: "Resources", navBrief: "Tax Brief",
-      kicker: "Official releases · free to read",
-      pageTitle: "Tax Brief",
-      lead: "Official tax-release titles, sources, and dates for Taiwan, the US, and Asia Pacific. Each row opens the official page. This page does not host full official text.",
-      snapshot: "Today's snapshot",
-      twKinds: "New rulings / draft rules",
-      today: "Today", yesterday: "Yesterday",
-      windowNote: "The window uses Taipei time. Education, not tax advice.",
-      refresh: "Refresh",
-      liveKicker: "Separate panel",
-      liveTitle: "Live updates",
-      liveNote: "Not mixed into the today or yesterday list. Each row opens the official page.",
-      close: "Close",
-      footerEdu: "This page is a title index only. Use the official site for the full text and effective date. For a personal case, ask a qualified tax professional.",
-      footerDisclaimer: "Disclaimer",
-      footerLine: "Content is educational and personal views. It is not investment advice or professional tax advice. © 2026 TaxCode x US Stocks x AI",
-      empty: "No new releases today",
-      emptyHint: "Official titles will show up here when the source publishes them. This page will not invent ruling numbers.",
-      loading: "Loading…",
-      tw: "Taiwan", us: "United States", apac: "Asia Pacific",
-      hk: "Hong Kong", sg: "Singapore", jp: "Japan", kr: "Korea", cn: "China",
-      typeRuling: "Ruling", typeDraft: "Draft", typeIR: "IR", typeGazette: "Gazette",
-      typeLive: "Live", typeOther: "Release"
-    }
-  };
-
-  var state = {
-    lang: "zh",
-    country: "tw",
-    apac: "",
-    window: "today",
-    payload: null,
-    loading: true,
-    liveOpen: false
-  };
-
-  function t(key) {
-    return (I18N[state.lang] && I18N[state.lang][key]) || I18N.zh[key] || key;
-  }
-
-  function applyChrome() {
-    document.documentElement.lang = state.lang === "en" ? "en" : "zh-Hant";
-    document.querySelectorAll("[data-i18n]").forEach(function (el) {
-      var key = el.getAttribute("data-i18n");
-      if (key) el.textContent = t(key);
-    });
-    var zhBtn = document.getElementById("lang-zh");
-    var enBtn = document.getElementById("lang-en");
-    zhBtn.classList.toggle("active", state.lang === "zh");
-    enBtn.classList.toggle("active", state.lang === "en");
-    zhBtn.setAttribute("aria-pressed", state.lang === "zh" ? "true" : "false");
-    enBtn.setAttribute("aria-pressed", state.lang === "en" ? "true" : "false");
-    document.getElementById("brief-date").textContent = formatDateHeader();
-    renderFilters();
-    renderAll();
-  }
-
-  function formatDateHeader() {
-    var now = new Date();
-    if (state.lang === "en") {
-      return new Intl.DateTimeFormat("en-GB", {
-        timeZone: "Asia/Taipei",
-        weekday: "long",
-        day: "numeric",
-        month: "long",
-        year: "numeric"
-      }).format(now);
-    }
-    var parts = {};
-    new Intl.DateTimeFormat("zh-Hant", {
-      timeZone: "Asia/Taipei",
-      weekday: "short",
-      day: "numeric",
-      month: "numeric",
-      year: "numeric"
-    }).formatToParts(now).forEach(function (p) { parts[p.type] = p.value; });
-    return parts.year + "年" + parts.month + "月" + parts.day + "日 " + parts.weekday;
-  }
-
-  function taipeiYmd(date) {
-    var fmt = new Intl.DateTimeFormat("en-US", {
-      timeZone: "Asia/Taipei",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit"
-    });
-    var parts = {};
-    fmt.formatToParts(date).forEach(function (p) { parts[p.type] = p.value; });
-    return parts.year + "-" + parts.month + "-" + parts.day;
-  }
-
-  function yesterdayTaipei(today) {
-    var now = new Date();
-    for (var i = 1; i <= 48; i++) {
-      var y = taipeiYmd(new Date(now.getTime() - i * 3600000));
-      if (y !== today) return y;
-    }
-    return today;
-  }
-
-  function isHttpUrl(s) {
-    try {
-      var u = new URL(s);
-      return u.protocol === "http:" || u.protocol === "https:";
-    } catch (e) {
-      return false;
-    }
-  }
-
-  function normalizeDate(v) {
-    if (!v) return "";
-    var s = String(v).trim();
-    var m = s.match(/^(\d{4}-\d{2}-\d{2})/);
-    if (m) return m[1];
-    var d = new Date(s);
-    if (!isNaN(d.getTime())) return taipeiYmd(d);
-    return "";
-  }
-
-  function normalizeCountry(v) {
-    var s = String(v || "").trim().toLowerCase();
-    if (/^(tw|taiwan|台灣|臺灣|台湾)$/.test(s)) return "tw";
-    if (/^(us|usa|united states|美國|美国)$/.test(s)) return "us";
-    if (/^(hk|hong ?kong|香港)$/.test(s)) return "hk";
-    if (/^(sg|singapore|新加坡)$/.test(s)) return "sg";
-    if (/^(jp|japan|日本)$/.test(s)) return "jp";
-    if (/^(kr|korea|韓國|韩国|南韓|南韩)$/.test(s)) return "kr";
-    if (/^(cn|china|中國|中国|prc)$/.test(s)) return "cn";
-    return "";
-  }
-
-  function normalizeKind(v) {
-    var s = String(v || "").trim().toLowerCase();
-    if (/\bir\b|internal revenue|revenue ruling/.test(s)) return "ir";
-    if (/gazette|公報|bulletin|公告/.test(s)) return "gazette";
-    if (/ruling|函釋|函释|interpretation|letter/.test(s)) return "ruling";
-    if (/draft|草案|bill/.test(s)) return "draft";
-    if (/live|realtime|real-time|即時|即时/.test(s)) return "live";
-    if (/highlight|snapshot|快照/.test(s)) return "highlight";
-    return "";
-  }
-
-  function normalizeItem(raw, sectionHint) {
-    if (!raw || typeof raw !== "object") return null;
-    var title = String(raw.title || raw.name || "").trim();
-    var url = String(raw.url || raw.href || raw.link || "").trim();
-    if (!title || !isHttpUrl(url)) return null;
-    var kind = normalizeKind(raw.kind || raw.type || raw.category || sectionHint);
-    var live = !!(raw.live || raw.isLive || raw.realtime || kind === "live" || sectionHint === "live");
-    if (live) kind = kind || "live";
-    return {
-      title: title,
-      source: String(raw.source || raw.publisher || raw.agency || "").trim(),
-      date: normalizeDate(raw.date || raw.published || raw.publishedAt || raw.pubDate),
-      url: url,
-      country: normalizeCountry(raw.country || raw.jurisdiction || raw.region),
-      kind: kind,
-      section: String(raw.section || sectionHint || "").toLowerCase(),
-      live: live
-    };
-  }
-
-  function asArray(v) { return Array.isArray(v) ? v : []; }
-
-  function normalizePayload(data) {
-    if (Array.isArray(data)) {
-      return { generatedAt: "", items: data.map(function (x) { return normalizeItem(x, ""); }).filter(Boolean) };
-    }
-    if (!data || typeof data !== "object") return { generatedAt: "", items: [] };
-    var items = [];
-    if (Array.isArray(data.items)) {
-      items = data.items.map(function (x) { return normalizeItem(x, ""); }).filter(Boolean);
-    } else {
-      ["snapshot", "highlights", "rulings", "drafts", "today", "yesterday", "live", "releases"].forEach(function (key) {
-        asArray(data[key]).forEach(function (raw) {
-          var hint = key === "highlights" || key === "snapshot" ? "highlight" : key === "rulings" ? "ruling" : key === "drafts" ? "draft" : key === "live" ? "live" : "";
-          var item = normalizeItem(raw, hint);
-          if (item) items.push(item);
-        });
-      });
-    }
-    return {
-      generatedAt: String(data.generatedAt || data.updatedAt || data.generated_at || ""),
-      items: items
-    };
-  }
-
-  function countryQuery() {
-    if (state.country === "us") return "us";
-    if (state.country === "apac") return state.apac || "hk,sg,jp,kr,cn";
-    return "tw";
-  }
-
-  function workerPaths() {
-    var base = String(WORKER_BASE || "").replace(/\/+$/, "");
-    return [
-      base + "/feed?countries=" + encodeURIComponent(countryQuery()),
-      base + "/feed",
-      base
-    ];
-  }
-
-  function looksLikeHelloWorld(text) {
-    var s = String(text || "").replace(/^\uFEFF/, "").trim();
-    if (!s) return true;
-    if (/^<!doctype html/i.test(s) || /^<html[\s>]/i.test(s)) return true;
-    if (/hello\s*world/i.test(s) && s.length < 400) return true;
-    return false;
-  }
-
-  function isFeedPayload(data) {
-    if (Array.isArray(data)) return true;
-    if (!data || typeof data !== "object") return false;
-    if (Array.isArray(data.items)) return true;
-    var keys = ["snapshot", "highlights", "rulings", "drafts", "today", "yesterday", "live", "releases"];
-    for (var i = 0; i < keys.length; i++) {
-      if (Array.isArray(data[keys[i]])) return true;
-    }
-    return false;
-  }
-
-  function parseWorkerBody(text) {
-    if (looksLikeHelloWorld(text)) return { items: [] };
-    var data;
-    try {
-      data = JSON.parse(text);
-    } catch (e) {
-      return { items: [] };
-    }
-    if (!isFeedPayload(data)) return { items: [] };
-    return data;
-  }
-
-  function fetchBrief() {
-    var paths = workerPaths();
-    var i = 0;
-    function next() {
-      if (i >= paths.length) return Promise.resolve({ items: [] });
-      var url = paths[i++];
-      var ctrl = new AbortController();
-      var timer = setTimeout(function () { ctrl.abort(); }, 8000);
-      return fetch(url, { credentials: "omit", signal: ctrl.signal }).then(function (res) {
-        return res.text().then(function (text) {
-          var data = parseWorkerBody(text);
-          if (!res.ok && !isFeedPayload(data)) throw new Error("http-" + res.status);
-          return data;
-        });
-      }).finally(function () {
-        clearTimeout(timer);
-      }).catch(function () {
-        return next();
-      });
-    }
-    return next();
-  }
-
-  function matchesCountry(item) {
-    if (!item.country) return true;
-    if (state.country === "tw") return item.country === "tw";
-    if (state.country === "us") return item.country === "us";
-    if (state.country === "apac") {
-      var apac = { hk: 1, sg: 1, jp: 1, kr: 1, cn: 1 };
-      if (!apac[item.country]) return false;
-      if (state.apac) return item.country === state.apac;
-      return true;
-    }
-    return true;
-  }
-
-  function emptyBox() {
-    var wrap = document.createElement("div");
-    wrap.className = "brief-empty";
-    wrap.innerHTML = '<div class="brief-empty-art" aria-hidden="true"><span class="a"></span><span class="b"></span><span class="c"></span></div>';
-    var title = document.createElement("p");
-    title.className = "brief-empty-title";
-    title.textContent = state.loading ? t("loading") : t("empty");
-    var hint = document.createElement("p");
-    hint.className = "brief-empty-hint";
-    hint.textContent = state.loading ? "" : t("emptyHint");
-    wrap.appendChild(title);
-    if (!state.loading) wrap.appendChild(hint);
-    return wrap;
-  }
-
-  function typeLabel(item) {
-    if (item.kind === "ruling") return t("typeRuling");
-    if (item.kind === "draft") return t("typeDraft");
-    if (item.kind === "ir") return t("typeIR");
-    if (item.kind === "gazette") return t("typeGazette");
-    if (item.live || item.kind === "live") return t("typeLive");
-    return t("typeOther");
-  }
-
-  function typeClass(item) {
-    if (item.kind === "ruling") return "ruling";
-    if (item.kind === "draft") return "draft";
-    if (item.kind === "ir") return "ir";
-    if (item.kind === "gazette") return "gazette";
-    if (item.live || item.kind === "live") return "live";
-    return "other";
-  }
-
-  function cardClass(item) {
-    if (item.kind === "ruling") return "mint";
-    if (item.kind === "draft") return "yellow";
-    if (item.kind === "ir") return "teal";
-    if (item.kind === "gazette") return "gazette";
-    return "cream";
-  }
-
-  function renderItem(item, asCard) {
-    var a = document.createElement("a");
-    a.className = (asCard ? "brief-card " : "brief-row ") + cardClass(item);
-    a.href = item.url;
-    a.target = "_blank";
-    a.rel = "noopener noreferrer";
-    var chip = document.createElement("span");
-    chip.className = "brief-type " + typeClass(item);
-    chip.textContent = typeLabel(item);
-    var grow = document.createElement("div");
-    grow.className = "brief-grow";
-    var title = document.createElement("div");
-    title.className = "title";
-    title.textContent = item.title;
-    var meta = document.createElement("div");
-    meta.className = "brief-meta";
-    meta.textContent = [item.source, item.date].filter(Boolean).join(" · ");
-    grow.appendChild(title);
-    grow.appendChild(meta);
-    var chev = document.createElement("span");
-    chev.className = "brief-chevron";
-    chev.setAttribute("aria-hidden", "true");
-    chev.textContent = "›";
-    a.appendChild(chip);
-    a.appendChild(grow);
-    a.appendChild(chev);
-    return a;
-  }
-
-  function fillList(el, items, asCard) {
-    el.innerHTML = "";
-    if (state.loading || !items.length) {
-      el.appendChild(emptyBox());
-      return;
-    }
-    items.forEach(function (item) { el.appendChild(renderItem(item, asCard)); });
-  }
-
-  function renderFilters() {
-    var main = document.getElementById("country-filters");
-    var apac = document.getElementById("apac-filters");
-    main.innerHTML = "";
-    [["tw", t("tw")], ["us", t("us")], ["apac", t("apac")]].forEach(function (pair) {
-      var b = document.createElement("button");
-      b.type = "button";
-      b.className = "brief-chip" + (state.country === pair[0] ? " active" : "");
-      b.textContent = pair[1];
-      b.setAttribute("aria-pressed", state.country === pair[0] ? "true" : "false");
-      b.addEventListener("click", function () {
-        state.country = pair[0];
-        if (pair[0] !== "apac") state.apac = "";
-        renderFilters();
-        loadFeed();
-      });
-      main.appendChild(b);
-    });
-    var showApac = state.country === "apac";
-    apac.hidden = !showApac;
-    apac.innerHTML = "";
-    if (showApac) {
-      [["", t("apac")], ["hk", t("hk")], ["sg", t("sg")], ["jp", t("jp")], ["kr", t("kr")], ["cn", t("cn")]].forEach(function (pair) {
-        var b = document.createElement("button");
-        b.type = "button";
-        b.className = "brief-chip sub" + (state.apac === pair[0] ? " active" : "");
-        b.textContent = pair[1];
-        b.addEventListener("click", function () {
-          state.apac = pair[0];
-          renderFilters();
-          loadFeed();
-        });
-        apac.appendChild(b);
-      });
-    }
-    document.querySelectorAll("[data-window]").forEach(function (b) {
-      var on = b.getAttribute("data-window") === state.window;
-      b.classList.toggle("active", on);
-      b.setAttribute("aria-pressed", on ? "true" : "false");
-    });
-  }
-
-  function setLiveOpen(open) {
-    state.liveOpen = !!open;
-    document.getElementById("live-panel").hidden = !state.liveOpen;
-    document.getElementById("live-overlay").hidden = !state.liveOpen;
-    document.getElementById("live-open").setAttribute("aria-expanded", state.liveOpen ? "true" : "false");
-    if (state.liveOpen) renderAll();
-  }
-
-  function renderAll() {
-    try {
-      var items = state.payload ? state.payload.items : [];
-      var filtered = items.filter(matchesCountry);
-      var today = taipeiYmd(new Date());
-      var yesterday = yesterdayTaipei(today);
-      var snap = filtered.filter(function (it) {
-        return it.kind === "highlight" || it.section === "snapshot" || it.section === "highlights";
-      });
-      var live = filtered.filter(function (it) { return it.live || it.kind === "live" || it.section === "live"; });
-      var day = state.window === "yesterday" ? yesterday : today;
-      var daily = filtered.filter(function (it) {
-        if (it.live || it.kind === "live" || it.section === "live") return false;
-        return it.date === day;
-      });
-      fillList(document.getElementById("snap-list"), snap, true);
-      fillList(document.getElementById("daily-list"), daily, false);
-      fillList(document.getElementById("live-list"), live, false);
-    } catch (e) {
-      fillList(document.getElementById("snap-list"), [], true);
-      fillList(document.getElementById("daily-list"), [], false);
-      fillList(document.getElementById("live-list"), [], false);
-    }
-  }
-
-  function loadFeed() {
-    state.loading = true;
-    renderAll();
-    return fetchBrief().then(function (data) {
-      state.loading = false;
-      try {
-        state.payload = normalizePayload(data);
-      } catch (e) {
-        state.payload = { generatedAt: "", items: [] };
-      }
-      renderAll();
-    }).catch(function () {
-      state.loading = false;
-      state.payload = { generatedAt: "", items: [] };
-      renderAll();
-    });
-  }
-
-  function bind() {
-    document.getElementById("lang-zh").addEventListener("click", function () {
-      state.lang = "zh";
-      try { localStorage.setItem("brief-lang", "zh"); } catch (e) {}
-      applyChrome();
-    });
-    document.getElementById("lang-en").addEventListener("click", function () {
-      state.lang = "en";
-      try { localStorage.setItem("brief-lang", "en"); } catch (e) {}
-      applyChrome();
-    });
-    document.querySelectorAll("[data-window]").forEach(function (b) {
-      b.addEventListener("click", function () {
-        state.window = b.getAttribute("data-window");
-        renderFilters();
-        renderAll();
-      });
-    });
-    document.getElementById("live-open").addEventListener("click", function () {
-      loadFeed().then(function () { setLiveOpen(true); });
-    });
-    document.getElementById("live-close").addEventListener("click", function () { setLiveOpen(false); });
-    document.getElementById("live-overlay").addEventListener("click", function () { setLiveOpen(false); });
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && state.liveOpen) setLiveOpen(false);
-    });
-  }
-
-  function start() {
-    try {
-      var saved = localStorage.getItem("brief-lang");
-      if (saved === "en" || saved === "zh") state.lang = saved;
-    } catch (e) {}
-    bind();
-    applyChrome();
-    loadFeed();
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", start);
-  } else {
-    start();
-  }
-})();
-</script>
 </body>
 </html>
