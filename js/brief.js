@@ -51,6 +51,7 @@
       typeIr: "IR",
       typeFr: "FR",
       typeSample: "示意",
+      close: "關閉",
       footerDisclaimer: "免責聲明"
     },
     en: {
@@ -98,6 +99,7 @@
       typeIr: "IR",
       typeFr: "FR",
       typeSample: "Sample",
+      close: "Close",
       footerDisclaimer: "Disclaimer"
     }
   };
@@ -307,7 +309,7 @@
     document.getElementById("brief-date").textContent = formatHeaderDate(new Date());
     renderFilters();
     renderMain();
-    if (state.liveOpen) renderLive(state.livePayload);
+    if (state.liveOpen) renderLive(state.livePayload, { reopen: false });
   }
 
   function renderFilters() {
@@ -558,13 +560,32 @@
     }
   }
 
-  function renderLive(payload) {
+  function openLive() {
     var panel = document.getElementById("live-panel");
+    var overlay = document.getElementById("live-overlay");
+    var btn = document.getElementById("refresh-btn");
+    panel.classList.add("open");
+    overlay.hidden = false;
+    state.liveOpen = true;
+    btn.setAttribute("aria-expanded", "true");
+    document.getElementById("live-close").focus();
+  }
+
+  function closeLive() {
+    var panel = document.getElementById("live-panel");
+    var overlay = document.getElementById("live-overlay");
+    var btn = document.getElementById("refresh-btn");
+    panel.classList.remove("open");
+    overlay.hidden = true;
+    state.liveOpen = false;
+    btn.setAttribute("aria-expanded", "false");
+  }
+
+  function renderLive(payload, opts) {
     var meta = document.getElementById("live-meta");
     var rulings = document.getElementById("live-rulings");
     var drafts = document.getElementById("live-drafts");
-    panel.classList.add("open");
-    state.liveOpen = true;
+    if (!opts || opts.reopen !== false) openLive();
 
     var items = payload && payload.items ? payload.items : [];
     if (!items.length) {
@@ -638,12 +659,20 @@
       try { localStorage.setItem("brief-lang", "en"); } catch (e) {}
       applyChrome();
     });
-    document.getElementById("refresh-btn").addEventListener("click", function () {
-      var panel = document.getElementById("live-panel");
-      panel.classList.add("open");
-      state.liveOpen = true;
-      panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    var refresh = document.getElementById("refresh-btn");
+    refresh.addEventListener("click", function () {
+      openLive();
+      document.getElementById("live-meta").textContent = t("loading");
+      document.getElementById("live-rulings").innerHTML = "";
+      document.getElementById("live-drafts").innerHTML = "";
+      document.getElementById("live-rulings").appendChild(emptyCard("loading", "hint"));
+      document.getElementById("live-drafts").appendChild(emptyCard("loading", "hint"));
       loadFeed(true);
+    });
+    document.getElementById("live-close").addEventListener("click", closeLive);
+    document.getElementById("live-overlay").addEventListener("click", closeLive);
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && state.liveOpen) closeLive();
     });
   }
 
