@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>稅訊｜官方函釋與法規草案速覽｜稅務 x 美股 x AI</title>
+<meta name="description" content="整理台灣、美國與亞太官方稅務發布的標題、來源與日期。點列後開官方原文。教育整理，不是稅務意見。">
+<link rel="stylesheet" href="css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gelasio:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="alternate" type="application/rss+xml" title="稅務 x 美股 x AI" href="https://taxcodeusstocks.com/feed.xml">
+<link rel="canonical" href="https://taxcodeusstocks.com/brief.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="稅訊｜官方函釋與法規草案速覽｜稅務 x 美股 x AI">
+<meta property="og:description" content="整理台灣、美國與亞太官方稅務發布的標題、來源與日期。點列後開官方原文。教育整理，不是稅務意見。">
+<meta property="og:url" content="https://taxcodeusstocks.com/brief.html">
+<meta property="og:site_name" content="稅務 x 美股 x AI">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://taxcodeusstocks.com/img/og-default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="稅訊｜稅務 x 美股 x AI">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="稅訊｜官方函釋與法規草案速覽｜稅務 x 美股 x AI">
+<meta name="twitter:description" content="整理台灣、美國與亞太官方稅務發布的標題、來源與日期。點列後開官方原文。教育整理，不是稅務意見。">
+<meta name="twitter:image" content="https://taxcodeusstocks.com/img/og-default.png">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script src="js/site.js" defer></script>
+<style>
+  body.brief-page {
+    font-family: "Noto Sans TC", "PingFang TC", -apple-system, "Segoe UI", sans-serif;
+    background: #F4ECE8;
+  }
+  .brief-serif { font-family: Gelasio, "Times New Roman", serif; }
+  .brief-lang {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    border: 1px solid var(--gold);
+    background: var(--card);
+    border-radius: 999px;
+    padding: .12rem .55rem;
+    font-size: .82rem;
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .brief-lang button {
+    font: inherit;
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 0 .15rem;
+  }
+  .brief-lang button.active { color: var(--navy); }
+  .brief-lang button:hover { color: var(--gold); }
+  .brief-hero {
+    margin-bottom: 1.4rem;
+  }
+  .brief-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    font-size: .78rem;
+    font-weight: 700;
+    color: var(--navy);
+    background: var(--card);
+    border: 1px solid var(--gold-soft);
+    border-radius: 999px;
+    padding: .28rem .75rem;
+    margin-bottom: .85rem;
+  }
+  .brief-hero h1 {
+    font-size: clamp(1.7rem, 3.2vw, 2.2rem);
+    color: var(--navy);
+    line-height: 1.3;
+    font-weight: 700;
+  }
+  .brief-lead {
+    margin-top: .7rem;
+    color: var(--ink);
+    max-width: 42rem;
+  }
+  .brief-note {
+    margin-top: .7rem;
+    font-size: .88rem;
+    color: var(--muted);
+    max-width: 42rem;
+  }
+  .brief-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .7rem 1rem;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin: 1.3rem 0 1.1rem;
+  }
+  .brief-filters h2,
+  .brief-section h2 {
+    font-size: 1.15rem;
+    color: var(--navy);
+    border-left: 5px solid var(--gold);
+    padding-left: .65rem;
+    margin: 0 0 .75rem;
+  }
+  .brief-chip-row { display: flex; flex-wrap: wrap; gap: .45rem; }
+  .brief-chip {
+    font: inherit;
+    font-size: .84rem;
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--navy);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: .22rem .85rem;
+  }
+  .brief-chip:hover { border-color: var(--gold); }
+  .brief-chip.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .brief-chip.sub { font-weight: 500; background: var(--surface-warm); }
+  .brief-chip.sub.active { background: var(--navy); color: #fff; }
+  .brief-status {
+    font-size: .82rem;
+    color: var(--muted);
+    text-align: right;
+  }
+  .brief-banner {
+    border-radius: var(--radius-sm);
+    padding: .85rem 1.05rem;
+    margin: 0 0 1.1rem;
+    font-size: .92rem;
+  }
+  .brief-banner.error {
+    background: #fdf3f4;
+    border: 1px solid #f0c8cd;
+    color: #7a2430;
+  }
+  .brief-banner.empty {
+    background: var(--surface-warm);
+    border: 1px solid var(--line);
+    color: var(--muted);
+  }
+  .brief-grid {
+    display: grid;
+    grid-template-columns: 1.4fr .8fr;
+    gap: 1.15rem;
+    align-items: start;
+  }
+  .brief-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.15rem;
+  }
+  .brief-section { margin: 1.6rem 0 0; }
+  .brief-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: .85rem;
+  }
+  .brief-card,
+  .brief-row {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border-radius: var(--radius-sm);
+    padding: .95rem 1.05rem;
+    box-shadow: var(--shadow-sm);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .brief-card:hover,
+  .brief-row:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+  }
+  .brief-card.mint,
+  .brief-row.mint { background: #E7F6EE; border: 1px solid #C6E6D3; }
+  .brief-card.yellow,
+  .brief-row.yellow { background: #FFF6D4; border: 1px solid #F0E2A8; }
+  .brief-card.cream,
+  .brief-row.cream { background: #FFFCF7; border: 1px solid var(--gold-soft); }
+  .brief-type {
+    display: inline-block;
+    font-size: .72rem;
+    font-weight: 700;
+    border-radius: 999px;
+    padding: .12rem .55rem;
+    margin-bottom: .45rem;
+  }
+  .brief-type.ruling { background: #1F8A4C; color: #fff; }
+  .brief-type.draft { background: #E3B341; color: #3D2E00; }
+  .brief-type.live { background: #C4473A; color: #fff; }
+  .brief-type.other { background: var(--navy); color: #fff; }
+  .brief-card .title,
+  .brief-row .title {
+    font-family: Gelasio, "Times New Roman", serif;
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.45;
+  }
+  .brief-meta {
+    margin-top: .45rem;
+    font-size: .8rem;
+    color: var(--muted);
+  }
+  .brief-list { display: flex; flex-direction: column; gap: .65rem; }
+  .brief-live {
+    background: #FFFCF7;
+    border: 1px solid var(--gold-soft);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.15rem 1.2rem;
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 5.2rem;
+  }
+  .brief-live h2 { border-left-color: #1F8A4C; }
+  .brief-window {
+    display: flex;
+    gap: .4rem;
+    margin: 0 0 .8rem;
+  }
+  .brief-empty {
+    font-size: .9rem;
+    color: var(--muted);
+    background: var(--card);
+    border: 1px dashed var(--line);
+    border-radius: var(--radius-sm);
+    padding: .85rem 1rem;
+  }
+  .brief-edu {
+    margin-top: 2rem;
+    font-size: .82rem;
+    color: var(--muted);
+    background: var(--surface-warm);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: .9rem 1.1rem;
+  }
+  @media (max-width: 860px) {
+    .brief-grid,
+    .brief-split { grid-template-columns: 1fr; }
+    .brief-live { position: static; }
+    .brief-status { text-align: left; }
+  }
+</style>
+</head>
+<body class="brief-page" data-no-ads="true">
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">稅務 <span class="x">x</span> 美股 <span class="x">x</span> AI</a>
+    <nav class="main-nav" id="main-nav">
+      <a href="index.html" data-i18n="navHome">首頁</a>
+      <a href="index.html#articles" data-i18n="navArticles">文章</a>
+      <a href="services.html" data-i18n="navServices">服務項目</a>
+      <a href="about.html" data-i18n="navAbout">關於傑夫哥</a>
+      <a href="resources.html" data-i18n="navResources">官方資源</a>
+      <a href="brief.html" class="active" data-nav="brief" data-i18n="navBrief">稅訊</a>
+    </nav>
+    <div class="brief-lang" role="group" aria-label="語言">
+      <button type="button" id="lang-zh" class="active" aria-pressed="true">繁</button>
+      <span aria-hidden="true">|</span>
+      <button type="button" id="lang-en" aria-pressed="false">EN</button>
+    </div>
+    <button class="nav-toggle" aria-label="選單" aria-expanded="false" aria-controls="main-nav">☰</button>
+  </div>
+</header>
+
+<main>
+  <section class="brief-hero">
+    <div class="brief-kicker" data-i18n="kicker">官方發布速覽 · 免費閱讀</div>
+    <h1 class="brief-serif" data-i18n="pageTitle">稅訊</h1>
+    <p class="brief-lead" data-i18n="lead">整理台灣、美國與亞太官方稅務發布的標題、來源與日期。點列後另開官方原文，本頁不代管全文。</p>
+    <p class="brief-note" data-i18n="eduLine">內容為教育整理，不是稅務意見，也不構成投資建議。標題維持官方原文，不做機器翻譯。</p>
+  </section>
+
+  <div class="brief-toolbar">
+    <div class="brief-filters">
+      <h2 data-i18n="countryTitle">國家／地區</h2>
+      <div class="brief-chip-row" id="country-filters" role="group" aria-label="國家篩選"></div>
+      <div class="brief-chip-row" id="apac-filters" hidden style="margin-top:.55rem;"></div>
+    </div>
+    <p class="brief-status" id="brief-status"></p>
+  </div>
+
+  <div id="brief-banner" hidden></div>
+
+  <section class="brief-section" aria-labelledby="snap-title">
+    <h2 id="snap-title" data-i18n="snapshot">當日重點快照</h2>
+    <div class="brief-cards" id="snap-list"></div>
+  </section>
+
+  <section class="brief-section" id="tw-kinds" aria-labelledby="tw-title">
+    <h2 id="tw-title" data-i18n="twKinds">新頒函釋 / 法規草案</h2>
+    <div class="brief-split">
+      <div>
+        <div class="brief-chip-row" style="margin-bottom:.65rem;"><span class="brief-type ruling" data-i18n="chipRuling">函釋</span></div>
+        <div class="brief-list" id="ruling-list"></div>
+      </div>
+      <div>
+        <div class="brief-chip-row" style="margin-bottom:.65rem;"><span class="brief-type draft" data-i18n="chipDraft">草案</span></div>
+        <div class="brief-list" id="draft-list"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="brief-grid brief-section">
+    <section aria-labelledby="daily-title">
+      <h2 id="daily-title" data-i18n="dailyTitle">今天 / 昨天</h2>
+      <div class="brief-window" role="group" aria-label="日期視窗">
+        <button type="button" class="brief-chip active" data-window="today" data-i18n="today">今天</button>
+        <button type="button" class="brief-chip" data-window="yesterday" data-i18n="yesterday">昨天</button>
+      </div>
+      <p class="brief-note" style="margin:0 0 .8rem;" data-i18n="windowNote">視窗以台北時間計算。</p>
+      <div class="brief-list" id="daily-list"></div>
+    </section>
+
+    <aside class="brief-live" aria-labelledby="live-title">
+      <h2 id="live-title" data-i18n="liveTitle">即時更新</h2>
+      <p class="brief-note" style="margin:0 0 .8rem;" data-i18n="liveNote">獨立面板，不混進今日／昨日清單。</p>
+      <div class="brief-list" id="live-list"></div>
+    </aside>
+  </div>
+
+  <div class="brief-edu" data-i18n="footerEdu">本頁只做官方標題索引，請以各機關網站的原文與生效日為準。個案請詢問你的合格稅務專業人員。</div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p><strong>稅務 x 美股 x AI</strong>｜傑夫哥　·　<a href="disclaimer.html" data-i18n="footerDisclaimer">免責聲明</a></p>
+    <p class="footer-disclaimer" data-i18n="footerLine">本網站內容為教育性質與個人觀點分享，不構成任何投資建議或稅務專業意見。© 2026 稅務 x 美股 x AI</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* TODO(Jeff): replace this placeholder with the live Cloudflare Worker base URL.
+     Jeff is creating the Worker outside this repo. Until that URL is set, this
+     page must keep rendering chrome plus an empty or error state. Do not invent
+     ruling numbers or official titles if the Worker is not ready. */
+  var WORKER_BASE = "https://tax-brief.example.workers.dev";
+
+  /* Expected JSON (either shape is fine):
+     1) { generatedAt, items: [{ title, source, date, url, country, kind, live }] }
+     2) { generatedAt, snapshot:[], rulings:[], drafts:[], today:[], yesterday:[], live:[] }
+     country: tw | us | hk | sg | jp | kr | cn
+     kind: ruling | draft | live | highlight
+     title stays in the official language. This page never translates titles. */
+
+  var I18N = {
+    zh: {
+      navHome: "首頁", navArticles: "文章", navServices: "服務項目", navAbout: "關於傑夫哥",
+      navResources: "官方資源", navBrief: "稅訊",
+      kicker: "官方發布速覽 · 免費閱讀",
+      pageTitle: "稅訊",
+      lead: "整理台灣、美國與亞太官方稅務發布的標題、來源與日期。點列後另開官方原文，本頁不代管全文。",
+      eduLine: "內容為教育整理，不是稅務意見，也不構成投資建議。標題維持官方原文，不做機器翻譯。",
+      countryTitle: "國家／地區",
+      snapshot: "當日重點快照",
+      twKinds: "新頒函釋 / 法規草案",
+      chipRuling: "函釋", chipDraft: "草案",
+      dailyTitle: "今天 / 昨天",
+      today: "今天", yesterday: "昨天",
+      windowNote: "視窗以台北時間計算。",
+      liveTitle: "即時更新",
+      liveNote: "獨立面板，不混進今日／昨日清單。",
+      footerEdu: "本頁只做官方標題索引，請以各機關網站的原文與生效日為準。個案請詢問你的合格稅務專業人員。",
+      footerDisclaimer: "免責聲明",
+      footerLine: "本網站內容為教育性質與個人觀點分享，不構成任何投資建議或稅務專業意見。© 2026 稅務 x 美股 x AI",
+      empty: "今日尚無新發布",
+      loading: "讀取中…",
+      error: "目前讀不到資料來源，請稍後再試。本頁不會自行編造函釋字號。",
+      updated: "資料時間",
+      tw: "台灣", us: "美國", apac: "亞太區",
+      hk: "香港", sg: "新加坡", jp: "日本", kr: "韓國", cn: "中國",
+      typeRuling: "函釋", typeDraft: "草案", typeLive: "即時", typeOther: "發布"
+    },
+    en: {
+      navHome: "Home", navArticles: "Articles", navServices: "Services", navAbout: "About",
+      navResources: "Resources", navBrief: "Tax Brief",
+      kicker: "Official releases · free to read",
+      pageTitle: "Tax Brief",
+      lead: "A list of official tax-release titles, sources, and dates for Taiwan, the US, and Asia Pacific. Each row opens the official page. This page does not host full official text.",
+      eduLine: "Education, not tax advice, and not investment advice. Official titles stay in the original language. No machine translation.",
+      countryTitle: "Country / region",
+      snapshot: "Today's snapshot",
+      twKinds: "New rulings / draft rules",
+      chipRuling: "Ruling", chipDraft: "Draft",
+      dailyTitle: "Today / yesterday",
+      today: "Today", yesterday: "Yesterday",
+      windowNote: "The window uses Taipei time.",
+      liveTitle: "Live updates",
+      liveNote: "A separate panel. Not mixed into the daily list.",
+      footerEdu: "This page is a title index only. Use the official site for the full text and effective date. For a personal case, ask a qualified tax professional.",
+      footerDisclaimer: "Disclaimer",
+      footerLine: "Content is educational and personal views. It is not investment advice or professional tax advice. © 2026 TaxCode x US Stocks x AI",
+      empty: "No new releases today",
+      loading: "Loading…",
+      error: "The data source could not be read. Try again later. This page will not invent ruling numbers.",
+      updated: "Source time",
+      tw: "Taiwan", us: "United States", apac: "Asia Pacific",
+      hk: "Hong Kong", sg: "Singapore", jp: "Japan", kr: "Korea", cn: "China",
+      typeRuling: "Ruling", typeDraft: "Draft", typeLive: "Live", typeOther: "Release"
+    }
+  };
+
+  var state = {
+    lang: "zh",
+    country: "tw",
+    apac: "",
+    window: "today",
+    payload: null,
+    error: false,
+    loading: true
+  };
+
+  function t(key) {
+    return (I18N[state.lang] && I18N[state.lang][key]) || I18N.zh[key] || key;
+  }
+
+  function applyChrome() {
+    document.documentElement.lang = state.lang === "en" ? "en" : "zh-Hant";
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      var key = el.getAttribute("data-i18n");
+      if (key) el.textContent = t(key);
+    });
+    var zhBtn = document.getElementById("lang-zh");
+    var enBtn = document.getElementById("lang-en");
+    zhBtn.classList.toggle("active", state.lang === "zh");
+    enBtn.classList.toggle("active", state.lang === "en");
+    zhBtn.setAttribute("aria-pressed", state.lang === "zh" ? "true" : "false");
+    enBtn.setAttribute("aria-pressed", state.lang === "en" ? "true" : "false");
+    renderFilters();
+    renderAll();
+  }
+
+  function taipeiYmd(date) {
+    var fmt = new Intl.DateTimeFormat("en-US", {
+      timeZone: "Asia/Taipei",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit"
+    });
+    var parts = {};
+    fmt.formatToParts(date).forEach(function (p) { parts[p.type] = p.value; });
+    return parts.year + "-" + parts.month + "-" + parts.day;
+  }
+
+  function yesterdayTaipei(today) {
+    var now = new Date();
+    for (var i = 1; i <= 48; i++) {
+      var y = taipeiYmd(new Date(now.getTime() - i * 3600000));
+      if (y !== today) return y;
+    }
+    return today;
+  }
+
+  function isHttpUrl(s) {
+    try {
+      var u = new URL(s);
+      return u.protocol === "http:" || u.protocol === "https:";
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function normalizeDate(v) {
+    if (!v) return "";
+    var s = String(v).trim();
+    var m = s.match(/^(\d{4}-\d{2}-\d{2})/);
+    if (m) return m[1];
+    var d = new Date(s);
+    if (!isNaN(d.getTime())) return taipeiYmd(d);
+    return "";
+  }
+
+  function normalizeCountry(v) {
+    var s = String(v || "").trim().toLowerCase();
+    if (/^(tw|taiwan|台灣|臺灣|台湾)$/.test(s)) return "tw";
+    if (/^(us|usa|united states|美國|美国)$/.test(s)) return "us";
+    if (/^(hk|hong ?kong|香港)$/.test(s)) return "hk";
+    if (/^(sg|singapore|新加坡)$/.test(s)) return "sg";
+    if (/^(jp|japan|日本)$/.test(s)) return "jp";
+    if (/^(kr|korea|韓國|韩国|南韓|南韩)$/.test(s)) return "kr";
+    if (/^(cn|china|中國|中国|prc)$/.test(s)) return "cn";
+    return "";
+  }
+
+  function normalizeKind(v) {
+    var s = String(v || "").trim().toLowerCase();
+    if (/ruling|函釋|函释|interpretation|letter/.test(s)) return "ruling";
+    if (/draft|草案|bill/.test(s)) return "draft";
+    if (/live|realtime|real-time|即時|即时/.test(s)) return "live";
+    if (/highlight|snapshot|快照/.test(s)) return "highlight";
+    return "";
+  }
+
+  function normalizeItem(raw, sectionHint) {
+    if (!raw || typeof raw !== "object") return null;
+    var title = String(raw.title || raw.name || "").trim();
+    var url = String(raw.url || raw.href || raw.link || "").trim();
+    if (!title || !isHttpUrl(url)) return null;
+    var kind = normalizeKind(raw.kind || raw.type || raw.category || sectionHint);
+    var live = !!(raw.live || raw.isLive || raw.realtime || kind === "live" || sectionHint === "live");
+    if (live) kind = kind || "live";
+    return {
+      title: title,
+      source: String(raw.source || raw.publisher || raw.agency || "").trim(),
+      date: normalizeDate(raw.date || raw.published || raw.publishedAt || raw.pubDate),
+      url: url,
+      country: normalizeCountry(raw.country || raw.jurisdiction || raw.region),
+      kind: kind,
+      section: String(raw.section || sectionHint || "").toLowerCase(),
+      live: live
+    };
+  }
+
+  function asArray(v) { return Array.isArray(v) ? v : []; }
+
+  function normalizePayload(data) {
+    if (Array.isArray(data)) {
+      return { generatedAt: "", items: data.map(function (x) { return normalizeItem(x, ""); }).filter(Boolean) };
+    }
+    if (!data || typeof data !== "object") return { generatedAt: "", items: [] };
+    var items = [];
+    if (Array.isArray(data.items)) {
+      items = data.items.map(function (x) { return normalizeItem(x, ""); }).filter(Boolean);
+    } else {
+      ["snapshot", "highlights", "rulings", "drafts", "today", "yesterday", "live", "releases"].forEach(function (key) {
+        asArray(data[key]).forEach(function (raw) {
+          var hint = key === "highlights" || key === "snapshot" ? "highlight" : key === "rulings" ? "ruling" : key === "drafts" ? "draft" : key === "live" ? "live" : "";
+          var item = normalizeItem(raw, hint);
+          if (item) items.push(item);
+        });
+      });
+    }
+    return {
+      generatedAt: String(data.generatedAt || data.updatedAt || data.generated_at || ""),
+      items: items
+    };
+  }
+
+  function workerPaths() {
+    var base = String(WORKER_BASE || "").replace(/\/+$/, "");
+    return [base + "/releases.json", base];
+  }
+
+  function fetchBrief() {
+    var paths = workerPaths();
+    var i = 0;
+    function next() {
+      if (i >= paths.length) return Promise.reject(new Error("worker-unavailable"));
+      var url = paths[i++];
+      var ctrl = new AbortController();
+      var timer = setTimeout(function () { ctrl.abort(); }, 8000);
+      return fetch(url, { credentials: "omit", signal: ctrl.signal }).then(function (res) {
+        if (!res.ok) throw new Error("http-" + res.status);
+        return res.json();
+      }).finally(function () {
+        clearTimeout(timer);
+      }).catch(function () {
+        return next();
+      });
+    }
+    return next();
+  }
+
+  function matchesCountry(item) {
+    if (!item.country) return true;
+    if (state.country === "tw") return item.country === "tw";
+    if (state.country === "us") return item.country === "us";
+    if (state.country === "apac") {
+      var apac = { hk: 1, sg: 1, jp: 1, kr: 1, cn: 1 };
+      if (!apac[item.country]) return false;
+      if (state.apac) return item.country === state.apac;
+      return true;
+    }
+    return true;
+  }
+
+  function emptyBox() {
+    var d = document.createElement("div");
+    d.className = "brief-empty";
+    d.textContent = state.error ? t("error") : t("empty");
+    return d;
+  }
+
+  function typeLabel(item) {
+    if (item.kind === "ruling") return t("typeRuling");
+    if (item.kind === "draft") return t("typeDraft");
+    if (item.live || item.kind === "live") return t("typeLive");
+    return t("typeOther");
+  }
+
+  function typeClass(item) {
+    if (item.kind === "ruling") return "ruling";
+    if (item.kind === "draft") return "draft";
+    if (item.live || item.kind === "live") return "live";
+    return "other";
+  }
+
+  function cardClass(item) {
+    if (item.kind === "ruling") return "mint";
+    if (item.kind === "draft") return "yellow";
+    return "cream";
+  }
+
+  function renderItem(item, asCard) {
+    var a = document.createElement("a");
+    a.className = (asCard ? "brief-card " : "brief-row ") + cardClass(item);
+    a.href = item.url;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    var chip = document.createElement("span");
+    chip.className = "brief-type " + typeClass(item);
+    chip.textContent = typeLabel(item);
+    var title = document.createElement("div");
+    title.className = "title";
+    title.textContent = item.title;
+    var meta = document.createElement("div");
+    meta.className = "brief-meta";
+    meta.textContent = [item.source, item.date].filter(Boolean).join(" · ");
+    a.appendChild(chip);
+    a.appendChild(title);
+    a.appendChild(meta);
+    return a;
+  }
+
+  function fillList(el, items, asCard) {
+    el.innerHTML = "";
+    if (state.loading) {
+      var load = document.createElement("div");
+      load.className = "brief-empty";
+      load.textContent = t("loading");
+      el.appendChild(load);
+      return;
+    }
+    if (!items.length) {
+      el.appendChild(emptyBox());
+      return;
+    }
+    items.forEach(function (item) { el.appendChild(renderItem(item, asCard)); });
+  }
+
+  function renderFilters() {
+    var main = document.getElementById("country-filters");
+    var apac = document.getElementById("apac-filters");
+    main.innerHTML = "";
+    [["tw", t("tw")], ["us", t("us")], ["apac", t("apac")]].forEach(function (pair) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "brief-chip" + (state.country === pair[0] ? " active" : "");
+      b.textContent = pair[1];
+      b.setAttribute("aria-pressed", state.country === pair[0] ? "true" : "false");
+      b.addEventListener("click", function () {
+        state.country = pair[0];
+        if (pair[0] !== "apac") state.apac = "";
+        renderFilters();
+        renderAll();
+      });
+      main.appendChild(b);
+    });
+    var showApac = state.country === "apac";
+    apac.hidden = !showApac;
+    apac.innerHTML = "";
+    if (showApac) {
+      [["", t("apac")], ["hk", t("hk")], ["sg", t("sg")], ["jp", t("jp")], ["kr", t("kr")], ["cn", t("cn")]].forEach(function (pair) {
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "brief-chip sub" + (state.apac === pair[0] ? " active" : "");
+        b.textContent = pair[1];
+        b.addEventListener("click", function () {
+          state.apac = pair[0];
+          renderFilters();
+          renderAll();
+        });
+        apac.appendChild(b);
+      });
+    }
+    document.querySelectorAll("[data-window]").forEach(function (b) {
+      var on = b.getAttribute("data-window") === state.window;
+      b.classList.toggle("active", on);
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+  }
+
+  function renderAll() {
+    var banner = document.getElementById("brief-banner");
+    var status = document.getElementById("brief-status");
+    var items = state.payload ? state.payload.items : [];
+    var filtered = items.filter(matchesCountry);
+    var today = taipeiYmd(new Date());
+    var yesterday = yesterdayTaipei(today);
+
+    if (state.loading) {
+      banner.hidden = true;
+      status.textContent = t("loading");
+    } else if (state.error) {
+      banner.hidden = false;
+      banner.className = "brief-banner error";
+      banner.textContent = t("error");
+      status.textContent = "";
+    } else {
+      banner.hidden = true;
+      status.textContent = state.payload && state.payload.generatedAt
+        ? t("updated") + " " + state.payload.generatedAt
+        : "";
+    }
+
+    var snap = filtered.filter(function (it) {
+      return it.kind === "highlight" || it.section === "snapshot" || it.section === "highlights";
+    });
+    var rulings = filtered.filter(function (it) {
+      return it.country === "tw" && it.kind === "ruling" && !it.live;
+    });
+    var drafts = filtered.filter(function (it) {
+      return it.country === "tw" && it.kind === "draft" && !it.live;
+    });
+    var live = filtered.filter(function (it) { return it.live || it.kind === "live" || it.section === "live"; });
+    var day = state.window === "yesterday" ? yesterday : today;
+    var daily = filtered.filter(function (it) {
+      if (it.live || it.kind === "live" || it.section === "live") return false;
+      return it.date === day;
+    });
+
+    document.getElementById("tw-kinds").hidden = state.country !== "tw";
+    fillList(document.getElementById("snap-list"), snap, true);
+    fillList(document.getElementById("ruling-list"), rulings, false);
+    fillList(document.getElementById("draft-list"), drafts, false);
+    fillList(document.getElementById("daily-list"), daily, false);
+    fillList(document.getElementById("live-list"), live, false);
+  }
+
+  function bind() {
+    document.getElementById("lang-zh").addEventListener("click", function () {
+      state.lang = "zh";
+      try { localStorage.setItem("brief-lang", "zh"); } catch (e) {}
+      applyChrome();
+    });
+    document.getElementById("lang-en").addEventListener("click", function () {
+      state.lang = "en";
+      try { localStorage.setItem("brief-lang", "en"); } catch (e) {}
+      applyChrome();
+    });
+    document.querySelectorAll("[data-window]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        state.window = b.getAttribute("data-window");
+        renderFilters();
+        renderAll();
+      });
+    });
+  }
+
+  function start() {
+    try {
+      var saved = localStorage.getItem("brief-lang");
+      if (saved === "en" || saved === "zh") state.lang = saved;
+    } catch (e) {}
+    bind();
+    applyChrome();
+    fetchBrief().then(function (data) {
+      state.loading = false;
+      state.error = false;
+      state.payload = normalizePayload(data);
+      renderAll();
+    }).catch(function () {
+      state.loading = false;
+      state.error = true;
+      state.payload = { generatedAt: "", items: [] };
+      renderAll();
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", start);
+  } else {
+    start();
+  }
+})();
+</script>
+</body>
+</html>
