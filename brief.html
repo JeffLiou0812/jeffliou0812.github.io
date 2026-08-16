@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>稅訊｜官方函釋與法規草案速覽｜稅務 x 美股 x AI</title>
+<meta name="description" content="整理台灣、美國與亞太官方稅務發布的標題、來源與日期。點列後開官方原文。教育整理，不是稅務意見。">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/brief.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gelasio:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="alternate" type="application/rss+xml" title="稅務 x 美股 x AI" href="https://taxcodeusstocks.com/feed.xml">
+<link rel="canonical" href="https://taxcodeusstocks.com/brief.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="稅訊｜官方函釋與法規草案速覽｜稅務 x 美股 x AI">
+<meta property="og:description" content="整理台灣、美國與亞太官方稅務發布的標題、來源與日期。點列後開官方原文。教育整理，不是稅務意見。">
+<meta property="og:url" content="https://taxcodeusstocks.com/brief.html">
+<meta property="og:site_name" content="稅務 x 美股 x AI">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://taxcodeusstocks.com/img/og-default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="稅訊｜稅務 x 美股 x AI">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="稅訊｜官方函釋與法規草案速覽｜稅務 x 美股 x AI">
+<meta name="twitter:description" content="整理台灣、美國與亞太官方稅務發布的標題、來源與日期。點列後開官方原文。教育整理，不是稅務意見。">
+<meta name="twitter:image" content="https://taxcodeusstocks.com/img/og-default.png">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script src="js/site.js" defer></script>
+<script src="js/brief.js" defer></script>
+</head>
+<body class="brief-page" data-no-ads="true">
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">稅務 <span class="x">x</span> 美股 <span class="x">x</span> AI</a>
+    <nav class="main-nav" id="main-nav">
+      <a href="index.html" data-i18n="navHome">首頁</a>
+      <a href="index.html#articles" data-i18n="navArticles">文章</a>
+      <a href="services.html" data-i18n="navServices">服務項目</a>
+      <a href="about.html" data-i18n="navAbout">關於傑夫哥</a>
+      <a href="resources.html" data-i18n="navResources">官方資源</a>
+      <a href="brief.html" class="active" data-nav="brief" data-i18n="navBrief">稅訊</a>
+    </nav>
+    <div class="brief-lang" role="group" aria-label="語言">
+      <button type="button" id="lang-zh" class="active" aria-pressed="true">繁</button>
+      <span aria-hidden="true">|</span>
+      <button type="button" id="lang-en" aria-pressed="false">EN</button>
+    </div>
+    <button class="nav-toggle" aria-label="選單" aria-expanded="false" aria-controls="main-nav">☰</button>
+  </div>
+</header>
+
+<main>
+  <section class="brief-head">
+    <p class="brief-date" id="brief-date"></p>
+    <h1 class="brief-serif" data-i18n="pageTitle">稅訊</h1>
+    <div class="brief-toolbar">
+      <div>
+        <div class="brief-pills" id="country-filters" role="group" aria-label="國家篩選"></div>
+        <div class="brief-apac" id="apac-filters" hidden></div>
+      </div>
+      <button type="button" class="brief-refresh" id="refresh-btn" aria-expanded="false" aria-controls="live-panel">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.2-5.5"/><path d="M20 4v6h-6"/></svg>
+        <span data-i18n="refresh">更新</span>
+      </button>
+    </div>
+    <p class="brief-scope" data-i18n="scope">教育用途，不是諮詢。</p>
+    <p class="brief-hint" data-i18n="hint">點標題開官方原文</p>
+  </section>
+
+  <div class="brief-overlay" id="live-overlay" hidden></div>
+  <aside class="brief-live" id="live-panel" role="dialog" aria-modal="true" aria-labelledby="live-title">
+    <div class="brief-live-top">
+      <div>
+        <h2 id="live-title" data-i18n="liveTitle">即時更新</h2>
+        <p class="brief-live-meta" id="live-meta"></p>
+      </div>
+      <button type="button" class="brief-close" id="live-close" data-i18n="close">關閉</button>
+    </div>
+    <div class="brief-live-grid">
+      <div class="brief-live-col">
+        <h3 data-i18n="rulings">新頒函釋</h3>
+        <div class="brief-list" id="live-rulings"></div>
+      </div>
+      <div class="brief-live-col">
+        <h3 data-i18n="drafts">法規草案</h3>
+        <div class="brief-list" id="live-drafts"></div>
+      </div>
+    </div>
+  </aside>
+
+  <div id="brief-banner" class="brief-banner" hidden></div>
+
+  <div class="brief-reader">
+    <section class="brief-snap" aria-labelledby="snap-title">
+      <h2 id="snap-title" data-i18n="snapshot">當日重點快照</h2>
+      <div class="brief-snap-list" id="snap-list"></div>
+    </section>
+
+    <section class="brief-block" id="block-rulings" aria-labelledby="ruling-title">
+      <h2 id="ruling-title" data-i18n="rulings">新頒函釋</h2>
+      <div class="brief-day">
+        <div class="brief-day-label" data-i18n="today">今天</div>
+        <div class="brief-list" id="ruling-today"></div>
+      </div>
+      <div class="brief-day">
+        <div class="brief-day-label" data-i18n="yesterday">昨天</div>
+        <div class="brief-list" id="ruling-yesterday"></div>
+      </div>
+    </section>
+
+    <section class="brief-block" id="block-drafts" aria-labelledby="draft-title">
+      <h2 id="draft-title" data-i18n="drafts">法規草案</h2>
+      <div class="brief-day">
+        <div class="brief-day-label" data-i18n="today">今天</div>
+        <div class="brief-list" id="draft-today"></div>
+      </div>
+      <div class="brief-day">
+        <div class="brief-day-label" data-i18n="yesterday">昨天</div>
+        <div class="brief-list" id="draft-yesterday"></div>
+      </div>
+    </section>
+
+    <section class="brief-block" id="block-gazette" hidden aria-labelledby="gazette-title">
+      <h2 id="gazette-title" data-i18n="gazette">公報</h2>
+      <div class="brief-day">
+        <div class="brief-day-label" data-i18n="today">今天</div>
+        <div class="brief-list" id="gazette-today"></div>
+      </div>
+      <div class="brief-day">
+        <div class="brief-day-label" data-i18n="yesterday">昨天</div>
+        <div class="brief-list" id="gazette-yesterday"></div>
+      </div>
+    </section>
+
+    <section class="brief-block" id="block-ir" hidden aria-labelledby="ir-title">
+      <h2 id="ir-title" data-i18n="ir">IRS 新聞</h2>
+      <div class="brief-day">
+        <div class="brief-day-label" data-i18n="today">今天</div>
+        <div class="brief-list" id="ir-today"></div>
+      </div>
+      <div class="brief-day">
+        <div class="brief-day-label" data-i18n="yesterday">昨天</div>
+        <div class="brief-list" id="ir-yesterday"></div>
+      </div>
+    </section>
+
+    <section class="brief-block" id="block-fr" hidden aria-labelledby="fr-title">
+      <h2 id="fr-title" data-i18n="fr">聯邦公報</h2>
+      <div class="brief-day">
+        <div class="brief-day-label" data-i18n="today">今天</div>
+        <div class="brief-list" id="fr-today"></div>
+      </div>
+      <div class="brief-day">
+        <div class="brief-day-label" data-i18n="yesterday">昨天</div>
+        <div class="brief-list" id="fr-yesterday"></div>
+      </div>
+    </section>
+
+    <section class="brief-block" id="block-news" hidden aria-labelledby="news-title">
+      <h2 id="news-title" data-i18n="news">官方發布</h2>
+      <div class="brief-day">
+        <div class="brief-day-label" data-i18n="today">今天</div>
+        <div class="brief-list" id="news-today"></div>
+      </div>
+      <div class="brief-day">
+        <div class="brief-day-label" data-i18n="yesterday">昨天</div>
+        <div class="brief-list" id="news-yesterday"></div>
+      </div>
+    </section>
+
+    <p class="brief-status" id="brief-status"></p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p><strong>稅務 x 美股 x AI</strong>｜傑夫哥　·　<a href="disclaimer.html" data-i18n="footerDisclaimer">免責聲明</a></p>
+    <p class="footer-disclaimer">© 2026 稅務 x 美股 x AI</p>
+  </div>
+</footer>
+
+</body>
+</html>
