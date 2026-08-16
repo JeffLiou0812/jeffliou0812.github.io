@@ -35,14 +35,47 @@
     background: #F4ECE8;
   }
   .brief-serif { font-family: Gelasio, "Times New Roman", serif; }
+  .brief-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+  .brief-date {
+    font-family: Gelasio, "Times New Roman", serif;
+    font-size: 1.02rem;
+    color: var(--muted);
+    letter-spacing: .01em;
+  }
+  .brief-top h1 {
+    margin-top: .2rem;
+    font-size: clamp(2rem, 4.2vw, 2.7rem);
+    color: var(--navy);
+    line-height: 1.15;
+    font-weight: 700;
+  }
+  .brief-lead {
+    margin-top: .45rem;
+    max-width: 36rem;
+    color: var(--ink);
+    font-size: .95rem;
+  }
+  .brief-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: .55rem;
+  }
   .brief-lang {
     display: inline-flex;
     align-items: center;
     gap: .35rem;
     border: 1px solid var(--gold);
-    background: var(--card);
+    background: #fff;
     border-radius: 999px;
-    padding: .12rem .55rem;
+    padding: .28rem .7rem;
     font-size: .82rem;
     font-weight: 700;
     color: var(--navy);
@@ -53,197 +86,245 @@
     background: transparent;
     color: var(--muted);
     cursor: pointer;
-    padding: 0 .15rem;
+    padding: 0 .12rem;
   }
   .brief-lang button.active { color: var(--navy); }
   .brief-lang button:hover { color: var(--gold); }
-  .brief-hero {
-    margin-bottom: 1.4rem;
-  }
-  .brief-kicker {
-    display: inline-flex;
-    align-items: center;
-    gap: .4rem;
-    font-size: .78rem;
-    font-weight: 700;
-    color: var(--navy);
-    background: var(--card);
-    border: 1px solid var(--gold-soft);
-    border-radius: 999px;
-    padding: .28rem .75rem;
-    margin-bottom: .85rem;
-  }
-  .brief-hero h1 {
-    font-size: clamp(1.7rem, 3.2vw, 2.2rem);
-    color: var(--navy);
-    line-height: 1.3;
-    font-weight: 700;
-  }
-  .brief-lead {
-    margin-top: .7rem;
-    color: var(--ink);
-    max-width: 42rem;
-  }
-  .brief-note {
-    margin-top: .7rem;
+  .brief-refresh {
+    font: inherit;
     font-size: .88rem;
-    color: var(--muted);
-    max-width: 42rem;
+    font-weight: 700;
+    cursor: pointer;
+    color: #fff;
+    background: #1F8A4C;
+    border: 0;
+    border-radius: 999px;
+    padding: .48rem 1.15rem;
+    box-shadow: 0 6px 16px rgba(31, 138, 76, 0.22);
   }
-  .brief-toolbar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .7rem 1rem;
-    align-items: flex-start;
-    justify-content: space-between;
-    margin: 1.3rem 0 1.1rem;
-  }
-  .brief-filters h2,
-  .brief-section h2 {
-    font-size: 1.15rem;
-    color: var(--navy);
-    border-left: 5px solid var(--gold);
-    padding-left: .65rem;
-    margin: 0 0 .75rem;
-  }
-  .brief-chip-row { display: flex; flex-wrap: wrap; gap: .45rem; }
+  .brief-refresh:hover { background: #187541; }
+  .brief-refresh[aria-expanded="true"] { background: #0F766E; }
+  .brief-pills { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 1.15rem; }
   .brief-chip {
     font: inherit;
-    font-size: .84rem;
+    font-size: .92rem;
     font-weight: 700;
     cursor: pointer;
     color: var(--navy);
-    background: var(--card);
-    border: 1px solid var(--line);
+    background: #fff;
+    border: 1px solid #E6DBD4;
     border-radius: 999px;
-    padding: .22rem .85rem;
+    padding: .38rem 1.05rem;
   }
   .brief-chip:hover { border-color: var(--gold); }
   .brief-chip.active { background: var(--navy); color: #fff; border-color: var(--navy); }
-  .brief-chip.sub { font-weight: 500; background: var(--surface-warm); }
-  .brief-chip.sub.active { background: var(--navy); color: #fff; }
-  .brief-status {
+  .brief-chip.sub { font-weight: 500; background: #FFF6D4; border-color: #F0E2A8; }
+  .brief-chip.sub.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .brief-chip.window { background: #E7F6EE; border-color: #C6E6D3; }
+  .brief-chip.window.active { background: #1F8A4C; color: #fff; border-color: #1F8A4C; }
+  .brief-snap {
+    background:
+      radial-gradient(circle at 92% 12%, rgba(255, 246, 212, 0.95), transparent 42%),
+      linear-gradient(145deg, #E7F6EE 0%, #F3FBF6 48%, #FFF6D4 100%);
+    border-radius: 28px;
+    padding: 1.45rem 1.5rem 1.55rem;
+    box-shadow: 0 12px 34px rgba(36, 59, 85, 0.07);
+    margin-bottom: 1.15rem;
+  }
+  .brief-kicker {
+    display: inline-block;
+    font-size: .74rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    color: #1F8A4C;
+    background: rgba(255,255,255,.72);
+    border-radius: 999px;
+    padding: .18rem .7rem;
+    margin-bottom: .55rem;
+  }
+  .brief-snap h2,
+  .brief-daily h2,
+  .brief-drawer h2 {
+    font-size: 1.28rem;
+    color: var(--navy);
+    margin: 0 0 .85rem;
+    line-height: 1.3;
+  }
+  .brief-daily {
+    background: #fff;
+    border-radius: 28px;
+    padding: 1.35rem 1.4rem 1.5rem;
+    box-shadow: 0 10px 30px rgba(36, 59, 85, 0.06);
+  }
+  .brief-daily-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: .7rem;
+    margin-bottom: .35rem;
+  }
+  .brief-window { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .brief-note {
     font-size: .82rem;
     color: var(--muted);
-    text-align: right;
+    margin: 0 0 .9rem;
   }
-  .brief-banner {
-    border-radius: var(--radius-sm);
-    padding: .85rem 1.05rem;
-    margin: 0 0 1.1rem;
-    font-size: .92rem;
-  }
-  .brief-banner.error {
-    background: #fdf3f4;
-    border: 1px solid #f0c8cd;
-    color: #7a2430;
-  }
-  .brief-banner.empty {
-    background: var(--surface-warm);
-    border: 1px solid var(--line);
-    color: var(--muted);
-  }
-  .brief-grid {
-    display: grid;
-    grid-template-columns: 1.4fr .8fr;
-    gap: 1.15rem;
-    align-items: start;
-  }
-  .brief-split {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.15rem;
-  }
-  .brief-section { margin: 1.6rem 0 0; }
+  .brief-list { display: flex; flex-direction: column; gap: .7rem; }
   .brief-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: .85rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: .75rem;
   }
-  .brief-card,
-  .brief-row {
-    display: block;
+  .brief-row,
+  .brief-card {
+    display: flex;
+    align-items: center;
+    gap: .9rem;
     text-decoration: none;
     color: inherit;
-    border-radius: var(--radius-sm);
-    padding: .95rem 1.05rem;
-    box-shadow: var(--shadow-sm);
+    border-radius: 22px;
+    padding: 1.05rem 1.15rem;
+    min-height: 78px;
+    box-shadow: 0 4px 16px rgba(36, 59, 85, 0.05);
     transition: transform .15s ease, box-shadow .15s ease;
   }
-  .brief-card:hover,
-  .brief-row:hover {
+  .brief-card { min-height: 0; }
+  .brief-row:hover,
+  .brief-card:hover {
     transform: translateY(-2px);
-    box-shadow: var(--shadow);
+    box-shadow: 0 10px 26px rgba(36, 59, 85, 0.1);
   }
-  .brief-card.mint,
-  .brief-row.mint { background: #E7F6EE; border: 1px solid #C6E6D3; }
-  .brief-card.yellow,
-  .brief-row.yellow { background: #FFF6D4; border: 1px solid #F0E2A8; }
-  .brief-card.cream,
-  .brief-row.cream { background: #FFFCF7; border: 1px solid var(--gold-soft); }
+  .brief-row.mint,
+  .brief-card.mint { background: #E7F6EE; }
+  .brief-row.yellow,
+  .brief-card.yellow { background: #FFF6D4; }
+  .brief-row.teal,
+  .brief-card.teal { background: #DDF4F2; }
+  .brief-row.gazette,
+  .brief-card.gazette { background: #E3F7EE; }
+  .brief-row.cream,
+  .brief-card.cream { background: #FFFCF7; }
   .brief-type {
     display: inline-block;
+    flex: none;
     font-size: .72rem;
     font-weight: 700;
     border-radius: 999px;
-    padding: .12rem .55rem;
-    margin-bottom: .45rem;
+    padding: .16rem .58rem;
   }
   .brief-type.ruling { background: #1F8A4C; color: #fff; }
   .brief-type.draft { background: #E3B341; color: #3D2E00; }
-  .brief-type.live { background: #C4473A; color: #fff; }
+  .brief-type.ir { background: #0F766E; color: #fff; }
+  .brief-type.gazette { background: #5BB89A; color: #08382C; }
+  .brief-type.live { background: #0F766E; color: #fff; }
   .brief-type.other { background: var(--navy); color: #fff; }
-  .brief-card .title,
-  .brief-row .title {
-    font-family: Gelasio, "Times New Roman", serif;
+  .brief-grow { flex: 1; min-width: 0; }
+  .brief-row .title,
+  .brief-card .title {
     font-size: 1.02rem;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--navy);
     line-height: 1.45;
   }
   .brief-meta {
-    margin-top: .45rem;
-    font-size: .8rem;
+    margin-top: .22rem;
+    font-family: Gelasio, "Times New Roman", serif;
+    font-size: .86rem;
     color: var(--muted);
   }
-  .brief-list { display: flex; flex-direction: column; gap: .65rem; }
-  .brief-live {
-    background: #FFFCF7;
-    border: 1px solid var(--gold-soft);
-    border-radius: var(--radius);
-    padding: 1.1rem 1.15rem 1.2rem;
-    box-shadow: var(--shadow-sm);
-    position: sticky;
-    top: 5.2rem;
-  }
-  .brief-live h2 { border-left-color: #1F8A4C; }
-  .brief-window {
-    display: flex;
-    gap: .4rem;
-    margin: 0 0 .8rem;
+  .brief-chevron {
+    flex: none;
+    font-family: Gelasio, "Times New Roman", serif;
+    font-size: 1.55rem;
+    line-height: 1;
+    color: var(--gold);
   }
   .brief-empty {
-    font-size: .9rem;
+    border-radius: 22px;
+    padding: 1.5rem 1.2rem 1.55rem;
+    text-align: center;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(231, 246, 238, 0.95), transparent 46%),
+      radial-gradient(circle at 86% 80%, rgba(255, 246, 212, 0.95), transparent 42%),
+      #FFFCF7;
+    box-shadow: inset 0 0 0 1px rgba(201, 149, 90, 0.12);
+  }
+  .brief-empty-art {
+    display: flex;
+    justify-content: center;
+    gap: .45rem;
+    margin-bottom: .7rem;
+  }
+  .brief-empty-art span {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .brief-empty-art .a { background: #1F8A4C; }
+  .brief-empty-art .b { background: #E3B341; }
+  .brief-empty-art .c { background: #0F766E; }
+  .brief-empty-title {
+    font-size: 1.12rem;
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .brief-empty-hint {
+    margin-top: .35rem;
+    font-size: .88rem;
     color: var(--muted);
-    background: var(--card);
-    border: 1px dashed var(--line);
-    border-radius: var(--radius-sm);
-    padding: .85rem 1rem;
   }
   .brief-edu {
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     font-size: .82rem;
     color: var(--muted);
     background: var(--surface-warm);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-sm);
-    padding: .9rem 1.1rem;
+    border-radius: 18px;
+    padding: .95rem 1.15rem;
   }
-  @media (max-width: 860px) {
-    .brief-grid,
-    .brief-split { grid-template-columns: 1fr; }
-    .brief-live { position: static; }
-    .brief-status { text-align: left; }
+  .brief-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(36, 59, 85, 0.28);
+    z-index: 70;
+  }
+  .brief-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(420px, 100%);
+    height: 100%;
+    z-index: 80;
+    background:
+      linear-gradient(180deg, #E7F6EE 0%, #FFFCF7 38%, #FFF6D4 100%);
+    box-shadow: -12px 0 40px rgba(36, 59, 85, 0.16);
+    padding: 1.25rem 1.2rem 1.6rem;
+    overflow: auto;
+  }
+  .brief-drawer-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: .7rem;
+    margin-bottom: .85rem;
+  }
+  .brief-close {
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    border: 0;
+    background: #fff;
+    color: var(--navy);
+    border-radius: 999px;
+    padding: .35rem .8rem;
+  }
+  [hidden] { display: none !important; }
+  @media (max-width: 720px) {
+    .brief-top { flex-direction: column; align-items: flex-start; }
+    .brief-actions { justify-content: flex-start; }
+    .brief-snap,
+    .brief-daily { padding: 1.15rem 1.05rem 1.25rem; border-radius: 22px; }
   }
 </style>
 </head>
@@ -260,73 +341,63 @@
       <a href="resources.html" data-i18n="navResources">官方資源</a>
       <a href="brief.html" class="active" data-nav="brief" data-i18n="navBrief">稅訊</a>
     </nav>
-    <div class="brief-lang" role="group" aria-label="語言">
-      <button type="button" id="lang-zh" class="active" aria-pressed="true">繁</button>
-      <span aria-hidden="true">|</span>
-      <button type="button" id="lang-en" aria-pressed="false">EN</button>
-    </div>
     <button class="nav-toggle" aria-label="選單" aria-expanded="false" aria-controls="main-nav">☰</button>
   </div>
 </header>
 
 <main>
-  <section class="brief-hero">
-    <div class="brief-kicker" data-i18n="kicker">官方發布速覽 · 免費閱讀</div>
-    <h1 class="brief-serif" data-i18n="pageTitle">稅訊</h1>
-    <p class="brief-lead" data-i18n="lead">整理台灣、美國與亞太官方稅務發布的標題、來源與日期。點列後另開官方原文，本頁不代管全文。</p>
-    <p class="brief-note" data-i18n="eduLine">內容為教育整理，不是稅務意見，也不構成投資建議。標題維持官方原文，不做機器翻譯。</p>
-  </section>
-
-  <div class="brief-toolbar">
-    <div class="brief-filters">
-      <h2 data-i18n="countryTitle">國家／地區</h2>
-      <div class="brief-chip-row" id="country-filters" role="group" aria-label="國家篩選"></div>
-      <div class="brief-chip-row" id="apac-filters" hidden style="margin-top:.55rem;"></div>
+  <div class="brief-top">
+    <div>
+      <p class="brief-date" id="brief-date"></p>
+      <h1 class="brief-serif" data-i18n="pageTitle">稅訊</h1>
+      <p class="brief-lead" data-i18n="lead">整理台灣、美國與亞太官方稅務發布的標題、來源與日期。點列後另開官方原文，本頁不代管全文。</p>
     </div>
-    <p class="brief-status" id="brief-status"></p>
+    <div class="brief-actions">
+      <div class="brief-lang" role="group" aria-label="語言">
+        <button type="button" id="lang-zh" class="active" aria-pressed="true">繁</button>
+        <span aria-hidden="true">|</span>
+        <button type="button" id="lang-en" aria-pressed="false">EN</button>
+      </div>
+      <button type="button" class="brief-refresh" id="live-open" aria-expanded="false" aria-controls="live-panel" data-i18n="refresh">更新</button>
+    </div>
   </div>
 
-  <div id="brief-banner" hidden></div>
+  <div class="brief-pills" id="country-filters" role="group" aria-label="國家篩選"></div>
+  <div class="brief-pills" id="apac-filters" hidden></div>
 
-  <section class="brief-section" aria-labelledby="snap-title">
+  <section class="brief-snap" aria-labelledby="snap-title">
+    <div class="brief-kicker" data-i18n="kicker">官方發布速覽 · 免費閱讀</div>
     <h2 id="snap-title" data-i18n="snapshot">當日重點快照</h2>
     <div class="brief-cards" id="snap-list"></div>
   </section>
 
-  <section class="brief-section" id="tw-kinds" aria-labelledby="tw-title">
-    <h2 id="tw-title" data-i18n="twKinds">新頒函釋 / 法規草案</h2>
-    <div class="brief-split">
-      <div>
-        <div class="brief-chip-row" style="margin-bottom:.65rem;"><span class="brief-type ruling" data-i18n="chipRuling">函釋</span></div>
-        <div class="brief-list" id="ruling-list"></div>
-      </div>
-      <div>
-        <div class="brief-chip-row" style="margin-bottom:.65rem;"><span class="brief-type draft" data-i18n="chipDraft">草案</span></div>
-        <div class="brief-list" id="draft-list"></div>
+  <section class="brief-daily" aria-labelledby="tw-title">
+    <div class="brief-daily-head">
+      <h2 id="tw-title" data-i18n="twKinds">新頒函釋 / 法規草案</h2>
+      <div class="brief-window" role="group" aria-label="日期視窗">
+        <button type="button" class="brief-chip window active" data-window="today" data-i18n="today">今天</button>
+        <button type="button" class="brief-chip window" data-window="yesterday" data-i18n="yesterday">昨天</button>
       </div>
     </div>
+    <p class="brief-note" data-i18n="windowNote">視窗以台北時間計算。內容為教育整理，不是稅務意見。</p>
+    <div class="brief-list" id="daily-list"></div>
   </section>
-
-  <div class="brief-grid brief-section">
-    <section aria-labelledby="daily-title">
-      <h2 id="daily-title" data-i18n="dailyTitle">今天 / 昨天</h2>
-      <div class="brief-window" role="group" aria-label="日期視窗">
-        <button type="button" class="brief-chip active" data-window="today" data-i18n="today">今天</button>
-        <button type="button" class="brief-chip" data-window="yesterday" data-i18n="yesterday">昨天</button>
-      </div>
-      <p class="brief-note" style="margin:0 0 .8rem;" data-i18n="windowNote">視窗以台北時間計算。</p>
-      <div class="brief-list" id="daily-list"></div>
-    </section>
-
-    <aside class="brief-live" aria-labelledby="live-title">
-      <h2 id="live-title" data-i18n="liveTitle">即時更新</h2>
-      <p class="brief-note" style="margin:0 0 .8rem;" data-i18n="liveNote">獨立面板，不混進今日／昨日清單。</p>
-      <div class="brief-list" id="live-list"></div>
-    </aside>
-  </div>
 
   <div class="brief-edu" data-i18n="footerEdu">本頁只做官方標題索引，請以各機關網站的原文與生效日為準。個案請詢問你的合格稅務專業人員。</div>
 </main>
+
+<div class="brief-overlay" id="live-overlay" hidden></div>
+<aside class="brief-drawer" id="live-panel" hidden role="dialog" aria-modal="true" aria-labelledby="live-title">
+  <div class="brief-drawer-head">
+    <div>
+      <div class="brief-kicker" data-i18n="liveKicker">獨立面板</div>
+      <h2 id="live-title" data-i18n="liveTitle">即時更新</h2>
+    </div>
+    <button type="button" class="brief-close" id="live-close" data-i18n="close">關閉</button>
+  </div>
+  <p class="brief-note" data-i18n="liveNote">不混進今日或昨日清單。點列後另開官方原文。</p>
+  <div class="brief-list" id="live-list"></div>
+</aside>
 
 <footer class="site-footer">
   <div class="footer-inner">
@@ -339,18 +410,8 @@
 (function () {
   "use strict";
 
-  /* Live Cloudflare Worker. Jeff is still filling the feed.
-     Hello World HTML, non-JSON, and health-only stubs are "API not ready".
-     Do not invent ruling numbers or official titles. */
+  /* Live Cloudflare Worker. Hello World, non-JSON, and [] all show the designed empty state. */
   var WORKER_BASE = "https://tax-brief.fengyen0812.workers.dev";
-
-  /* Feed JSON (either shape is fine):
-     1) { generatedAt, items: [{ title, source, date, url, country, kind, live }] }
-     2) { generatedAt, snapshot:[], rulings:[], drafts:[], today:[], yesterday:[], live:[] }
-     Advertised path today: /feed
-     country: tw | us | hk | sg | jp | kr | cn
-     kind: ruling | draft | live | highlight
-     title stays in the official language. This page never translates titles. */
 
   var I18N = {
     zh: {
@@ -359,55 +420,51 @@
       kicker: "官方發布速覽 · 免費閱讀",
       pageTitle: "稅訊",
       lead: "整理台灣、美國與亞太官方稅務發布的標題、來源與日期。點列後另開官方原文，本頁不代管全文。",
-      eduLine: "內容為教育整理，不是稅務意見，也不構成投資建議。標題維持官方原文，不做機器翻譯。",
-      countryTitle: "國家／地區",
       snapshot: "當日重點快照",
       twKinds: "新頒函釋 / 法規草案",
-      chipRuling: "函釋", chipDraft: "草案",
-      dailyTitle: "今天 / 昨天",
       today: "今天", yesterday: "昨天",
-      windowNote: "視窗以台北時間計算。",
+      windowNote: "視窗以台北時間計算。內容為教育整理，不是稅務意見。",
+      refresh: "更新",
+      liveKicker: "獨立面板",
       liveTitle: "即時更新",
-      liveNote: "獨立面板，不混進今日／昨日清單。",
+      liveNote: "不混進今日或昨日清單。點列後另開官方原文。",
+      close: "關閉",
       footerEdu: "本頁只做官方標題索引，請以各機關網站的原文與生效日為準。個案請詢問你的合格稅務專業人員。",
       footerDisclaimer: "免責聲明",
       footerLine: "本網站內容為教育性質與個人觀點分享，不構成任何投資建議或稅務專業意見。© 2026 稅務 x 美股 x AI",
       empty: "今日尚無新發布",
+      emptyHint: "官方一有新發布，標題就會出現在這裡。本頁不會自行編造函釋字號。",
       loading: "讀取中…",
-      error: "目前讀不到資料來源，請稍後再試。本頁不會自行編造函釋字號。",
-      notReady: "資料來源尚未就緒。本頁不會自行編造函釋字號。",
-      updated: "資料時間",
       tw: "台灣", us: "美國", apac: "亞太區",
       hk: "香港", sg: "新加坡", jp: "日本", kr: "韓國", cn: "中國",
-      typeRuling: "函釋", typeDraft: "草案", typeLive: "即時", typeOther: "發布"
+      typeRuling: "函釋", typeDraft: "草案", typeIR: "IR", typeGazette: "公報",
+      typeLive: "即時", typeOther: "發布"
     },
     en: {
       navHome: "Home", navArticles: "Articles", navServices: "Services", navAbout: "About",
       navResources: "Resources", navBrief: "Tax Brief",
       kicker: "Official releases · free to read",
       pageTitle: "Tax Brief",
-      lead: "A list of official tax-release titles, sources, and dates for Taiwan, the US, and Asia Pacific. Each row opens the official page. This page does not host full official text.",
-      eduLine: "Education, not tax advice, and not investment advice. Official titles stay in the original language. No machine translation.",
-      countryTitle: "Country / region",
+      lead: "Official tax-release titles, sources, and dates for Taiwan, the US, and Asia Pacific. Each row opens the official page. This page does not host full official text.",
       snapshot: "Today's snapshot",
       twKinds: "New rulings / draft rules",
-      chipRuling: "Ruling", chipDraft: "Draft",
-      dailyTitle: "Today / yesterday",
       today: "Today", yesterday: "Yesterday",
-      windowNote: "The window uses Taipei time.",
+      windowNote: "The window uses Taipei time. Education, not tax advice.",
+      refresh: "Refresh",
+      liveKicker: "Separate panel",
       liveTitle: "Live updates",
-      liveNote: "A separate panel. Not mixed into the daily list.",
+      liveNote: "Not mixed into the today or yesterday list. Each row opens the official page.",
+      close: "Close",
       footerEdu: "This page is a title index only. Use the official site for the full text and effective date. For a personal case, ask a qualified tax professional.",
       footerDisclaimer: "Disclaimer",
       footerLine: "Content is educational and personal views. It is not investment advice or professional tax advice. © 2026 TaxCode x US Stocks x AI",
       empty: "No new releases today",
+      emptyHint: "Official titles will show up here when the source publishes them. This page will not invent ruling numbers.",
       loading: "Loading…",
-      error: "The data source could not be read. Try again later. This page will not invent ruling numbers.",
-      notReady: "The API is not ready yet. This page will not invent ruling numbers.",
-      updated: "Source time",
       tw: "Taiwan", us: "United States", apac: "Asia Pacific",
       hk: "Hong Kong", sg: "Singapore", jp: "Japan", kr: "Korea", cn: "China",
-      typeRuling: "Ruling", typeDraft: "Draft", typeLive: "Live", typeOther: "Release"
+      typeRuling: "Ruling", typeDraft: "Draft", typeIR: "IR", typeGazette: "Gazette",
+      typeLive: "Live", typeOther: "Release"
     }
   };
 
@@ -417,9 +474,8 @@
     apac: "",
     window: "today",
     payload: null,
-    error: false,
-    notReady: false,
-    loading: true
+    loading: true,
+    liveOpen: false
   };
 
   function t(key) {
@@ -438,8 +494,31 @@
     enBtn.classList.toggle("active", state.lang === "en");
     zhBtn.setAttribute("aria-pressed", state.lang === "zh" ? "true" : "false");
     enBtn.setAttribute("aria-pressed", state.lang === "en" ? "true" : "false");
+    document.getElementById("brief-date").textContent = formatDateHeader();
     renderFilters();
     renderAll();
+  }
+
+  function formatDateHeader() {
+    var now = new Date();
+    if (state.lang === "en") {
+      return new Intl.DateTimeFormat("en-GB", {
+        timeZone: "Asia/Taipei",
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      }).format(now);
+    }
+    var parts = {};
+    new Intl.DateTimeFormat("zh-Hant", {
+      timeZone: "Asia/Taipei",
+      weekday: "short",
+      day: "numeric",
+      month: "numeric",
+      year: "numeric"
+    }).formatToParts(now).forEach(function (p) { parts[p.type] = p.value; });
+    return parts.year + "年" + parts.month + "月" + parts.day + "日 " + parts.weekday;
   }
 
   function taipeiYmd(date) {
@@ -496,6 +575,8 @@
 
   function normalizeKind(v) {
     var s = String(v || "").trim().toLowerCase();
+    if (/\bir\b|internal revenue|revenue ruling/.test(s)) return "ir";
+    if (/gazette|公報|bulletin|公告/.test(s)) return "gazette";
     if (/ruling|函釋|函释|interpretation|letter/.test(s)) return "ruling";
     if (/draft|草案|bill/.test(s)) return "draft";
     if (/live|realtime|real-time|即時|即时/.test(s)) return "live";
@@ -548,9 +629,19 @@
     };
   }
 
+  function countryQuery() {
+    if (state.country === "us") return "us";
+    if (state.country === "apac") return state.apac || "hk,sg,jp,kr,cn";
+    return "tw";
+  }
+
   function workerPaths() {
     var base = String(WORKER_BASE || "").replace(/\/+$/, "");
-    return [base + "/feed", base + "/releases.json", base];
+    return [
+      base + "/feed?countries=" + encodeURIComponent(countryQuery()),
+      base + "/feed",
+      base
+    ];
   }
 
   function looksLikeHelloWorld(text) {
@@ -573,50 +664,34 @@
   }
 
   function parseWorkerBody(text) {
-    if (looksLikeHelloWorld(text)) {
-      var err = new Error("api-not-ready");
-      err.code = "not-ready";
-      throw err;
-    }
+    if (looksLikeHelloWorld(text)) return { items: [] };
     var data;
     try {
       data = JSON.parse(text);
     } catch (e) {
-      var bad = new Error("non-json");
-      bad.code = "not-ready";
-      throw bad;
+      return { items: [] };
     }
-    if (!isFeedPayload(data)) {
-      var stub = new Error("api-not-ready");
-      stub.code = "not-ready";
-      throw stub;
-    }
+    if (!isFeedPayload(data)) return { items: [] };
     return data;
   }
 
   function fetchBrief() {
     var paths = workerPaths();
     var i = 0;
-    var lastCode = "error";
     function next() {
-      if (i >= paths.length) {
-        var done = new Error("worker-unavailable");
-        done.code = lastCode;
-        return Promise.reject(done);
-      }
+      if (i >= paths.length) return Promise.resolve({ items: [] });
       var url = paths[i++];
       var ctrl = new AbortController();
       var timer = setTimeout(function () { ctrl.abort(); }, 8000);
       return fetch(url, { credentials: "omit", signal: ctrl.signal }).then(function (res) {
         return res.text().then(function (text) {
           var data = parseWorkerBody(text);
-          if (!res.ok) throw new Error("http-" + res.status);
+          if (!res.ok && !isFeedPayload(data)) throw new Error("http-" + res.status);
           return data;
         });
       }).finally(function () {
         clearTimeout(timer);
-      }).catch(function (err) {
-        if (err && err.code === "not-ready") lastCode = "not-ready";
+      }).catch(function () {
         return next();
       });
     }
@@ -636,22 +711,26 @@
     return true;
   }
 
-  function failMessage() {
-    if (state.notReady) return t("notReady");
-    if (state.error) return t("error");
-    return t("empty");
-  }
-
   function emptyBox() {
-    var d = document.createElement("div");
-    d.className = "brief-empty";
-    d.textContent = failMessage();
-    return d;
+    var wrap = document.createElement("div");
+    wrap.className = "brief-empty";
+    wrap.innerHTML = '<div class="brief-empty-art" aria-hidden="true"><span class="a"></span><span class="b"></span><span class="c"></span></div>';
+    var title = document.createElement("p");
+    title.className = "brief-empty-title";
+    title.textContent = state.loading ? t("loading") : t("empty");
+    var hint = document.createElement("p");
+    hint.className = "brief-empty-hint";
+    hint.textContent = state.loading ? "" : t("emptyHint");
+    wrap.appendChild(title);
+    if (!state.loading) wrap.appendChild(hint);
+    return wrap;
   }
 
   function typeLabel(item) {
     if (item.kind === "ruling") return t("typeRuling");
     if (item.kind === "draft") return t("typeDraft");
+    if (item.kind === "ir") return t("typeIR");
+    if (item.kind === "gazette") return t("typeGazette");
     if (item.live || item.kind === "live") return t("typeLive");
     return t("typeOther");
   }
@@ -659,6 +738,8 @@
   function typeClass(item) {
     if (item.kind === "ruling") return "ruling";
     if (item.kind === "draft") return "draft";
+    if (item.kind === "ir") return "ir";
+    if (item.kind === "gazette") return "gazette";
     if (item.live || item.kind === "live") return "live";
     return "other";
   }
@@ -666,6 +747,8 @@
   function cardClass(item) {
     if (item.kind === "ruling") return "mint";
     if (item.kind === "draft") return "yellow";
+    if (item.kind === "ir") return "teal";
+    if (item.kind === "gazette") return "gazette";
     return "cream";
   }
 
@@ -678,28 +761,29 @@
     var chip = document.createElement("span");
     chip.className = "brief-type " + typeClass(item);
     chip.textContent = typeLabel(item);
+    var grow = document.createElement("div");
+    grow.className = "brief-grow";
     var title = document.createElement("div");
     title.className = "title";
     title.textContent = item.title;
     var meta = document.createElement("div");
     meta.className = "brief-meta";
     meta.textContent = [item.source, item.date].filter(Boolean).join(" · ");
+    grow.appendChild(title);
+    grow.appendChild(meta);
+    var chev = document.createElement("span");
+    chev.className = "brief-chevron";
+    chev.setAttribute("aria-hidden", "true");
+    chev.textContent = "›";
     a.appendChild(chip);
-    a.appendChild(title);
-    a.appendChild(meta);
+    a.appendChild(grow);
+    a.appendChild(chev);
     return a;
   }
 
   function fillList(el, items, asCard) {
     el.innerHTML = "";
-    if (state.loading) {
-      var load = document.createElement("div");
-      load.className = "brief-empty";
-      load.textContent = t("loading");
-      el.appendChild(load);
-      return;
-    }
-    if (!items.length) {
+    if (state.loading || !items.length) {
       el.appendChild(emptyBox());
       return;
     }
@@ -720,7 +804,7 @@
         state.country = pair[0];
         if (pair[0] !== "apac") state.apac = "";
         renderFilters();
-        renderAll();
+        loadFeed();
       });
       main.appendChild(b);
     });
@@ -736,7 +820,7 @@
         b.addEventListener("click", function () {
           state.apac = pair[0];
           renderFilters();
-          renderAll();
+          loadFeed();
         });
         apac.appendChild(b);
       });
@@ -748,65 +832,55 @@
     });
   }
 
+  function setLiveOpen(open) {
+    state.liveOpen = !!open;
+    document.getElementById("live-panel").hidden = !state.liveOpen;
+    document.getElementById("live-overlay").hidden = !state.liveOpen;
+    document.getElementById("live-open").setAttribute("aria-expanded", state.liveOpen ? "true" : "false");
+    if (state.liveOpen) renderAll();
+  }
+
   function renderAll() {
     try {
-      renderAllUnsafe();
+      var items = state.payload ? state.payload.items : [];
+      var filtered = items.filter(matchesCountry);
+      var today = taipeiYmd(new Date());
+      var yesterday = yesterdayTaipei(today);
+      var snap = filtered.filter(function (it) {
+        return it.kind === "highlight" || it.section === "snapshot" || it.section === "highlights";
+      });
+      var live = filtered.filter(function (it) { return it.live || it.kind === "live" || it.section === "live"; });
+      var day = state.window === "yesterday" ? yesterday : today;
+      var daily = filtered.filter(function (it) {
+        if (it.live || it.kind === "live" || it.section === "live") return false;
+        return it.date === day;
+      });
+      fillList(document.getElementById("snap-list"), snap, true);
+      fillList(document.getElementById("daily-list"), daily, false);
+      fillList(document.getElementById("live-list"), live, false);
     } catch (e) {
-      state.error = !state.notReady;
-      var banner = document.getElementById("brief-banner");
-      if (banner) {
-        banner.hidden = false;
-        banner.className = "brief-banner error";
-        banner.textContent = failMessage();
-      }
+      fillList(document.getElementById("snap-list"), [], true);
+      fillList(document.getElementById("daily-list"), [], false);
+      fillList(document.getElementById("live-list"), [], false);
     }
   }
 
-  function renderAllUnsafe() {
-    var banner = document.getElementById("brief-banner");
-    var status = document.getElementById("brief-status");
-    var items = state.payload ? state.payload.items : [];
-    var filtered = items.filter(matchesCountry);
-    var today = taipeiYmd(new Date());
-    var yesterday = yesterdayTaipei(today);
-
-    if (state.loading) {
-      banner.hidden = true;
-      status.textContent = t("loading");
-    } else if (state.notReady || state.error) {
-      banner.hidden = false;
-      banner.className = "brief-banner error";
-      banner.textContent = failMessage();
-      status.textContent = "";
-    } else {
-      banner.hidden = true;
-      status.textContent = state.payload && state.payload.generatedAt
-        ? t("updated") + " " + state.payload.generatedAt
-        : "";
-    }
-
-    var snap = filtered.filter(function (it) {
-      return it.kind === "highlight" || it.section === "snapshot" || it.section === "highlights";
+  function loadFeed() {
+    state.loading = true;
+    renderAll();
+    return fetchBrief().then(function (data) {
+      state.loading = false;
+      try {
+        state.payload = normalizePayload(data);
+      } catch (e) {
+        state.payload = { generatedAt: "", items: [] };
+      }
+      renderAll();
+    }).catch(function () {
+      state.loading = false;
+      state.payload = { generatedAt: "", items: [] };
+      renderAll();
     });
-    var rulings = filtered.filter(function (it) {
-      return it.country === "tw" && it.kind === "ruling" && !it.live;
-    });
-    var drafts = filtered.filter(function (it) {
-      return it.country === "tw" && it.kind === "draft" && !it.live;
-    });
-    var live = filtered.filter(function (it) { return it.live || it.kind === "live" || it.section === "live"; });
-    var day = state.window === "yesterday" ? yesterday : today;
-    var daily = filtered.filter(function (it) {
-      if (it.live || it.kind === "live" || it.section === "live") return false;
-      return it.date === day;
-    });
-
-    document.getElementById("tw-kinds").hidden = state.country !== "tw";
-    fillList(document.getElementById("snap-list"), snap, true);
-    fillList(document.getElementById("ruling-list"), rulings, false);
-    fillList(document.getElementById("draft-list"), drafts, false);
-    fillList(document.getElementById("daily-list"), daily, false);
-    fillList(document.getElementById("live-list"), live, false);
   }
 
   function bind() {
@@ -827,6 +901,14 @@
         renderAll();
       });
     });
+    document.getElementById("live-open").addEventListener("click", function () {
+      loadFeed().then(function () { setLiveOpen(true); });
+    });
+    document.getElementById("live-close").addEventListener("click", function () { setLiveOpen(false); });
+    document.getElementById("live-overlay").addEventListener("click", function () { setLiveOpen(false); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && state.liveOpen) setLiveOpen(false);
+    });
   }
 
   function start() {
@@ -836,24 +918,7 @@
     } catch (e) {}
     bind();
     applyChrome();
-    fetchBrief().then(function (data) {
-      state.loading = false;
-      state.error = false;
-      state.notReady = false;
-      try {
-        state.payload = normalizePayload(data);
-      } catch (e) {
-        state.notReady = true;
-        state.payload = { generatedAt: "", items: [] };
-      }
-      renderAll();
-    }).catch(function (err) {
-      state.loading = false;
-      state.notReady = !!(err && err.code === "not-ready");
-      state.error = !state.notReady;
-      state.payload = { generatedAt: "", items: [] };
-      renderAll();
-    });
+    loadFeed();
   }
 
   if (document.readyState === "loading") {
