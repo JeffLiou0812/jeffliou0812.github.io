@@ -80,6 +80,18 @@
     anchor.parentNode.insertBefore(bar, anchor);
   }
 
+  function initBriefNavLink() {
+    var nav = document.querySelector("nav.main-nav");
+    if (!nav || nav.querySelector('a[data-nav="brief"], a[href*="brief.html"]')) return;
+    var a = document.createElement("a");
+    a.href = SITE_ROOT + "brief.html";
+    a.setAttribute("data-nav", "brief");
+    a.textContent = IS_EN ? "Tax Brief" : "稅訊";
+    var path = (location.pathname || "").replace(/\/+$/, "");
+    if (/(^|\/)brief(\.html)?$/.test(path)) a.className = "active";
+    nav.appendChild(a);
+  }
+
   function initNavToggle() {
     var btn = document.querySelector(".nav-toggle");
     var nav = document.querySelector("nav.main-nav");
@@ -159,6 +171,7 @@
   function init() {
     initCoffeeButton();
     initCategoryFilter();
+    initBriefNavLink();
     initNavToggle();
   }
 
