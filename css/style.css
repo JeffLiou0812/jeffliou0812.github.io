@@ -4,13 +4,13 @@
   --navy-dark: #1A2B3D;
   --gold: #C9955A;
   --gold-soft: #E8D4B8;
-  --surface-warm: #F6E4D4;
+  --surface-warm: #F6E0CC;
   --red: #DC3545;
   --ink: #2A3340;
   --muted: #6B7785;
-  --bg: #E8D2C0;
+  --bg: #E0C2A8;
   --card: #FFFFFF;
-  --line: #D9C4B2;
+  --line: #D2B59A;
   --radius: 18px;
   --radius-sm: 12px;
   --shadow: 0 10px 32px rgba(36, 59, 85, 0.12);
@@ -25,10 +25,10 @@ body {
   color: var(--ink);
   background-color: var(--bg);
   background-image:
-    radial-gradient(ellipse 75% 55% at 100% -8%, rgba(201, 149, 90, 0.48), transparent 58%),
-    radial-gradient(ellipse 50% 42% at 0% 12%, rgba(36, 59, 85, 0.14), transparent 55%),
-    radial-gradient(ellipse 90% 45% at 50% 108%, rgba(201, 149, 90, 0.22), transparent 62%),
-    linear-gradient(180deg, #F7E3D1 0%, var(--bg) 32%, #D9BFA8 100%);
+    radial-gradient(ellipse 70% 52% at 96% -6%, rgba(214, 154, 72, 0.62), transparent 56%),
+    radial-gradient(ellipse 48% 40% at -4% 10%, rgba(36, 59, 85, 0.18), transparent 52%),
+    radial-gradient(ellipse 90% 42% at 50% 110%, rgba(201, 149, 90, 0.28), transparent 60%),
+    linear-gradient(180deg, #F3D4B4 0%, var(--bg) 34%, #CFA888 100%);
   line-height: 1.8;
   font-size: 17px;
 }
@@ -79,8 +79,8 @@ nav.main-nav a.active {
 /* ===== Hero ===== */
 .hero {
   background:
-    radial-gradient(ellipse 80% 70% at 88% 0%, rgba(201, 149, 90, 0.34), transparent 58%),
-    linear-gradient(165deg, #F8E2CC 0%, rgba(246, 228, 212, 0.55) 48%, transparent 100%);
+    radial-gradient(ellipse 78% 68% at 90% 0%, rgba(214, 154, 72, 0.42), transparent 56%),
+    linear-gradient(165deg, #F6D7B4 0%, rgba(246, 220, 190, 0.5) 46%, transparent 100%);
   color: var(--ink);
   padding: 2.8rem 1.2rem 2.4rem;
   text-align: left;
@@ -529,7 +529,7 @@ article.post .cta-box p { font-size: .95rem; margin-bottom: 0; }
 /* ===== Footer ===== */
 footer.site-footer {
   background:
-    linear-gradient(180deg, rgba(246, 228, 212, 0.35) 0%, #E6C9B0 42%, #D4B49A 100%);
+    linear-gradient(180deg, rgba(243, 212, 176, 0.4) 0%, #D9B18C 48%, #C79A74 100%);
   color: var(--muted);
   padding: 2.1rem 1.2rem 2.2rem;
   font-size: .85rem;
