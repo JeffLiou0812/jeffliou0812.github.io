@@ -30,6 +30,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script src="js/site.js" defer></script>
+<script src="js/brief-sources.js" defer></script>
 <script src="js/brief.js" defer></script>
 </head>
 <body class="brief-page" data-no-ads="true">
@@ -81,16 +82,7 @@
       </div>
       <button type="button" class="brief-close" id="live-close" data-i18n="close">關閉</button>
     </div>
-    <div class="brief-live-grid">
-      <div class="brief-live-col">
-        <h3 data-i18n="rulings">新頒函釋</h3>
-        <div class="brief-list" id="live-rulings"></div>
-      </div>
-      <div class="brief-live-col">
-        <h3 data-i18n="drafts">法規草案</h3>
-        <div class="brief-list" id="live-drafts"></div>
-      </div>
-    </div>
+    <div class="brief-live-grid" id="live-cols"></div>
   </aside>
 
   <div id="brief-banner" class="brief-banner" hidden></div>
@@ -101,77 +93,7 @@
       <div class="brief-snap-list" id="snap-list"></div>
     </section>
 
-    <section class="brief-block" id="block-rulings" aria-labelledby="ruling-title">
-      <h2 id="ruling-title" data-i18n="rulings">新頒函釋</h2>
-      <div class="brief-day">
-        <div class="brief-day-label" data-i18n="today">今天</div>
-        <div class="brief-list" id="ruling-today"></div>
-      </div>
-      <div class="brief-day">
-        <div class="brief-day-label" data-i18n="yesterday">昨天</div>
-        <div class="brief-list" id="ruling-yesterday"></div>
-      </div>
-    </section>
-
-    <section class="brief-block" id="block-drafts" aria-labelledby="draft-title">
-      <h2 id="draft-title" data-i18n="drafts">法規草案</h2>
-      <div class="brief-day">
-        <div class="brief-day-label" data-i18n="today">今天</div>
-        <div class="brief-list" id="draft-today"></div>
-      </div>
-      <div class="brief-day">
-        <div class="brief-day-label" data-i18n="yesterday">昨天</div>
-        <div class="brief-list" id="draft-yesterday"></div>
-      </div>
-    </section>
-
-    <section class="brief-block" id="block-gazette" hidden aria-labelledby="gazette-title">
-      <h2 id="gazette-title" data-i18n="gazette">公報</h2>
-      <div class="brief-day">
-        <div class="brief-day-label" data-i18n="today">今天</div>
-        <div class="brief-list" id="gazette-today"></div>
-      </div>
-      <div class="brief-day">
-        <div class="brief-day-label" data-i18n="yesterday">昨天</div>
-        <div class="brief-list" id="gazette-yesterday"></div>
-      </div>
-    </section>
-
-    <section class="brief-block" id="block-ir" hidden aria-labelledby="ir-title">
-      <h2 id="ir-title" data-i18n="ir">IRS 新聞</h2>
-      <div class="brief-day">
-        <div class="brief-day-label" data-i18n="today">今天</div>
-        <div class="brief-list" id="ir-today"></div>
-      </div>
-      <div class="brief-day">
-        <div class="brief-day-label" data-i18n="yesterday">昨天</div>
-        <div class="brief-list" id="ir-yesterday"></div>
-      </div>
-    </section>
-
-    <section class="brief-block" id="block-fr" hidden aria-labelledby="fr-title">
-      <h2 id="fr-title" data-i18n="fr">聯邦公報</h2>
-      <div class="brief-day">
-        <div class="brief-day-label" data-i18n="today">今天</div>
-        <div class="brief-list" id="fr-today"></div>
-      </div>
-      <div class="brief-day">
-        <div class="brief-day-label" data-i18n="yesterday">昨天</div>
-        <div class="brief-list" id="fr-yesterday"></div>
-      </div>
-    </section>
-
-    <section class="brief-block" id="block-news" hidden aria-labelledby="news-title">
-      <h2 id="news-title" data-i18n="news">官方發布</h2>
-      <div class="brief-day">
-        <div class="brief-day-label" data-i18n="today">今天</div>
-        <div class="brief-list" id="news-today"></div>
-      </div>
-      <div class="brief-day">
-        <div class="brief-day-label" data-i18n="yesterday">昨天</div>
-        <div class="brief-list" id="news-yesterday"></div>
-      </div>
-    </section>
+    <div id="country-feeds"></div>
 
     <p class="brief-status" id="brief-status"></p>
   </div>
