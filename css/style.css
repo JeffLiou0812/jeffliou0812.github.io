@@ -322,6 +322,9 @@ main { max-width: 1040px; margin: 0 auto; padding: 2.2rem 1.2rem 3rem; }
   background: #d4a66a;
   color: var(--navy-dark);
 }
+article.post .tool-promo {
+  margin: 1.8rem 0 0;
+}
 .tool-secondary {
   background: var(--card);
   border: 1px solid var(--line);
