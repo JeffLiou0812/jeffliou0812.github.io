@@ -1,12 +1,15 @@
 /* 稅務 x 美股 x AI — site-wide enhancements
    1) Floating "buy me a coffee" button (placeholder link until a donation platform is chosen)
-   2) Category filter for article card grids (pages with .card[data-category])          */
+   2) Category filter for article card grids (pages with .card[data-category])
+   3) Idle-deferred GA + AdSense so first paint is not competing with third parties */
 (function () {
   "use strict";
 
   /* Set DONATE_URL once the donation platform is decided (Portaly / BMC / Ko-fi ...).
      While null, the button links to the #support section on the services page. */
   var DONATE_URL = null;
+  var GA_ID = "G-TRNEWFX3G6";
+  var ADSENSE_CLIENT = "ca-pub-4182088023942573";
 
   var SITE_ROOT = (function () {
     var src = document.currentScript && document.currentScript.src;
@@ -103,11 +106,63 @@
     });
   }
 
+  function loadScript(src, attrs) {
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = src;
+    if (attrs) {
+      Object.keys(attrs).forEach(function (k) {
+        s.setAttribute(k, attrs[k]);
+      });
+    }
+    document.head.appendChild(s);
+  }
+
+  function initAnalyticsStub() {
+    window.dataLayer = window.dataLayer || [];
+    window.gtag =
+      window.gtag ||
+      function () {
+        window.dataLayer.push(arguments);
+      };
+    window.gtag("js", new Date());
+    window.gtag("config", GA_ID);
+  }
+
+  function loadThirdParty() {
+    loadScript("https://www.googletagmanager.com/gtag/js?id=" + GA_ID);
+    var noAds = document.body && document.body.getAttribute("data-no-ads") === "true";
+    if (!noAds) {
+      loadScript(
+        "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=" + ADSENSE_CLIENT,
+        { crossorigin: "anonymous" }
+      );
+    }
+  }
+
+  function scheduleThirdParty() {
+    initAnalyticsStub();
+    var run = function () {
+      loadThirdParty();
+    };
+    if ("requestIdleCallback" in window) {
+      requestIdleCallback(run, { timeout: 2500 });
+    } else if (document.readyState === "complete") {
+      setTimeout(run, 1);
+    } else {
+      window.addEventListener("load", function () {
+        setTimeout(run, 1);
+      });
+    }
+  }
+
   function init() {
     initCoffeeButton();
     initCategoryFilter();
     initNavToggle();
   }
+
+  scheduleThirdParty();
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
   } else {
