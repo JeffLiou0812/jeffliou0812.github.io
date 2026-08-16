@@ -129,8 +129,16 @@ nav.main-nav a.active {
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: .7rem;
   margin-top: 1.4rem;
+}
+.hero-brief-intro {
+  margin-top: .7rem;
+  max-width: 36rem;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: var(--muted);
 }
 .btn {
   display: inline-flex;
@@ -322,6 +330,9 @@ main { max-width: 1040px; margin: 0 auto; padding: 2.2rem 1.2rem 3rem; }
   background: #d4a66a;
   color: var(--navy-dark);
 }
+.tool-promo-brief {
+  background: linear-gradient(135deg, #3d5348 0%, #2c4038 100%);
+}
 .tool-secondary {
   background: var(--card);
   border: 1px solid var(--line);
@@ -345,6 +356,8 @@ main { max-width: 1040px; margin: 0 auto; padding: 2.2rem 1.2rem 3rem; }
 .tool-secondary h3 a { color: var(--navy); text-decoration: none; }
 .tool-secondary h3 a:hover { color: var(--gold); }
 .tool-secondary p { font-size: .9rem; color: var(--muted); }
+.tool-secondary p a { color: var(--navy); font-weight: 700; }
+.tool-secondary p a:hover { color: var(--gold); }
 .tool-secondary .meta { margin-top: .7rem; font-size: .8rem; color: #8a97a5; }
 
 /* ===== Article cards ===== */
@@ -431,6 +444,8 @@ article.post pre code { background: none; padding: 0; color: inherit; }
   margin: 1.2rem 0;
   font-size: .95rem;
 }
+.callout a { color: var(--navy); font-weight: 700; }
+.callout a:hover { color: var(--gold); }
 .callout.warn { border-left-color: var(--red); background: #fdf3f4; }
 .assumption {
   font-size: .85rem;

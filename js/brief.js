@@ -2,8 +2,11 @@
   "use strict";
 
   var WORKER_BASE = "https://tax-brief.fengyen0812.workers.dev";
-  var APAC = ["hk", "sg", "jp", "kr", "cn"];
-  var ALL_COUNTRIES = ["tw", "us"].concat(APAC);
+  var Sources = window.BriefSources;
+  var APAC = Sources.APAC.filter(function (code) {
+    return Sources.sourcesForCountry(code).length > 0;
+  });
+  var ALL_COUNTRIES = Sources.knownCountries();
 
   var I18N = {
     zh: {
@@ -52,7 +55,8 @@
       typeFr: "FR",
       typeSample: "示意",
       close: "關閉",
-      footerDisclaimer: "免責聲明"
+      footerDisclaimer: "免責聲明",
+      sourceLabel: "來源"
     },
     en: {
       navHome: "Home",
@@ -100,14 +104,18 @@
       typeFr: "FR",
       typeSample: "Sample",
       close: "Close",
-      footerDisclaimer: "Disclaimer"
+      footerDisclaimer: "Disclaimer",
+      sourceLabel: "Source"
     }
   };
 
   var state = {
     lang: "zh",
     groups: { tw: true, us: false, apac: false },
-    apac: { hk: true, sg: true, jp: true, kr: true, cn: true },
+    apac: APAC.reduce(function (acc, code) {
+      acc[code] = true;
+      return acc;
+    }, {}),
     payload: null,
     livePayload: null,
     error: false,
@@ -128,11 +136,18 @@
         if (state.apac[code]) out.push(code);
       });
     }
+    out = out.filter(function (code) {
+      return Sources.sourcesForCountry(code).length > 0;
+    });
     if (!out.length) {
       state.groups.tw = true;
       out.push("tw");
     }
     return out;
+  }
+
+  function visibleItems(rawItems) {
+    return Sources.filterItemsByCountries(rawItems || [], selectedCountries());
   }
 
   function taipeiYmd(date) {
@@ -486,21 +501,77 @@
     return items.filter(function (it) { return it.date === day; });
   }
 
-  function showSection(id, on) {
-    var el = document.getElementById(id);
-    if (el) el.hidden = !on;
+  function sourceName(src) {
+    return state.lang === "en" ? src.sourceEn : src.sourceZh;
+  }
+
+  function makeDayBlock(labelKey) {
+    var day = document.createElement("div");
+    day.className = "brief-day";
+    var label = document.createElement("div");
+    label.className = "brief-day-label";
+    label.textContent = t(labelKey);
+    var list = document.createElement("div");
+    list.className = "brief-list";
+    day.appendChild(label);
+    day.appendChild(list);
+    return { wrap: day, list: list };
+  }
+
+  function renderCountryFeeds(items, today, yesterday) {
+    var root = document.getElementById("country-feeds");
+    root.innerHTML = "";
+    selectedCountries().forEach(function (code) {
+      var countryItems = items.filter(function (it) { return it.country === code; });
+      var sources = Sources.sourcesForCountry(code);
+      if (!sources.length) return;
+
+      var group = document.createElement("section");
+      group.className = "brief-country";
+      group.setAttribute("data-country", code);
+
+      var head = document.createElement("h2");
+      head.className = "brief-country-title";
+      head.textContent = t(code);
+      group.appendChild(head);
+
+      sources.forEach(function (src) {
+        var srcItems = byKind(countryItems, src.kinds);
+        if (src.optional && !srcItems.length && !state.loading) return;
+
+        var block = document.createElement("section");
+        block.className = "brief-block";
+        block.setAttribute("data-source-key", src.key);
+        block.setAttribute("data-country", code);
+
+        var title = document.createElement("h3");
+        title.textContent = t(src.labelKey);
+        var note = document.createElement("p");
+        note.className = "brief-source";
+        note.textContent = t("sourceLabel") + "：" + sourceName(src);
+
+        var todayBox = makeDayBlock("today");
+        var yestBox = makeDayBlock("yesterday");
+        fillDay(todayBox.list, byDay(srcItems, today));
+        fillDay(yestBox.list, byDay(srcItems, yesterday));
+
+        block.appendChild(title);
+        block.appendChild(note);
+        block.appendChild(todayBox.wrap);
+        block.appendChild(yestBox.wrap);
+        group.appendChild(block);
+      });
+
+      if (group.querySelector(".brief-block")) root.appendChild(group);
+    });
   }
 
   function renderMain() {
     var banner = document.getElementById("brief-banner");
     var status = document.getElementById("brief-status");
-    var items = state.payload ? state.payload.items : [];
+    var items = visibleItems(state.payload ? state.payload.items : []);
     var today = taipeiYmd(new Date());
     var yesterday = yesterdayTaipei(today);
-    var countries = selectedCountries();
-    var hasTw = countries.indexOf("tw") !== -1;
-    var hasUs = countries.indexOf("us") !== -1;
-    var hasApac = countries.some(function (c) { return APAC.indexOf(c) !== -1; });
 
     if (state.error) {
       banner.hidden = false;
@@ -528,36 +599,7 @@
     status.textContent = bits.join(" · ");
 
     fillList(document.getElementById("snap-list"), pickSnapshot(items, today, yesterday), true);
-
-    var gazettes = byKind(items, ["gazette"]);
-    showSection("block-rulings", hasTw);
-    showSection("block-drafts", hasTw);
-    showSection("block-gazette", hasTw && gazettes.length > 0);
-    showSection("block-ir", hasUs);
-    showSection("block-fr", hasUs);
-    showSection("block-news", hasApac);
-
-    if (hasTw) {
-      fillDay(document.getElementById("ruling-today"), byDay(byKind(items, ["ruling"]), today));
-      fillDay(document.getElementById("ruling-yesterday"), byDay(byKind(items, ["ruling"]), yesterday));
-      fillDay(document.getElementById("draft-today"), byDay(byKind(items, ["draft"]), today));
-      fillDay(document.getElementById("draft-yesterday"), byDay(byKind(items, ["draft"]), yesterday));
-      if (gazettes.length) {
-        fillDay(document.getElementById("gazette-today"), byDay(gazettes, today));
-        fillDay(document.getElementById("gazette-yesterday"), byDay(gazettes, yesterday));
-      }
-    }
-    if (hasUs) {
-      fillDay(document.getElementById("ir-today"), byDay(byKind(items, ["ir"]), today));
-      fillDay(document.getElementById("ir-yesterday"), byDay(byKind(items, ["ir"]), yesterday));
-      fillDay(document.getElementById("fr-today"), byDay(byKind(items, ["fr"]), today));
-      fillDay(document.getElementById("fr-yesterday"), byDay(byKind(items, ["fr"]), yesterday));
-    }
-    if (hasApac) {
-      var apacItems = items.filter(function (it) { return APAC.indexOf(it.country) !== -1; });
-      fillDay(document.getElementById("news-today"), byDay(apacItems, today));
-      fillDay(document.getElementById("news-yesterday"), byDay(apacItems, yesterday));
-    }
+    renderCountryFeeds(items, today, yesterday);
   }
 
   function openLive() {
@@ -583,33 +625,45 @@
 
   function renderLive(payload, opts) {
     var meta = document.getElementById("live-meta");
-    var rulings = document.getElementById("live-rulings");
-    var drafts = document.getElementById("live-drafts");
+    var grid = document.getElementById("live-cols");
     if (!opts || opts.reopen !== false) openLive();
 
-    var items = payload && payload.items ? payload.items : [];
+    var items = visibleItems(payload && payload.items ? payload.items : []);
     if (!items.length) {
       meta.textContent = formatStamp(payload && payload.generatedAt) + " · " + t("liveEmpty");
     } else {
       meta.textContent = formatStamp(payload && payload.generatedAt) + " · " + t("liveCount").replace("{n}", String(items.length));
     }
 
-    function fillLive(el, list) {
-      el.innerHTML = "";
-      if (!list.length) {
-        el.appendChild(emptyCard("liveEmpty", "hint"));
-        return;
-      }
-      list.forEach(function (item) {
-        el.appendChild(renderRow(item, false));
+    grid.innerHTML = "";
+    selectedCountries().forEach(function (code) {
+      var countryItems = items.filter(function (it) { return it.country === code; });
+      Sources.sourcesForCountry(code).forEach(function (src) {
+        var col = document.createElement("div");
+        col.className = "brief-live-col";
+        col.setAttribute("data-country", code);
+        col.setAttribute("data-source-key", src.key);
+        var h3 = document.createElement("h3");
+        h3.textContent = t(code) + " · " + t(src.labelKey);
+        var note = document.createElement("p");
+        note.className = "brief-source";
+        note.textContent = t("sourceLabel") + "：" + sourceName(src);
+        var list = document.createElement("div");
+        list.className = "brief-list";
+        var srcItems = byKind(countryItems, src.kinds);
+        if (!srcItems.length) {
+          list.appendChild(emptyCard("liveEmpty", "hint"));
+        } else {
+          srcItems.forEach(function (item) {
+            list.appendChild(renderRow(item, false));
+          });
+        }
+        col.appendChild(h3);
+        col.appendChild(note);
+        col.appendChild(list);
+        grid.appendChild(col);
       });
-    }
-
-    var leftover = items.filter(function (it) {
-      return ["ruling", "ir", "gazette", "draft", "fr"].indexOf(it.kind) === -1;
     });
-    fillLive(rulings, byKind(items, ["ruling", "ir", "gazette"]).concat(leftover));
-    fillLive(drafts, byKind(items, ["draft", "fr"]));
   }
 
   function setBusy(on) {
@@ -663,10 +717,7 @@
     refresh.addEventListener("click", function () {
       openLive();
       document.getElementById("live-meta").textContent = t("loading");
-      document.getElementById("live-rulings").innerHTML = "";
-      document.getElementById("live-drafts").innerHTML = "";
-      document.getElementById("live-rulings").appendChild(emptyCard("loading", "hint"));
-      document.getElementById("live-drafts").appendChild(emptyCard("loading", "hint"));
+      document.getElementById("live-cols").innerHTML = "";
       loadFeed(true);
     });
     document.getElementById("live-close").addEventListener("click", closeLive);
