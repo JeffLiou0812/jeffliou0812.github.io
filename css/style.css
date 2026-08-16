@@ -450,6 +450,17 @@ article.post pre code { background: none; padding: 0; color: inherit; }
 }
 .cta-box h4 { color: var(--navy); font-size: 1rem; margin-bottom: .3rem; }
 article.post .cta-box p { font-size: .95rem; margin-bottom: 0; }
+.calc-cta {
+  margin: 1.4rem 0;
+  padding: 1rem 1.2rem;
+  background: var(--surface-warm);
+  border: 1px solid var(--gold-soft);
+  border-left: 5px solid var(--gold);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+article.post .calc-cta p { margin-bottom: 0; font-size: .95rem; }
+.calc-cta a { font-weight: 700; color: var(--navy); }
+.calc-cta a:hover { color: var(--gold); }
 .sources { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--line); font-size: .85rem; color: var(--muted); }
 .sources h4 { color: var(--navy); font-size: .95rem; margin-bottom: .5rem; }
 .disclaimer-box {
