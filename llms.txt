@@ -48,7 +48,8 @@ English audience: nonresident alien (NRA) investors in US stocks, and expats dea
 
 ## Feeds
 
-- [RSS Feed](https://taxcodeusstocks.com/feed.xml)
+- [RSS Feed (中文)](https://taxcodeusstocks.com/feed.xml)
+- [RSS Feed (English)](https://taxcodeusstocks.com/en/feed.xml)
 - [Sitemap](https://taxcodeusstocks.com/sitemap.xml)
 
 ## 引用注意 Citation notes

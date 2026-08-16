@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"><channel>
+  <title>TaxCode x US Stocks x AI | Jeff</title>
+  <link>https://taxcodeusstocks.com/en/</link>
+  <description>US stock analysis through an international tax lens, plus AI-automated research workflows. The tax layer you're missing in US stock investing.</description>
+  <language>en</language>
+  <item>
+    <title>How I Direct AI: A Hands-On Case</title>
+    <link>https://taxcodeusstocks.com/en/ai-workflow-case.html</link>
+    <guid>https://taxcodeusstocks.com/en/ai-workflow-case.html</guid>
+    <pubDate>Thu, 09 Jul 2026 02:00:00 +0000</pubDate>
+    <description>Four days of flagship-model access and a scarce quota: the AI audited my delegation design, flagged four traps, and the layering was rebuilt around leverage of judgment, with the final sign-off staying human.</description>
+  </item>
+  <item>
+    <title>Taiwan's 183-day rule: when foreigners become tax residents, and what happens to offshore investments</title>
+    <link>https://taxcodeusstocks.com/en/articles/foreigner-taiwan-tax-resident.html</link>
+    <guid>https://taxcodeusstocks.com/en/articles/foreigner-taiwan-tax-resident.html</guid>
+    <pubDate>Sun, 05 Jul 2026 03:00:00 +0000</pubDate>
+    <description>How the days are counted, the four-step legal chain that pulls offshore income into Taiwan's minimum tax at 183 days, and the three details expats miss.</description>
+  </item>
+  <item>
+    <title>How I built an AI-powered investment research pipeline: from filings to conclusions</title>
+    <link>https://taxcodeusstocks.com/en/articles/ai-research-workflow.html</link>
+    <guid>https://taxcodeusstocks.com/en/articles/ai-research-workflow.html</guid>
+    <pubDate>Sat, 04 Jul 2026 09:00:00 +0000</pubDate>
+    <description>Python pulls the data, AI deep-reads the filings, and multi-source cross-checks guard against hallucination. A research workflow in daily use, tools and rules fully public.</description>
+  </item>
+  <item>
+    <title>Apple's tax code, decoded: ETR spiked from 14.7% to 24.1%, then settled at 15.6%</title>
+    <link>https://taxcodeusstocks.com/en/articles/apple-etr.html</link>
+    <guid>https://taxcodeusstocks.com/en/articles/apple-etr.html</guid>
+    <pubDate>Sat, 04 Jul 2026 09:00:00 +0000</pubDate>
+    <description>Five years of effective tax rate in one read: four structural drivers, the USD 10.2B EU State Aid one-off, and the new normal under Pillar Two.</description>
+  </item>
+  <item>
+    <title>Build your own 13F tracker: free automation with Python + SEC EDGAR</title>
+    <link>https://taxcodeusstocks.com/en/articles/diy-13f-tracker.html</link>
+    <guid>https://taxcodeusstocks.com/en/articles/diy-13f-tracker.html</guid>
+    <pubDate>Sat, 04 Jul 2026 09:00:00 +0000</pubDate>
+    <description>Skip the subscription fees: pull Buffett's and Burry's position changes straight from SEC source data. Full SOP with code, plus the pitfalls beginners hit.</description>
+  </item>
+  <item>
+    <title>Will the 15% global minimum tax hit your Irish-domiciled ETF?</title>
+    <link>https://taxcodeusstocks.com/en/articles/irish-etf-pillar-two.html</link>
+    <guid>https://taxcodeusstocks.com/en/articles/irish-etf-pillar-two.html</guid>
+    <pubDate>Sat, 04 Jul 2026 09:00:00 +0000</pubDate>
+    <description>Ireland raised its rate under the OECD global minimum tax, so will VWRA or CSPX get caught? A three-layer test: the fund is not taxed; the real effect sits in the holdings.</description>
+  </item>
+  <item>
+    <title>Is overseas income under NT$7.5M tax-free? The five most common myths for US stock investors, dismantled</title>
+    <link>https://taxcodeusstocks.com/en/articles/overseas-income-750-myth.html</link>
+    <guid>https://taxcodeusstocks.com/en/articles/overseas-income-750-myth.html</guid>
+    <pubDate>Sat, 04 Jul 2026 09:00:00 +0000</pubDate>
+    <description>The NT$1M threshold is a cliff not a floor, the NT$7.5M deduction does not come off overseas income alone, and crossing it does not always mean paying. Five myths with worked examples.</description>
+  </item>
+  <item>
+    <title>SK Hynix is coming to Nasdaq (SKHY): should Taiwan investors buy the ADR or the Korean shares?</title>
+    <link>https://taxcodeusstocks.com/en/articles/sk-hynix-adr-tax.html</link>
+    <guid>https://taxcodeusstocks.com/en/articles/sk-hynix-adr-tax.html</guid>
+    <pubDate>Sat, 04 Jul 2026 09:00:00 +0000</pubDate>
+    <description>Treaty 10% vs statutory 22% dividend withholding, capital gains on both sides, and estate tax on both the ADR and the Korean shares.</description>
+  </item>
+  <item>
+    <title>US Treasuries are exempt from US estate tax, but Treasury ETFs are taxed: what nonresident investors must know</title>
+    <link>https://taxcodeusstocks.com/en/articles/treasury-etf-estate-tax.html</link>
+    <guid>https://taxcodeusstocks.com/en/articles/treasury-etf-estate-tax.html</guid>
+    <pubDate>Sat, 04 Jul 2026 09:00:00 +0000</pubDate>
+    <description>Hold T-Bills directly and they sit outside the US estate tax. Wrap the same Treasuries in a US-listed ETF and the shares become taxable US-situs assets.</description>
+  </item>
+  <item>
+    <title>TSM ADR vs the Taiwan-listed share: the two tax questions most people get wrong</title>
+    <link>https://taxcodeusstocks.com/en/articles/tsm-adr-tax.html</link>
+    <guid>https://taxcodeusstocks.com/en/articles/tsm-adr-tax.html</guid>
+    <pubDate>Sat, 04 Jul 2026 09:00:00 +0000</pubDate>
+    <description>Is the 21% dividend withholding recoverable? Is a TSM ADR a US-situs estate tax asset? The issuer test settles both.</description>
+  </item>
+  <item>
+    <title>The tax most foreign investors in US stocks overlook: the USD 60,000 estate tax threshold</title>
+    <link>https://taxcodeusstocks.com/en/articles/us-estate-tax-60k.html</link>
+    <guid>https://taxcodeusstocks.com/en/articles/us-estate-tax-60k.html</guid>
+    <pubDate>Sat, 04 Jul 2026 09:00:00 +0000</pubDate>
+    <description>US citizens get a USD 15M exemption; nonresident aliens get USD 60,000. What counts as US-situs, the correct computation, and three planning routes.</description>
+  </item>
+</channel></rss>
