@@ -36,6 +36,64 @@
       }
     });
     document.body.appendChild(a);
+    followCoffeeOnScroll(a);
+  }
+
+  /* Keep the cup on the right edge and ease it toward the lower viewport
+     as the page scrolls, so it visibly rides up and down with the reader. */
+  function followCoffeeOnScroll(el) {
+    if (!el || !window.requestAnimationFrame) return;
+    var y = null;
+    var reduced = false;
+
+    function readReduced() {
+      reduced = !!(
+        window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      );
+    }
+
+    function edge() {
+      return (window.innerWidth || 800) <= 640 ? 14 : 18;
+    }
+
+    function targetTop() {
+      var viewH = window.innerHeight || 800;
+      var docH = Math.max(
+        (document.documentElement && document.documentElement.scrollHeight) || 0,
+        (document.body && document.body.scrollHeight) || 0,
+        viewH
+      );
+      var size = el.offsetHeight || 52;
+      var pad = edge();
+      var scrollY = window.pageYOffset || 0;
+      var desired = scrollY + viewH - size - pad;
+      var max = Math.max(pad, docH - size - pad);
+      return Math.max(pad, Math.min(max, desired));
+    }
+
+    function place(top) {
+      el.style.position = "absolute";
+      el.style.top = Math.round(top) + "px";
+      el.style.bottom = "auto";
+      el.style.right = edge() + "px";
+    }
+
+    function tick() {
+      var t = targetTop();
+      if (y == null || reduced) y = t;
+      else y += (t - y) * 0.12;
+      place(y);
+      window.requestAnimationFrame(tick);
+    }
+
+    readReduced();
+    if (window.matchMedia) {
+      var mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+      if (mq.addEventListener) mq.addEventListener("change", readReduced);
+      else if (mq.addListener) mq.addListener(readReduced);
+    }
+    window.requestAnimationFrame(tick);
   }
 
   function initCategoryFilter() {

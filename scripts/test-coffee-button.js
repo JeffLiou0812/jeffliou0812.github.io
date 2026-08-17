@@ -84,7 +84,11 @@ function runSiteJs(options) {
     document: document,
     dataLayer: [],
     location: { pathname: options.pathname || "/" },
-    addEventListener: function () {}
+    addEventListener: function () {},
+    requestAnimationFrame: undefined,
+    pageYOffset: 0,
+    innerHeight: 800,
+    innerWidth: 1280
   };
 
   var ctx = {
@@ -173,6 +177,9 @@ assert(
 
 assert("No invented cup illustration", zhBtn && zhBtn.innerHTML.indexOf("<svg") === -1 && css.indexOf(".coffee-cup") === -1);
 assert("No page-wandering animation", !/coffee-drift|coffee-steam/.test(css) && !/animation:/.test(btnRule));
+
+var siteJs = fs.readFileSync(path.join(__dirname, "../js/site.js"), "utf8");
+assert("Cup eases toward the viewport as the page scrolls", siteJs.indexOf("followCoffeeOnScroll") !== -1 && siteJs.indexOf("pageYOffset") !== -1);
 
 if (failed) {
   console.error(failed + " failed");
