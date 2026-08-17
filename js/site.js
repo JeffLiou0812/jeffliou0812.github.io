@@ -1,5 +1,5 @@
 /* 稅務 x 美股 x AI — site-wide enhancements
-   1) Floating "buy me a coffee" button (placeholder link until a donation platform is chosen)
+   1) Small floating coffee-cup icon (links to #support until a donation platform is chosen)
    2) Category filter for article card grids (pages with .card[data-category])
    3) Idle-deferred GA + AdSense so first paint is not competing with third parties */
 (function () {
@@ -18,13 +18,14 @@
   var IS_EN = (document.documentElement.lang || "").toLowerCase().indexOf("en") === 0;
 
   function initCoffeeButton() {
-    if (!DONATE_URL) return; /* placeholder hidden until a donation platform is set */
     var href = DONATE_URL || SITE_ROOT + (IS_EN ? "en/" : "") + "services.html#support";
     var a = document.createElement("a");
     a.className = "coffee-btn";
     a.href = href;
-    a.setAttribute("aria-label", "Buy me a coffee");
-    a.innerHTML = '<span aria-hidden="true">☕</span><span class="coffee-label">Buy me a coffee</span>';
+    a.setAttribute("aria-label", IS_EN ? "Support this site" : "支持這個網站");
+    a.innerHTML =
+      '<span aria-hidden="true">☕</span>' +
+      '<span class="coffee-label">Buy me a coffee</span>';
     if (DONATE_URL) {
       a.target = "_blank";
       a.rel = "noopener";

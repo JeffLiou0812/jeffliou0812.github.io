@@ -636,35 +636,33 @@ footer.site-footer {
 .coffee-btn {
   position: fixed;
   right: 18px;
-  bottom: 18px;
+  bottom: calc(18px + env(safe-area-inset-bottom));
   z-index: 40;
   display: inline-flex;
   align-items: center;
-  gap: .4rem;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
   background: var(--navy);
   color: var(--gold);
   border: 1px solid var(--gold);
-  border-radius: 999px;
-  padding: .55rem 1rem;
-  font-size: .9rem;
-  font-weight: 700;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  line-height: 1;
   text-decoration: none;
   box-shadow: 0 4px 14px rgba(0,0,0,.22);
 }
-.coffee-btn:hover { background: var(--navy-hover); }
+.coffee-btn:hover { background: var(--navy-dark); }
+/* Cup glyph only at every width — no wording on the button. */
+.coffee-btn .coffee-label { display: none; }
 @media (max-width: 640px) {
   .coffee-btn {
-    padding: 0;
-    width: 52px;
-    height: 52px;
-    justify-content: center;
-    border-radius: 50%;
     right: 14px;
     bottom: calc(14px + env(safe-area-inset-bottom));
-    font-size: 1.25rem;
   }
-  .coffee-btn .coffee-label { display: none; }
 }
+#support { scroll-margin-top: 5.5rem; }
 
 /* ===== Mobile hamburger nav ===== */
 .nav-toggle {
