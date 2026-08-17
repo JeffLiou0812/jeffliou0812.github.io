@@ -635,11 +635,11 @@ footer.site-footer {
 /* ===== Floating coffee cup (injected by js/site.js) ===== */
 .coffee-btn {
   position: fixed;
-  right: 18px;
-  bottom: calc(22px + env(safe-area-inset-bottom));
+  right: 28px;
+  bottom: calc(36px + env(safe-area-inset-bottom));
   z-index: 40;
-  width: 52px;
-  height: 52px;
+  width: 64px;
+  height: 64px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -649,13 +649,13 @@ footer.site-footer {
   border-radius: 0;
   padding: 0;
   text-decoration: none;
-  filter: drop-shadow(0 6px 10px rgba(36, 59, 85, 0.22));
-  animation: coffee-drift 6.5s ease-in-out infinite;
+  filter: drop-shadow(0 8px 12px rgba(36, 59, 85, 0.28));
+  animation: coffee-drift 5s ease-in-out infinite;
 }
-.coffee-btn:hover { color: var(--navy-hover); }
+.coffee-btn:hover { filter: drop-shadow(0 10px 14px rgba(36, 59, 85, 0.36)); }
 .coffee-cup {
-  width: 46px;
-  height: 46px;
+  width: 58px;
+  height: 58px;
   display: block;
 }
 .coffee-steam path {
@@ -666,11 +666,10 @@ footer.site-footer {
 .coffee-steam path:nth-child(2) { animation-delay: .35s; }
 .coffee-steam path:nth-child(3) { animation-delay: .7s; }
 @keyframes coffee-drift {
-  0%, 100% { transform: translate(0, 0) rotate(-3deg); }
-  20% { transform: translate(-14px, -18px) rotate(4deg); }
-  40% { transform: translate(10px, -8px) rotate(-5deg); }
-  60% { transform: translate(-8px, -24px) rotate(3deg); }
-  80% { transform: translate(12px, -10px) rotate(-2deg); }
+  0%, 100% { transform: translate(0, 0) rotate(-4deg); }
+  25% { transform: translate(-28px, -32px) rotate(6deg); }
+  50% { transform: translate(18px, -14px) rotate(-6deg); }
+  75% { transform: translate(-16px, -40px) rotate(5deg); }
 }
 @keyframes coffee-steam {
   0%, 100% { opacity: .2; transform: translateY(1px); }

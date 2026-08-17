@@ -25,15 +25,16 @@
     a.setAttribute("aria-label", IS_EN ? "Support this site" : "支持這個網站");
     a.innerHTML =
       '<svg class="coffee-cup" viewBox="0 0 64 64" aria-hidden="true" focusable="false">' +
-        '<g class="coffee-steam" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">' +
-          '<path d="M24 18c1.6-3-2.2-4.6 0-8"/>' +
-          '<path d="M32 16c1.6-3-2.2-4.6 0-8"/>' +
-          '<path d="M40 18c1.6-3-2.2-4.6 0-8"/>' +
+        '<g class="coffee-steam" fill="none" stroke="#C9955A" stroke-width="2.4" stroke-linecap="round">' +
+          '<path d="M23 20c2-4-3-5 0-9"/>' +
+          '<path d="M32 18c2-4-3-5 0-9"/>' +
+          '<path d="M41 20c2-4-3-5 0-9"/>' +
         "</g>" +
-        '<ellipse cx="30" cy="26" rx="14" ry="3.6" fill="currentColor"/>' +
-        '<path fill="currentColor" d="M16.5 26.8h27l-2.1 16.2A11.2 11.2 0 0 1 30.4 54h-1.8A11.2 11.2 0 0 1 18.6 43L16.5 26.8z"/>' +
-        '<path class="coffee-handle" d="M44 31c8 1 9.2 14.2.6 16.4" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>' +
-        '<path fill="currentColor" d="M15 53.2h30c2.2 1.6-1.6 4-15 4s-17.2-2.4-15-4z"/>' +
+        '<ellipse cx="30" cy="27" rx="15" ry="4" fill="#243B55"/>' +
+        '<path fill="#243B55" d="M16 28h28l-2.4 17.4A12 12 0 0 1 30 57h-2A12 12 0 0 1 18.4 45.4L16 28z"/>' +
+        '<ellipse cx="30" cy="28.2" rx="12.2" ry="3.1" fill="#6B4A2B"/>' +
+        '<path d="M44.5 32c8.4 1.2 9.6 15.2.4 17.6" fill="none" stroke="#243B55" stroke-width="3.4" stroke-linecap="round"/>' +
+        '<path fill="#243B55" d="M14.5 55h31c2.4 1.8-2 4.4-15.5 4.4S12.1 56.8 14.5 55z"/>' +
       "</svg>";
     if (DONATE_URL) {
       a.target = "_blank";
