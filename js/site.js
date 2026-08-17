@@ -18,7 +18,6 @@
   var IS_EN = (document.documentElement.lang || "").toLowerCase().indexOf("en") === 0;
 
   function initCoffeeButton() {
-    if (!DONATE_URL) return; /* placeholder hidden until a donation platform is set */
     var href = DONATE_URL || SITE_ROOT + (IS_EN ? "en/" : "") + "services.html#support";
     var a = document.createElement("a");
     a.className = "coffee-btn";
