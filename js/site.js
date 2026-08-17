@@ -67,22 +67,34 @@
       var size = el.offsetHeight || 52;
       var pad = edge();
       var scrollY = window.pageYOffset || 0;
+      /* Sit in the lower-right, but ease through document space so a
+         scroll visibly tows the cup up or down before it catches up. */
       var desired = scrollY + viewH - size - pad;
       var max = Math.max(pad, docH - size - pad);
       return Math.max(pad, Math.min(max, desired));
     }
 
-    function place(top) {
-      el.style.position = "absolute";
-      el.style.top = Math.round(top) + "px";
+    function place(docTop) {
+      var viewH = window.innerHeight || 800;
+      var size = el.offsetHeight || 52;
+      var pad = edge();
+      var scrollY = window.pageYOffset || 0;
+      var viewY = docTop - scrollY;
+      var minView = pad;
+      var maxView = Math.max(minView, viewH - size - pad);
+      if (viewY < minView) viewY = minView;
+      if (viewY > maxView) viewY = maxView;
+      el.style.position = "fixed";
+      el.style.top = "0px";
       el.style.bottom = "auto";
-      el.style.right = edge() + "px";
+      el.style.right = pad + "px";
+      el.style.transform = "translateY(" + Math.round(viewY) + "px)";
     }
 
     function tick() {
       var t = targetTop();
       if (y == null || reduced) y = t;
-      else y += (t - y) * 0.12;
+      else y += (t - y) * 0.05;
       place(y);
       window.requestAnimationFrame(tick);
     }
