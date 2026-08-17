@@ -1,5 +1,5 @@
 /* 稅務 x 美股 x AI — site-wide enhancements
-   1) Floating "buy me a coffee" button (placeholder link until a donation platform is chosen)
+   1) Small floating coffee-cup icon (links to #support until a donation platform is chosen)
    2) Category filter for article card grids (pages with .card[data-category])
    3) Idle-deferred GA + AdSense so first paint is not competing with third parties */
 (function () {
@@ -22,13 +22,32 @@
     var a = document.createElement("a");
     a.className = "coffee-btn";
     a.href = href;
-    a.setAttribute("aria-label", "Buy me a coffee");
-    a.innerHTML = '<span aria-hidden="true">☕</span><span class="coffee-label">Buy me a coffee</span>';
+    a.setAttribute("aria-label", IS_EN ? "Support this site" : "支持這個網站");
+    a.innerHTML =
+      '<svg class="coffee-cup" viewBox="0 0 64 64" aria-hidden="true" focusable="false">' +
+        '<g class="coffee-steam" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">' +
+          '<path d="M24 18c1.6-3-2.2-4.6 0-8"/>' +
+          '<path d="M32 16c1.6-3-2.2-4.6 0-8"/>' +
+          '<path d="M40 18c1.6-3-2.2-4.6 0-8"/>' +
+        "</g>" +
+        '<ellipse cx="30" cy="26" rx="14" ry="3.6" fill="currentColor"/>' +
+        '<path fill="currentColor" d="M16.5 26.8h27l-2.1 16.2A11.2 11.2 0 0 1 30.4 54h-1.8A11.2 11.2 0 0 1 18.6 43L16.5 26.8z"/>' +
+        '<path class="coffee-handle" d="M44 31c8 1 9.2 14.2.6 16.4" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>' +
+        '<path fill="currentColor" d="M15 53.2h30c2.2 1.6-1.6 4-15 4s-17.2-2.4-15-4z"/>' +
+      "</svg>";
     if (DONATE_URL) {
       a.target = "_blank";
       a.rel = "noopener";
     }
-    a.addEventListener("click", function () {
+    a.addEventListener("click", function (e) {
+      if (!DONATE_URL) {
+        var el = document.getElementById("support");
+        if (el) {
+          e.preventDefault();
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+          if (history.replaceState) history.replaceState(null, "", "#support");
+        }
+      }
       if (typeof gtag === "function") {
         gtag("event", "coffee_click", { link_url: href });
       }

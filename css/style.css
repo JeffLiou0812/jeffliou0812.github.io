@@ -632,39 +632,55 @@ footer.site-footer {
 .related ul { margin: 0 0 0 1.4rem; font-size: .92rem; }
 .related li { margin-bottom: .3rem; }
 
-/* ===== Floating coffee button (injected by js/site.js) ===== */
+/* ===== Floating coffee cup (injected by js/site.js) ===== */
 .coffee-btn {
   position: fixed;
   right: 18px;
-  bottom: 18px;
+  bottom: calc(22px + env(safe-area-inset-bottom));
   z-index: 40;
+  width: 52px;
+  height: 52px;
   display: inline-flex;
   align-items: center;
-  gap: .4rem;
-  background: var(--navy);
-  color: var(--gold);
-  border: 1px solid var(--gold);
-  border-radius: 999px;
-  padding: .55rem 1rem;
-  font-size: .9rem;
-  font-weight: 700;
+  justify-content: center;
+  background: transparent;
+  color: var(--navy);
+  border: 0;
+  border-radius: 0;
+  padding: 0;
   text-decoration: none;
-  box-shadow: 0 4px 14px rgba(0,0,0,.22);
+  filter: drop-shadow(0 6px 10px rgba(36, 59, 85, 0.22));
+  animation: coffee-drift 6.5s ease-in-out infinite;
 }
-.coffee-btn:hover { background: var(--navy-hover); }
-@media (max-width: 640px) {
-  .coffee-btn {
-    padding: 0;
-    width: 52px;
-    height: 52px;
-    justify-content: center;
-    border-radius: 50%;
-    right: 14px;
-    bottom: calc(14px + env(safe-area-inset-bottom));
-    font-size: 1.25rem;
-  }
-  .coffee-btn .coffee-label { display: none; }
+.coffee-btn:hover { color: var(--navy-hover); }
+.coffee-cup {
+  width: 46px;
+  height: 46px;
+  display: block;
 }
+.coffee-steam path {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: coffee-steam 2.2s ease-in-out infinite;
+}
+.coffee-steam path:nth-child(2) { animation-delay: .35s; }
+.coffee-steam path:nth-child(3) { animation-delay: .7s; }
+@keyframes coffee-drift {
+  0%, 100% { transform: translate(0, 0) rotate(-3deg); }
+  20% { transform: translate(-14px, -18px) rotate(4deg); }
+  40% { transform: translate(10px, -8px) rotate(-5deg); }
+  60% { transform: translate(-8px, -24px) rotate(3deg); }
+  80% { transform: translate(12px, -10px) rotate(-2deg); }
+}
+@keyframes coffee-steam {
+  0%, 100% { opacity: .2; transform: translateY(1px); }
+  50% { opacity: .85; transform: translateY(-3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .coffee-btn,
+  .coffee-steam path { animation: none; }
+}
+#support { scroll-margin-top: 5.5rem; }
 
 /* ===== Mobile hamburger nav ===== */
 .nav-toggle {

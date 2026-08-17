@@ -103,10 +103,10 @@ function runSiteJs(options) {
 var zh = runSiteJs({ lang: "zh-Hant", scriptSrc: "https://taxcodeusstocks.com/js/site.js" });
 var zhBtn = zh.appended.filter(function (el) { return el.className === "coffee-btn"; })[0];
 
-assert("ZH page injects floating coffee button", !!zhBtn);
-assert("ZH coffee button links to services #support", zhBtn && zhBtn.href === "https://taxcodeusstocks.com/services.html#support");
-assert("ZH coffee button shows cup glyph", zhBtn && zhBtn.innerHTML.indexOf("☕") !== -1);
-assert("ZH coffee button has accessible name", zhBtn && zhBtn.attributes["aria-label"] === "Buy me a coffee");
+assert("ZH page injects floating coffee cup", !!zhBtn);
+assert("ZH coffee cup links to services #support", zhBtn && zhBtn.href === "https://taxcodeusstocks.com/services.html#support");
+assert("ZH coffee cup is an icon, not a text pill", zhBtn && zhBtn.innerHTML.indexOf("coffee-cup") !== -1 && zhBtn.innerHTML.indexOf("Buy me a coffee") === -1);
+assert("ZH coffee cup has accessible name", zhBtn && zhBtn.attributes["aria-label"] === "支持這個網站");
 assert("ZH placeholder does not open a new tab", zhBtn && !zhBtn.target);
 
 var en = runSiteJs({
@@ -116,8 +116,9 @@ var en = runSiteJs({
 });
 var enBtn = en.appended.filter(function (el) { return el.className === "coffee-btn"; })[0];
 
-assert("EN page injects floating coffee button", !!enBtn);
-assert("EN coffee button links to EN services #support", enBtn && enBtn.href === "https://taxcodeusstocks.com/en/services.html#support");
+assert("EN page injects floating coffee cup", !!enBtn);
+assert("EN coffee cup links to EN services #support", enBtn && enBtn.href === "https://taxcodeusstocks.com/en/services.html#support");
+assert("EN coffee cup has accessible name", enBtn && enBtn.attributes["aria-label"] === "Support this site");
 
 if (failed) {
   console.error(failed + " failed");
