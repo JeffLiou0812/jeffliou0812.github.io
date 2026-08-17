@@ -36,6 +36,85 @@
       }
     });
     document.body.appendChild(a);
+    followCoffeeOnScroll(a);
+  }
+
+  /* Keep the cup on the right edge and ease it toward the lower viewport
+     as the page scrolls, so it visibly rides up and down with the reader. */
+  function followCoffeeOnScroll(el) {
+    if (!el || !window.requestAnimationFrame) return;
+    var y = null;
+    var reduced = false;
+    var lastScrollAt = 0;
+
+    function readReduced() {
+      reduced = !!(
+        window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      );
+    }
+
+    function edge() {
+      return (window.innerWidth || 800) <= 640 ? 14 : 18;
+    }
+
+    function targetTop() {
+      var viewH = window.innerHeight || 800;
+      var docH = Math.max(
+        (document.documentElement && document.documentElement.scrollHeight) || 0,
+        (document.body && document.body.scrollHeight) || 0,
+        viewH
+      );
+      var size = el.offsetHeight || 52;
+      var pad = edge();
+      var scrollY = window.pageYOffset || 0;
+      /* Sit in the lower-right, but ease through document space so a
+         scroll visibly tows the cup up or down before it catches up. */
+      var desired = scrollY + viewH - size - pad;
+      var max = Math.max(pad, docH - size - pad);
+      return Math.max(pad, Math.min(max, desired));
+    }
+
+    function place(docTop) {
+      var viewH = window.innerHeight || 800;
+      var size = el.offsetHeight || 52;
+      var pad = edge();
+      var scrollY = window.pageYOffset || 0;
+      var viewY = docTop - scrollY;
+      var minView = pad;
+      var maxView = Math.max(minView, viewH - size - pad);
+      if (viewY < minView) viewY = minView;
+      if (viewY > maxView) viewY = maxView;
+      el.style.position = "fixed";
+      el.style.top = "0px";
+      el.style.bottom = "auto";
+      el.style.right = pad + "px";
+      el.style.transform = "translateY(" + Math.round(viewY) + "px)";
+    }
+
+    function tick() {
+      var t = targetTop();
+      var scrolling = Date.now() - lastScrollAt < 220;
+      if (y == null) y = t;
+      else if (!scrolling) y = reduced ? t : y + (t - y) * 0.03;
+      place(y);
+      window.requestAnimationFrame(tick);
+    }
+
+    readReduced();
+    window.addEventListener(
+      "scroll",
+      function () {
+        lastScrollAt = Date.now();
+      },
+      { passive: true }
+    );
+    if (window.matchMedia) {
+      var mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+      if (mq.addEventListener) mq.addEventListener("change", readReduced);
+      else if (mq.addListener) mq.addListener(readReduced);
+    }
+    window.requestAnimationFrame(tick);
   }
 
   function initCategoryFilter() {
