@@ -45,6 +45,7 @@
     if (!el || !window.requestAnimationFrame) return;
     var y = null;
     var reduced = false;
+    var lastScrollAt = 0;
 
     function readReduced() {
       reduced = !!(
@@ -93,13 +94,21 @@
 
     function tick() {
       var t = targetTop();
+      var scrolling = Date.now() - lastScrollAt < 160;
       if (y == null || reduced) y = t;
-      else y += (t - y) * 0.05;
+      else if (!scrolling) y += (t - y) * 0.08;
       place(y);
       window.requestAnimationFrame(tick);
     }
 
     readReduced();
+    window.addEventListener(
+      "scroll",
+      function () {
+        lastScrollAt = Date.now();
+      },
+      { passive: true }
+    );
     if (window.matchMedia) {
       var mq = window.matchMedia("(prefers-reduced-motion: reduce)");
       if (mq.addEventListener) mq.addEventListener("change", readReduced);
