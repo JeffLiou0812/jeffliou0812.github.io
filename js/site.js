@@ -22,10 +22,25 @@
     var a = document.createElement("a");
     a.className = "coffee-btn";
     a.href = href;
-    a.setAttribute("aria-label", IS_EN ? "Support this site" : "支持這個網站");
+    a.setAttribute("aria-label", IS_EN ? "Coffee" : "喝杯咖啡");
     a.innerHTML =
-      '<span aria-hidden="true">☕</span>' +
-      '<span class="coffee-label">Buy me a coffee</span>';
+      '<span class="coffee-text">' + (IS_EN ? "Coffee" : "喝杯咖啡") + "</span>" +
+      '<span class="coffee-mark" aria-hidden="true">' +
+        '<svg class="coffee-cup" viewBox="0 0 64 64" focusable="false">' +
+          '<g class="coffee-steam" fill="none" stroke="#C9955A" stroke-width="2.2" stroke-linecap="round">' +
+            '<path d="M23 20c1.8-3.6-2.4-4.8 0-8.4"/>' +
+            '<path d="M32 17c1.8-3.6-2.4-4.8 0-8.4"/>' +
+            '<path d="M41 20c1.8-3.6-2.4-4.8 0-8.4"/>' +
+          "</g>" +
+          '<path fill="#243B55" d="M17.2 28.2h25.2c1.8 0 2.8 1.8 2.4 3.5l-2.1 15.6A10.6 10.6 0 0 1 32.4 58h-4.8A10.6 10.6 0 0 1 17.3 47.3l-2.1-15.6c-.4-1.7.6-3.5 2-3.5z"/>' +
+          '<ellipse cx="29.8" cy="30.2" rx="11.2" ry="3.3" fill="#6B4A2B"/>' +
+          '<ellipse cx="24" cy="40" rx="2.1" ry="3.4" fill="#35506B"/>' +
+          '<path d="M44.6 32.4c8.2 1.1 9.4 14.6.6 16.8" fill="none" stroke="#243B55" stroke-width="3.2" stroke-linecap="round"/>' +
+          '<circle cx="24.4" cy="44.6" r="1.7" fill="#E8A0A0"/>' +
+          '<circle cx="35.2" cy="44.6" r="1.7" fill="#E8A0A0"/>' +
+          '<path d="M26.6 48.4c2 1.8 6.2 1.8 8.2 0" fill="none" stroke="#E8D4B8" stroke-width="1.5" stroke-linecap="round"/>' +
+        "</svg>" +
+      "</span>";
     if (DONATE_URL) {
       a.target = "_blank";
       a.rel = "noopener";
@@ -96,7 +111,7 @@
       var t = targetTop();
       var scrolling = Date.now() - lastScrollAt < 220;
       if (y == null) y = t;
-      else if (!scrolling) y = reduced ? t : y + (t - y) * 0.03;
+      else if (!scrolling) y = reduced ? t : y + (t - y) * 0.015;
       place(y);
       window.requestAnimationFrame(tick);
     }
