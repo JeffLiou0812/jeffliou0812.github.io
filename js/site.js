@@ -94,9 +94,9 @@
 
     function tick() {
       var t = targetTop();
-      var scrolling = Date.now() - lastScrollAt < 160;
+      var scrolling = Date.now() - lastScrollAt < 220;
       if (y == null) y = t;
-      else if (!scrolling) y = reduced ? t : y + (t - y) * 0.08;
+      else if (!scrolling) y = reduced ? t : y + (t - y) * 0.03;
       place(y);
       window.requestAnimationFrame(tick);
     }
