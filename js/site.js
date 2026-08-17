@@ -24,31 +24,13 @@
     a.href = href;
     a.setAttribute("aria-label", IS_EN ? "Support this site" : "支持這個網站");
     a.innerHTML =
-      '<svg class="coffee-cup" viewBox="0 0 64 64" aria-hidden="true" focusable="false">' +
-        '<g class="coffee-steam" fill="none" stroke="#C9955A" stroke-width="2.4" stroke-linecap="round">' +
-          '<path d="M23 20c2-4-3-5 0-9"/>' +
-          '<path d="M32 18c2-4-3-5 0-9"/>' +
-          '<path d="M41 20c2-4-3-5 0-9"/>' +
-        "</g>" +
-        '<ellipse cx="30" cy="27" rx="15" ry="4" fill="#243B55"/>' +
-        '<path fill="#243B55" d="M16 28h28l-2.4 17.4A12 12 0 0 1 30 57h-2A12 12 0 0 1 18.4 45.4L16 28z"/>' +
-        '<ellipse cx="30" cy="28.2" rx="12.2" ry="3.1" fill="#6B4A2B"/>' +
-        '<path d="M44.5 32c8.4 1.2 9.6 15.2.4 17.6" fill="none" stroke="#243B55" stroke-width="3.4" stroke-linecap="round"/>' +
-        '<path fill="#243B55" d="M14.5 55h31c2.4 1.8-2 4.4-15.5 4.4S12.1 56.8 14.5 55z"/>' +
-      "</svg>";
+      '<span aria-hidden="true">☕</span>' +
+      '<span class="coffee-label">Buy me a coffee</span>';
     if (DONATE_URL) {
       a.target = "_blank";
       a.rel = "noopener";
     }
-    a.addEventListener("click", function (e) {
-      if (!DONATE_URL) {
-        var el = document.getElementById("support");
-        if (el) {
-          e.preventDefault();
-          el.scrollIntoView({ behavior: "smooth", block: "start" });
-          if (history.replaceState) history.replaceState(null, "", "#support");
-        }
-      }
+    a.addEventListener("click", function () {
       if (typeof gtag === "function") {
         gtag("event", "coffee_click", { link_url: href });
       }

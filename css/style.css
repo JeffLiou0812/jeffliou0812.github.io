@@ -632,52 +632,35 @@ footer.site-footer {
 .related ul { margin: 0 0 0 1.4rem; font-size: .92rem; }
 .related li { margin-bottom: .3rem; }
 
-/* ===== Floating coffee cup (injected by js/site.js) ===== */
+/* ===== Floating coffee button (injected by js/site.js) ===== */
 .coffee-btn {
   position: fixed;
-  right: 28px;
-  bottom: calc(36px + env(safe-area-inset-bottom));
+  right: 18px;
+  bottom: calc(18px + env(safe-area-inset-bottom));
   z-index: 40;
-  width: 64px;
-  height: 64px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: transparent;
-  color: var(--navy);
-  border: 0;
-  border-radius: 0;
+  width: 52px;
+  height: 52px;
   padding: 0;
+  background: var(--navy);
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  font-size: 1.25rem;
+  line-height: 1;
   text-decoration: none;
-  filter: drop-shadow(0 8px 12px rgba(36, 59, 85, 0.28));
-  animation: coffee-drift 5s ease-in-out infinite;
+  box-shadow: 0 4px 14px rgba(0,0,0,.22);
 }
-.coffee-btn:hover { filter: drop-shadow(0 10px 14px rgba(36, 59, 85, 0.36)); }
-.coffee-cup {
-  width: 58px;
-  height: 58px;
-  display: block;
-}
-.coffee-steam path {
-  transform-box: fill-box;
-  transform-origin: center bottom;
-  animation: coffee-steam 2.2s ease-in-out infinite;
-}
-.coffee-steam path:nth-child(2) { animation-delay: .35s; }
-.coffee-steam path:nth-child(3) { animation-delay: .7s; }
-@keyframes coffee-drift {
-  0%, 100% { transform: translate(0, 0) rotate(-4deg); }
-  25% { transform: translate(-28px, -32px) rotate(6deg); }
-  50% { transform: translate(18px, -14px) rotate(-6deg); }
-  75% { transform: translate(-16px, -40px) rotate(5deg); }
-}
-@keyframes coffee-steam {
-  0%, 100% { opacity: .2; transform: translateY(1px); }
-  50% { opacity: .85; transform: translateY(-3px); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .coffee-btn,
-  .coffee-steam path { animation: none; }
+.coffee-btn:hover { background: var(--navy-dark); }
+/* Cup glyph only at every width — no wording on the button. */
+.coffee-btn .coffee-label { display: none; }
+@media (max-width: 640px) {
+  .coffee-btn {
+    right: 14px;
+    bottom: calc(14px + env(safe-area-inset-bottom));
+  }
 }
 #support { scroll-margin-top: 5.5rem; }
 

@@ -100,13 +100,52 @@ function runSiteJs(options) {
   return { appended: appended };
 }
 
+/* Drop every @media block so a rule can be checked as unconditional. */
+function stripMediaBlocks(css) {
+  var out = "";
+  var i = 0;
+  while (i < css.length) {
+    var at = css.indexOf("@media", i);
+    if (at === -1) {
+      out += css.slice(i);
+      break;
+    }
+    out += css.slice(i, at);
+    var open = css.indexOf("{", at);
+    if (open === -1) break;
+    var depth = 1;
+    var j = open + 1;
+    while (j < css.length && depth > 0) {
+      if (css[j] === "{") depth += 1;
+      else if (css[j] === "}") depth -= 1;
+      j += 1;
+    }
+    i = j;
+  }
+  return out;
+}
+
+function ruleBody(css, selector) {
+  var at = css.indexOf(selector + " {");
+  if (at === -1) at = css.indexOf(selector + "{");
+  if (at === -1) return null;
+  var open = css.indexOf("{", at);
+  var close = css.indexOf("}", open);
+  if (open === -1 || close === -1) return null;
+  return css.slice(open + 1, close);
+}
+
+var css = fs.readFileSync(path.join(__dirname, "../css/style.css"), "utf8");
+var cssNoMedia = stripMediaBlocks(css);
+var btnRule = ruleBody(cssNoMedia, ".coffee-btn") || "";
+
 var zh = runSiteJs({ lang: "zh-Hant", scriptSrc: "https://taxcodeusstocks.com/js/site.js" });
 var zhBtn = zh.appended.filter(function (el) { return el.className === "coffee-btn"; })[0];
 
-assert("ZH page injects floating coffee cup", !!zhBtn);
-assert("ZH coffee cup links to services #support", zhBtn && zhBtn.href === "https://taxcodeusstocks.com/services.html#support");
-assert("ZH coffee cup is an icon, not a text pill", zhBtn && zhBtn.innerHTML.indexOf("coffee-cup") !== -1 && zhBtn.innerHTML.indexOf("Buy me a coffee") === -1);
-assert("ZH coffee cup has accessible name", zhBtn && zhBtn.attributes["aria-label"] === "支持這個網站");
+assert("ZH page injects floating coffee button", !!zhBtn);
+assert("ZH coffee button links to services #support", zhBtn && zhBtn.href === "https://taxcodeusstocks.com/services.html#support");
+assert("ZH coffee button shows the cup glyph", zhBtn && zhBtn.innerHTML.indexOf("☕") !== -1);
+assert("ZH coffee button has accessible name", zhBtn && zhBtn.attributes["aria-label"] === "支持這個網站");
 assert("ZH placeholder does not open a new tab", zhBtn && !zhBtn.target);
 
 var en = runSiteJs({
@@ -116,9 +155,24 @@ var en = runSiteJs({
 });
 var enBtn = en.appended.filter(function (el) { return el.className === "coffee-btn"; })[0];
 
-assert("EN page injects floating coffee cup", !!enBtn);
-assert("EN coffee cup links to EN services #support", enBtn && enBtn.href === "https://taxcodeusstocks.com/en/services.html#support");
-assert("EN coffee cup has accessible name", enBtn && enBtn.attributes["aria-label"] === "Support this site");
+assert("EN page injects floating coffee button", !!enBtn);
+assert("EN coffee button links to EN services #support", enBtn && enBtn.href === "https://taxcodeusstocks.com/en/services.html#support");
+assert("EN coffee button has accessible name", enBtn && enBtn.attributes["aria-label"] === "Support this site");
+
+/* Visual contract: small navy/gold cup, no wording, floats with the viewport. */
+assert("CSS styles .coffee-btn outside any media query", !!ruleBody(cssNoMedia, ".coffee-btn"));
+assert("Coffee button floats with the viewport", /position:\s*fixed/.test(btnRule));
+assert("Coffee button is a small circle", /width:\s*52px/.test(btnRule) && /height:\s*52px/.test(btnRule) && /border-radius:\s*50%/.test(btnRule));
+assert("Coffee button keeps Warm Expert colors", /var\(--navy\)/.test(btnRule) && /var\(--gold\)/.test(btnRule));
+
+var labelRule = ruleBody(cssNoMedia, ".coffee-btn .coffee-label");
+assert(
+  "No visible wording on the coffee button at any width",
+  zhBtn && (zhBtn.innerHTML.indexOf("Buy me a coffee") === -1 || (labelRule && /display:\s*none/.test(labelRule)))
+);
+
+assert("No invented cup illustration", zhBtn && zhBtn.innerHTML.indexOf("<svg") === -1 && css.indexOf(".coffee-cup") === -1);
+assert("No page-wandering animation", !/coffee-drift|coffee-steam/.test(css) && !/animation:/.test(btnRule));
 
 if (failed) {
   console.error(failed + " failed");
