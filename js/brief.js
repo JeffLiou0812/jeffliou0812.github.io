@@ -3,6 +3,7 @@
 
   var WORKER_BASE = "https://tax-brief.fengyen0812.workers.dev";
   var Sources = window.BriefSources;
+  var Filters = window.BriefFilters;
   var APAC = Sources.APAC.filter(function (code) {
     return Sources.sourcesForCountry(code).length > 0;
   });
@@ -10,6 +11,7 @@
 
   var I18N = {
     zh: {
+      brand: "稅務 x 美股 x AI",
       navHome: "首頁",
       navArticles: "文章",
       navServices: "服務項目",
@@ -17,7 +19,6 @@
       navResources: "官方資源",
       navBrief: "稅訊",
       pageTitle: "稅訊",
-      scope: "教育用途，不是諮詢。",
       hint: "點標題開官方原文",
       refresh: "更新",
       liveTitle: "即時更新",
@@ -59,6 +60,7 @@
       sourceLabel: "來源"
     },
     en: {
+      brand: "TaxCode x US Stocks x AI",
       navHome: "Home",
       navArticles: "Articles",
       navServices: "Services",
@@ -66,7 +68,6 @@
       navResources: "Resources",
       navBrief: "Tax Brief",
       pageTitle: "Tax Brief",
-      scope: "For education, not advice.",
       hint: "Open the official page",
       refresh: "Refresh",
       liveTitle: "Live update",
@@ -109,13 +110,11 @@
     }
   };
 
+  var filterSeed = Filters.initialFilterState(APAC);
   var state = {
     lang: "zh",
-    groups: { tw: true, us: false, apac: false },
-    apac: APAC.reduce(function (acc, code) {
-      acc[code] = true;
-      return acc;
-    }, {}),
+    groups: filterSeed.groups,
+    apac: filterSeed.apac,
     payload: null,
     livePayload: null,
     error: false,
@@ -128,22 +127,31 @@
   }
 
   function selectedCountries() {
-    var out = [];
-    if (state.groups.tw) out.push("tw");
-    if (state.groups.us) out.push("us");
-    if (state.groups.apac) {
-      APAC.forEach(function (code) {
-        if (state.apac[code]) out.push(code);
-      });
+    return Filters.selectedCountries(state, APAC, Sources.sourcesForCountry);
+  }
+
+  function persistLang(lang) {
+    try {
+      localStorage.setItem("brief-lang", lang);
+    } catch (e) {}
+  }
+
+  function applyNavHrefs() {
+    var brand = document.querySelector(".site-header .brand");
+    if (brand) {
+      brand.href = Filters.navHrefForLang(state.lang, "brand");
+      brand.innerHTML =
+        state.lang === "en"
+          ? 'TaxCode <span class="x">x</span> US Stocks <span class="x">x</span> AI'
+          : '稅務 <span class="x">x</span> 美股 <span class="x">x</span> AI';
     }
-    out = out.filter(function (code) {
-      return Sources.sourcesForCountry(code).length > 0;
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      var key = el.getAttribute("data-i18n");
+      var href = Filters.navHrefForLang(state.lang, key);
+      if (href && el.tagName === "A") el.setAttribute("href", href);
     });
-    if (!out.length) {
-      state.groups.tw = true;
-      out.push("tw");
-    }
-    return out;
+    var footerBrand = document.querySelector(".site-footer strong");
+    if (footerBrand) footerBrand.textContent = t("brand");
   }
 
   function visibleItems(rawItems) {
@@ -241,10 +249,10 @@
 
   function normalizeItem(raw) {
     if (!raw || typeof raw !== "object") return null;
+    if (Filters.shouldDropFeedItem(raw)) return null;
     var title = String(raw.title || "").trim();
     var url = String(raw.url || raw.href || raw.link || "").trim();
     if (!title || !isHttpUrl(url)) return null;
-    var sample = raw.sample === true || /示意/.test(title);
     return {
       title: title,
       source: String(raw.source || "").trim(),
@@ -252,7 +260,7 @@
       url: url,
       country: normalizeCountry(raw.country),
       kind: normalizeKind(raw.kind),
-      sample: sample
+      sample: false
     };
   }
 
@@ -315,6 +323,7 @@
       var key = el.getAttribute("data-i18n");
       if (key) el.textContent = t(key);
     });
+    applyNavHrefs();
     var zhBtn = document.getElementById("lang-zh");
     var enBtn = document.getElementById("lang-en");
     zhBtn.classList.toggle("active", state.lang === "zh");
@@ -339,11 +348,7 @@
       b.textContent = pair[1];
       b.setAttribute("aria-pressed", state.groups[key] ? "true" : "false");
       b.addEventListener("click", function () {
-        state.groups[key] = !state.groups[key];
-        if (key === "apac" && state.groups.apac) {
-          APAC.forEach(function (code) { state.apac[code] = true; });
-        }
-        if (!selectedCountries().length) state.groups.tw = true;
+        Filters.selectMainGroup(state, key, APAC, Sources.sourcesForCountry);
         renderFilters();
         loadFeed(false);
       });
@@ -361,12 +366,7 @@
         b.textContent = t(code);
         b.setAttribute("aria-pressed", state.apac[code] ? "true" : "false");
         b.addEventListener("click", function () {
-          state.apac[code] = !state.apac[code];
-          var any = APAC.some(function (c) { return state.apac[c]; });
-          if (!any) {
-            state.groups.apac = false;
-          }
-          if (!selectedCountries().length) state.groups.tw = true;
+          Filters.selectApacCountry(state, code, APAC);
           renderFilters();
           loadFeed(false);
         });
@@ -705,12 +705,12 @@
   function bind() {
     document.getElementById("lang-zh").addEventListener("click", function () {
       state.lang = "zh";
-      try { localStorage.setItem("brief-lang", "zh"); } catch (e) {}
+      persistLang("zh");
       applyChrome();
     });
     document.getElementById("lang-en").addEventListener("click", function () {
       state.lang = "en";
-      try { localStorage.setItem("brief-lang", "en"); } catch (e) {}
+      persistLang("en");
       applyChrome();
     });
     var refresh = document.getElementById("refresh-btn");
@@ -728,10 +728,17 @@
   }
 
   function start() {
+    var saved = null;
     try {
-      var saved = localStorage.getItem("brief-lang");
-      if (saved === "en" || saved === "zh") state.lang = saved;
+      saved = localStorage.getItem("brief-lang");
     } catch (e) {}
+    state.lang = Filters.resolveInitialLang({
+      search: location.search || "",
+      referrer: document.referrer || "",
+      origin: location.origin || "",
+      saved: saved
+    });
+    persistLang(state.lang);
     bind();
     applyChrome();
     loadFeed(false);
