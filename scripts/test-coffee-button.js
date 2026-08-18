@@ -146,15 +146,17 @@ function ruleBody(css, selector) {
 var css = fs.readFileSync(path.join(__dirname, "../css/style.css"), "utf8");
 var cssNoMedia = stripMediaBlocks(css);
 var btnRule = ruleBody(cssNoMedia, ".coffee-btn") || "";
+var siteJs = fs.readFileSync(path.join(__dirname, "../js/site.js"), "utf8");
+
+assert("Coffee button does not early-return when DONATE_URL is null", !/if\s*\(\s*!DONATE_URL\s*\)\s*return\s*;/.test(siteJs));
 
 var zh = runSiteJs({ lang: "zh-Hant", scriptSrc: "https://taxcodeusstocks.com/js/site.js" });
 var zhBtn = zh.appended.filter(function (el) { return el.className === "coffee-btn"; })[0];
 
 assert("ZH page injects floating coffee button", !!zhBtn);
 assert("ZH coffee button links to services #support", zhBtn && zhBtn.href === "https://taxcodeusstocks.com/services.html#support");
-assert("ZH coffee button shows a steaming cup", zhBtn && zhBtn.innerHTML.indexOf("coffee-cup") !== -1 && zhBtn.innerHTML.indexOf("coffee-steam") !== -1);
-assert("ZH coffee button shows 喝杯咖啡", zhBtn && zhBtn.innerHTML.indexOf("喝杯咖啡") !== -1);
-assert("ZH coffee button has accessible name", zhBtn && zhBtn.attributes["aria-label"] === "喝杯咖啡");
+assert("ZH coffee button shows emoji + Buy me a coffee", zhBtn && zhBtn.innerHTML.indexOf("☕") !== -1 && zhBtn.innerHTML.indexOf("Buy me a coffee") !== -1);
+assert("ZH coffee button has accessible name", zhBtn && zhBtn.attributes["aria-label"] === "Buy me a coffee");
 assert("ZH placeholder does not open a new tab", zhBtn && !zhBtn.target);
 
 var en = runSiteJs({
@@ -166,23 +168,22 @@ var enBtn = en.appended.filter(function (el) { return el.className === "coffee-b
 
 assert("EN page injects floating coffee button", !!enBtn);
 assert("EN coffee button links to EN services #support", enBtn && enBtn.href === "https://taxcodeusstocks.com/en/services.html#support");
-assert("EN coffee button has accessible name", enBtn && enBtn.attributes["aria-label"] === "Coffee");
-assert("EN coffee button shows Coffee, not 喝杯咖啡", enBtn && enBtn.innerHTML.indexOf(">Coffee<") !== -1 && enBtn.innerHTML.indexOf("喝杯咖啡") === -1);
+assert("EN coffee button keeps Buy me a coffee label", enBtn && enBtn.innerHTML.indexOf("Buy me a coffee") !== -1);
+assert("EN placeholder does not open a new tab", enBtn && !enBtn.target);
 
-/* Visual contract: cute steaming cup, label on wide screens, follows scroll. */
+/* Visual contract: original pill button, emoji + label on desktop, circle on mobile. */
 assert("CSS styles .coffee-btn outside any media query", !!ruleBody(cssNoMedia, ".coffee-btn"));
 assert("Coffee button floats with the viewport", /position:\s*fixed/.test(btnRule));
-var markRule = ruleBody(cssNoMedia, ".coffee-mark") || "";
-assert("Cup mark is a small circle", /width:\s*56px/.test(markRule) && /height:\s*56px/.test(markRule) && /border-radius:\s*50%/.test(markRule));
-assert("Coffee button keeps Warm Expert colors", /var\(--navy\)/.test(markRule) && /var\(--gold\)/.test(markRule));
-assert("Desktop keeps the nearby label visible", /display:\s*none/.test(ruleBody(cssNoMedia, ".coffee-text") || "") === false);
-
-assert("Narrow screens hide the label", /@media \(max-width: 640px\)[\s\S]*\.coffee-text \{ display: none; \}/.test(css));
-assert("Steam animation is defined", /@keyframes coffee-steam/.test(css));
-
-var siteJs = fs.readFileSync(path.join(__dirname, "../js/site.js"), "utf8");
-assert("Cup eases toward the viewport as the page scrolls", siteJs.indexOf("followCoffeeOnScroll") !== -1 && siteJs.indexOf("pageYOffset") !== -1);
-assert("Return ease is slower than the previous 0.03 step", /\* 0\.015/.test(siteJs));
+assert("Coffee button uses navy + gold pill styling",
+  /background:\s*var\(--navy\)/.test(btnRule) &&
+  /color:\s*var\(--gold\)/.test(btnRule) &&
+  /border-radius:\s*999px/.test(btnRule) &&
+  /box-shadow:\s*0 4px 14px rgba\(0,0,0,\.22\)/.test(btnRule));
+assert("Desktop keeps the Buy me a coffee label visible",
+  /display:\s*none/.test(ruleBody(cssNoMedia, ".coffee-btn .coffee-label") || "") === false);
+assert("Narrow screens hide the label and become a 52px circle",
+  /@media \(max-width: 640px\)[\s\S]*\.coffee-btn \{[\s\S]*width:\s*52px;[\s\S]*height:\s*52px;[\s\S]*border-radius:\s*50%;[\s\S]*\}[\s\S]*\.coffee-btn \.coffee-label \{ display: none; \}/.test(css));
+assert("No scroll-follow coffee behavior", siteJs.indexOf("followCoffeeOnScroll") === -1);
 
 if (failed) {
   console.error(failed + " failed");

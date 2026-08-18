@@ -1,12 +1,12 @@
 /* 稅務 x 美股 x AI — site-wide enhancements
-   1) Small floating coffee-cup icon (links to #support until a donation platform is chosen)
+   1) Floating "buy me a coffee" button (placeholder link until a donation platform is chosen)
    2) Category filter for article card grids (pages with .card[data-category])
    3) Idle-deferred GA + AdSense so first paint is not competing with third parties */
 (function () {
   "use strict";
 
   /* Set DONATE_URL once the donation platform is decided (Portaly / BMC / Ko-fi ...).
-     While null, the button links to the #support section on the services page. */
+     While null, the button still shows and links to the #support section on the services page. */
   var DONATE_URL = null;
   var GA_ID = "G-TRNEWFX3G6";
   var ADSENSE_CLIENT = "ca-pub-4182088023942573";
@@ -18,29 +18,14 @@
   var IS_EN = (document.documentElement.lang || "").toLowerCase().indexOf("en") === 0;
 
   function initCoffeeButton() {
+    /* Always inject the button. DONATE_URL null → services.html#support (same-tab);
+       a real donate URL opens a new tab. Do not early-return when DONATE_URL is null. */
     var href = DONATE_URL || SITE_ROOT + (IS_EN ? "en/" : "") + "services.html#support";
     var a = document.createElement("a");
     a.className = "coffee-btn";
     a.href = href;
-    a.setAttribute("aria-label", IS_EN ? "Coffee" : "喝杯咖啡");
-    a.innerHTML =
-      '<span class="coffee-text">' + (IS_EN ? "Coffee" : "喝杯咖啡") + "</span>" +
-      '<span class="coffee-mark" aria-hidden="true">' +
-        '<svg class="coffee-cup" viewBox="0 0 64 64" focusable="false">' +
-          '<g class="coffee-steam" fill="none" stroke="#C9955A" stroke-width="2.2" stroke-linecap="round">' +
-            '<path d="M23 20c1.8-3.6-2.4-4.8 0-8.4"/>' +
-            '<path d="M32 17c1.8-3.6-2.4-4.8 0-8.4"/>' +
-            '<path d="M41 20c1.8-3.6-2.4-4.8 0-8.4"/>' +
-          "</g>" +
-          '<path fill="#243B55" d="M17.2 28.2h25.2c1.8 0 2.8 1.8 2.4 3.5l-2.1 15.6A10.6 10.6 0 0 1 32.4 58h-4.8A10.6 10.6 0 0 1 17.3 47.3l-2.1-15.6c-.4-1.7.6-3.5 2-3.5z"/>' +
-          '<ellipse cx="29.8" cy="30.2" rx="11.2" ry="3.3" fill="#6B4A2B"/>' +
-          '<ellipse cx="24" cy="40" rx="2.1" ry="3.4" fill="#35506B"/>' +
-          '<path d="M44.6 32.4c8.2 1.1 9.4 14.6.6 16.8" fill="none" stroke="#243B55" stroke-width="3.2" stroke-linecap="round"/>' +
-          '<circle cx="24.4" cy="44.6" r="1.7" fill="#E8A0A0"/>' +
-          '<circle cx="35.2" cy="44.6" r="1.7" fill="#E8A0A0"/>' +
-          '<path d="M26.6 48.4c2 1.8 6.2 1.8 8.2 0" fill="none" stroke="#E8D4B8" stroke-width="1.5" stroke-linecap="round"/>' +
-        "</svg>" +
-      "</span>";
+    a.setAttribute("aria-label", "Buy me a coffee");
+    a.innerHTML = '<span aria-hidden="true">☕</span><span class="coffee-label">Buy me a coffee</span>';
     if (DONATE_URL) {
       a.target = "_blank";
       a.rel = "noopener";
@@ -51,85 +36,6 @@
       }
     });
     document.body.appendChild(a);
-    followCoffeeOnScroll(a);
-  }
-
-  /* Keep the cup on the right edge and ease it toward the lower viewport
-     as the page scrolls, so it visibly rides up and down with the reader. */
-  function followCoffeeOnScroll(el) {
-    if (!el || !window.requestAnimationFrame) return;
-    var y = null;
-    var reduced = false;
-    var lastScrollAt = 0;
-
-    function readReduced() {
-      reduced = !!(
-        window.matchMedia &&
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches
-      );
-    }
-
-    function edge() {
-      return (window.innerWidth || 800) <= 640 ? 14 : 18;
-    }
-
-    function targetTop() {
-      var viewH = window.innerHeight || 800;
-      var docH = Math.max(
-        (document.documentElement && document.documentElement.scrollHeight) || 0,
-        (document.body && document.body.scrollHeight) || 0,
-        viewH
-      );
-      var size = el.offsetHeight || 52;
-      var pad = edge();
-      var scrollY = window.pageYOffset || 0;
-      /* Sit in the lower-right, but ease through document space so a
-         scroll visibly tows the cup up or down before it catches up. */
-      var desired = scrollY + viewH - size - pad;
-      var max = Math.max(pad, docH - size - pad);
-      return Math.max(pad, Math.min(max, desired));
-    }
-
-    function place(docTop) {
-      var viewH = window.innerHeight || 800;
-      var size = el.offsetHeight || 52;
-      var pad = edge();
-      var scrollY = window.pageYOffset || 0;
-      var viewY = docTop - scrollY;
-      var minView = pad;
-      var maxView = Math.max(minView, viewH - size - pad);
-      if (viewY < minView) viewY = minView;
-      if (viewY > maxView) viewY = maxView;
-      el.style.position = "fixed";
-      el.style.top = "0px";
-      el.style.bottom = "auto";
-      el.style.right = pad + "px";
-      el.style.transform = "translateY(" + Math.round(viewY) + "px)";
-    }
-
-    function tick() {
-      var t = targetTop();
-      var scrolling = Date.now() - lastScrollAt < 220;
-      if (y == null) y = t;
-      else if (!scrolling) y = reduced ? t : y + (t - y) * 0.015;
-      place(y);
-      window.requestAnimationFrame(tick);
-    }
-
-    readReduced();
-    window.addEventListener(
-      "scroll",
-      function () {
-        lastScrollAt = Date.now();
-      },
-      { passive: true }
-    );
-    if (window.matchMedia) {
-      var mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-      if (mq.addEventListener) mq.addEventListener("change", readReduced);
-      else if (mq.addListener) mq.addListener(readReduced);
-    }
-    window.requestAnimationFrame(tick);
   }
 
   function initCategoryFilter() {
