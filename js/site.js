@@ -85,7 +85,7 @@
     var nav = document.querySelector("nav.main-nav");
     if (!nav || nav.querySelector('a[data-nav="brief"], a[href*="brief.html"]')) return;
     var a = document.createElement("a");
-    a.href = SITE_ROOT + "brief.html";
+    a.href = SITE_ROOT + "brief.html" + (IS_EN ? "?lang=en" : "?lang=zh");
     a.setAttribute("data-nav", "brief");
     a.textContent = IS_EN ? "Tax Brief" : "稅訊";
     var path = (location.pathname || "").replace(/\/+$/, "");

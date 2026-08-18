@@ -148,15 +148,8 @@
 .brief-refresh[aria-busy="true"] { opacity: .72; cursor: wait; }
 .brief-refresh svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; }
 
-.brief-scope {
-  margin-top: .85rem;
-  font-size: .8rem;
-  color: var(--muted);
-  max-width: 40rem;
-}
-
 .brief-hint {
-  margin-top: .25rem;
+  margin-top: .85rem;
   font-size: .8rem;
   color: var(--muted);
 }
