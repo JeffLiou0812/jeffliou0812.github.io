@@ -1,14 +1,50 @@
 /* Homepage 焦點儀表. Do not reuse 稅訊 brief-* class names.
-   Chrome tokens live in css/style.css :root. */
+   Chrome tokens live in css/style.css :root.
+   Local HUD tokens stay on .home-focus so the rest of the site stays cream. */
 .home-focus {
   --hf-card-pad: .9rem 1rem .95rem;
   --hf-card-min: 22.5rem;
-  --hf-grid: rgba(26, 43, 61, 0.12);
+  --hf-bg: #16222F;
+  --hf-card-top: #1E2F41;
+  --hf-card-bot: #1A2A3B;
+  --hf-well: #141E2A;
+  --hf-ink: #F4ECE8;
+  --hf-ink-bright: #FFFCF7;
+  --hf-muted: rgba(244, 236, 232, 0.55);
+  --hf-accent: #C9955A;
+  --hf-accent-hot: rgba(201, 149, 90, 0.85);
+  --hf-line: rgba(201, 149, 90, 0.45);
+  --hf-up: #5BC98C;
+  --hf-down: #FF7A66;
+  --hf-hover: #E8D4B8;
+  --hf-grid: rgba(201, 149, 90, 0.10);
+  --hf-glow: rgba(201, 149, 90, 0.05);
+  position: relative;
   background:
-    repeating-linear-gradient(0deg, transparent 0 19px, var(--hf-grid) 19px 20px),
-    repeating-linear-gradient(90deg, transparent 0 19px, var(--hf-grid) 19px 20px),
-    #F4ECE8;
+    radial-gradient(ellipse 58% 46% at 88% 6%, var(--hf-glow), transparent 64%),
+    repeating-linear-gradient(0deg, transparent 0 13px, var(--hf-grid) 13px 14px),
+    repeating-linear-gradient(90deg, transparent 0 13px, var(--hf-grid) 13px 14px),
+    var(--hf-bg);
   padding: 1.05rem 1.2rem 1.2rem;
+}
+
+.home-focus::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent 0%, rgba(201, 149, 90, 0.32) 50%, transparent 100%);
+  background-size: 36% 100%;
+  background-repeat: no-repeat;
+  animation: hf-scan 9s linear infinite;
+}
+
+@keyframes hf-scan {
+  0% { background-position: -36% 0; }
+  100% { background-position: 136% 0; }
 }
 
 .home-focus-inner {
@@ -31,7 +67,7 @@
   font-weight: 700;
   letter-spacing: .02em;
   line-height: 1.25;
-  color: var(--navy);
+  color: var(--hf-ink-bright);
   margin: 0;
 }
 
@@ -39,8 +75,9 @@
   margin: .15rem 0 0;
   font-size: .82rem;
   font-weight: 700;
-  color: var(--ink);
+  color: var(--hf-ink);
   letter-spacing: .06em;
+  opacity: .78;
 }
 
 .home-focus-meta {
@@ -50,35 +87,50 @@
   gap: .45rem .7rem;
   font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   font-size: .72rem;
-  color: var(--muted);
+  color: var(--hf-muted);
 }
 
 .home-focus-dot {
+  --hf-dot: #D06A3A;
   width: .5rem;
   height: .5rem;
   border-radius: 50%;
-  background: var(--terra);
-  box-shadow: 0 0 0 2px rgba(208, 106, 58, 0.22);
+  background: var(--hf-dot);
+  box-shadow: 0 0 0 2px rgba(208, 106, 58, 0.28), 0 0 6px 2px rgba(208, 106, 58, 0.4);
+  animation: hf-dot-terra 2s ease-in-out infinite;
 }
 
 .home-focus-dot.is-ok {
-  background: var(--up);
-  box-shadow: 0 0 0 2px rgba(31, 107, 69, 0.2);
+  --hf-dot: #5BC98C;
+  background: var(--hf-dot);
+  box-shadow: 0 0 0 2px rgba(91, 201, 140, 0.28), 0 0 6px 2px rgba(91, 201, 140, 0.4);
+  animation-name: hf-dot-ok;
 }
 
 .home-focus-dot.is-off {
-  background: var(--muted);
+  background: rgba(244, 236, 232, 0.35);
   box-shadow: none;
+  animation: none;
+}
+
+@keyframes hf-dot-terra {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(208, 106, 58, 0.22), 0 0 4px 1px rgba(208, 106, 58, 0.28); }
+  50% { box-shadow: 0 0 0 4px rgba(208, 106, 58, 0.18), 0 0 10px 3px rgba(208, 106, 58, 0.5); }
+}
+
+@keyframes hf-dot-ok {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(91, 201, 140, 0.22), 0 0 4px 1px rgba(91, 201, 140, 0.28); }
+  50% { box-shadow: 0 0 0 4px rgba(91, 201, 140, 0.18), 0 0 10px 3px rgba(91, 201, 140, 0.5); }
 }
 
 .home-focus-workflow {
-  color: var(--navy);
+  color: var(--hf-ink);
   font-weight: 700;
   text-decoration: none;
-  border-bottom: 1px solid var(--gold);
+  border-bottom: 1px solid var(--hf-accent);
 }
 
-.home-focus-workflow:hover { color: var(--terra); }
+.home-focus-workflow:hover { color: var(--hf-hover); }
 
 .home-focus-grid {
   display: grid;
@@ -89,17 +141,53 @@
 
 .home-focus-card {
   position: relative;
-  background: var(--card);
-  border: var(--frame-width) solid var(--frame);
+  background: linear-gradient(180deg, var(--hf-card-top) 0%, var(--hf-card-bot) 100%);
+  border: 1px solid var(--hf-line);
   border-radius: 8px;
   padding: var(--hf-card-pad);
   min-width: 0;
   min-height: var(--hf-card-min);
   height: 100%;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 0 24px rgba(201, 149, 90, 0.12);
   display: flex;
   flex-direction: column;
   gap: .55rem;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.home-focus-card:hover {
+  border-color: var(--hf-accent-hot);
+  transform: translateY(-2px);
+  box-shadow: 0 0 28px rgba(201, 149, 90, 0.2);
+}
+
+.home-focus-card::before,
+.home-focus-card::after {
+  content: "";
+  position: absolute;
+  left: -1px;
+  right: -1px;
+  height: 14px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.home-focus-card::before {
+  top: -1px;
+  background:
+    linear-gradient(var(--hf-accent), var(--hf-accent)) top left / 14px 1.5px no-repeat,
+    linear-gradient(var(--hf-accent), var(--hf-accent)) top left / 1.5px 14px no-repeat,
+    linear-gradient(var(--hf-accent), var(--hf-accent)) top right / 14px 1.5px no-repeat,
+    linear-gradient(var(--hf-accent), var(--hf-accent)) top right / 1.5px 14px no-repeat;
+}
+
+.home-focus-card::after {
+  bottom: -1px;
+  background:
+    linear-gradient(var(--hf-accent), var(--hf-accent)) bottom left / 14px 1.5px no-repeat,
+    linear-gradient(var(--hf-accent), var(--hf-accent)) bottom left / 1.5px 14px no-repeat,
+    linear-gradient(var(--hf-accent), var(--hf-accent)) bottom right / 14px 1.5px no-repeat,
+    linear-gradient(var(--hf-accent), var(--hf-accent)) bottom right / 1.5px 14px no-repeat;
 }
 
 .home-focus-card-head {
@@ -115,14 +203,19 @@
   font-weight: 700;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--navy);
+  color: var(--hf-accent);
+}
+
+.home-focus-card-kicker::before {
+  content: "▮ ";
+  letter-spacing: 0;
 }
 
 .home-focus-card h2 {
   margin: 0;
   font-size: 1.28rem;
   line-height: 1.25;
-  color: var(--navy);
+  color: var(--hf-ink-bright);
 }
 
 .home-focus-card h2 a {
@@ -130,7 +223,7 @@
   text-decoration: none;
 }
 
-.home-focus-card h2 a:hover { color: var(--terra); }
+.home-focus-card h2 a:hover { color: var(--hf-hover); }
 
 .home-focus-metrics {
   display: grid;
@@ -139,14 +232,15 @@
 }
 
 .home-focus-stat {
-  background: var(--card);
-  border: var(--frame-width-sm) solid var(--frame);
+  background: var(--hf-well);
+  border: 1px solid rgba(201, 149, 90, 0.22);
   border-radius: 8px;
   padding: .5rem .65rem .55rem;
   min-height: 5.6rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  box-shadow: inset 0 1px 10px rgba(0, 0, 0, 0.38);
 }
 
 .home-focus-stat-label {
@@ -154,7 +248,7 @@
   font-size: .68rem;
   font-weight: 700;
   letter-spacing: .08em;
-  color: var(--muted);
+  color: var(--hf-muted);
 }
 
 .home-focus-stat-num {
@@ -164,18 +258,25 @@
   font-size: 2rem;
   font-weight: 700;
   line-height: 1.05;
-  color: var(--navy);
+  color: var(--hf-ink);
   font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 12px rgba(244, 236, 232, 0.16);
 }
 
 .home-focus-stat-unit {
   font-size: .78rem;
   font-weight: 700;
-  color: var(--ink);
+  color: var(--hf-ink);
 }
 
-.home-focus-stat.is-up .home-focus-stat-num { color: var(--up); }
-.home-focus-stat.is-down .home-focus-stat-num { color: var(--red); }
+.home-focus-stat.is-up .home-focus-stat-num {
+  color: var(--hf-up);
+  text-shadow: 0 0 12px rgba(91, 201, 140, 0.28);
+}
+.home-focus-stat.is-down .home-focus-stat-num {
+  color: var(--hf-down);
+  text-shadow: 0 0 12px rgba(255, 122, 102, 0.28);
+}
 
 .home-focus-body {
   flex: 1 1 auto;
@@ -191,14 +292,14 @@
   font-size: 1.05rem;
   font-weight: 700;
   letter-spacing: .04em;
-  color: var(--navy);
+  color: var(--hf-ink);
   font-variant-numeric: tabular-nums;
 }
 
 .home-focus-sub {
   margin: 0;
   font-size: .92rem;
-  color: var(--ink);
+  color: var(--hf-ink);
 }
 
 .home-focus-titles {
@@ -214,40 +315,41 @@
 }
 
 .home-focus-titles a {
-  color: var(--navy);
+  color: var(--hf-ink);
   font-weight: 700;
   text-decoration: none;
 }
 
-.home-focus-titles a:hover { color: var(--terra); }
+.home-focus-titles a:hover { color: var(--hf-hover); }
 
-.home-focus-empty { color: var(--muted); font-weight: 500; }
+.home-focus-empty { color: var(--hf-muted); font-weight: 500; }
 
 .home-focus-breaking {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-left: 3px solid var(--terra);
+  background: var(--hf-well);
+  border: 1px solid rgba(208, 106, 58, 0.28);
+  border-left: 3px solid #D06A3A;
   border-radius: 6px;
   padding: .5rem .7rem;
+  box-shadow: inset 3px 0 10px rgba(208, 106, 58, 0.2), 0 0 12px rgba(208, 106, 58, 0.14);
 }
 
 .home-focus-breaking a {
   display: block;
   margin-top: .2rem;
-  color: var(--navy);
+  color: var(--hf-ink);
   font-weight: 700;
   font-size: .86rem;
   text-decoration: none;
 }
 
-.home-focus-breaking a:hover { color: var(--terra); }
+.home-focus-breaking a:hover { color: var(--hf-hover); }
 
 .home-focus-chip-kicker {
   font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   font-size: .64rem;
   font-weight: 700;
   letter-spacing: .08em;
-  color: var(--muted);
+  color: var(--hf-muted);
 }
 
 .home-focus-foot {
@@ -262,27 +364,38 @@
 .home-focus-stamp {
   font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   font-size: .7rem;
-  color: var(--muted);
+  color: var(--hf-muted);
 }
 
 .home-focus-cta {
   font-size: .82rem;
   font-weight: 700;
-  color: var(--navy);
+  color: var(--hf-ink);
   text-decoration: none;
-  border: var(--frame-width-sm) solid var(--frame);
+  border: 1px solid var(--hf-accent);
   border-radius: var(--radius-pill);
   padding: .22rem .7rem;
-  background: var(--card);
+  background: rgba(22, 34, 47, 0.55);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 
 .home-focus-cta:hover {
-  background: var(--terra-wash);
-  border-color: var(--terra);
-  color: var(--navy);
+  background: var(--hf-accent);
+  border-color: var(--hf-accent);
+  color: var(--hf-bg);
 }
 
 @media (max-width: 760px) {
   .home-focus-grid { grid-template-columns: 1fr; }
   .home-focus-stat-num { font-size: 1.7rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-focus::after,
+  .home-focus-dot,
+  .home-focus-card,
+  .home-focus-cta {
+    animation: none;
+    transition: none;
+  }
 }
