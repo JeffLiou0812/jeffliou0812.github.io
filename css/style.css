@@ -333,6 +333,9 @@ main { max-width: 1040px; margin: 0 auto; padding: 2.2rem 1.2rem 3rem; }
 .tool-promo-brief {
   background: linear-gradient(135deg, #3d5348 0%, #2c4038 100%);
 }
+.tool-promo-close {
+  background: linear-gradient(135deg, #3d4a5c 0%, #2a3344 100%);
+}
 .tool-secondary {
   background: var(--card);
   border: 1px solid var(--line);
