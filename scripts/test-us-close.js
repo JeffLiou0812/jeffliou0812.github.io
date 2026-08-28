@@ -144,6 +144,7 @@ assert("html heading 摘要", html.indexOf(">摘要<") !== -1);
 assert("html heading 美股焦點 table", html.indexOf("id=\"close-names-title\">美股焦點<") !== -1);
 assert("html keeps 本月與下月", html.indexOf("本月與下月即將公布總經／財報") !== -1);
 assert("html has no 今日", html.indexOf("今日") === -1);
+assert("us-close uses 資訊分享 not 教育整理", html.indexOf("資訊分享，不是投資建議") !== -1 && html.indexOf("教育整理") === -1);
 assert("html does not hardcode 結論 heading", html.indexOf(">結論<") === -1);
 assert("html does not hardcode 16 檔", html.indexOf("16 檔收盤快照") === -1);
 
@@ -151,6 +152,10 @@ var indexHtml = fs.readFileSync(path.join(root, "index.html"), "utf8");
 assert("hero 昨夜美股 links us-close", /hero-close-box"[^>]*href="us-close.html"/.test(indexHtml) && indexHtml.indexOf(">昨夜美股<") !== -1);
 assert("hero 昨夜美股 has no 今日", (indexHtml.match(/hero-close-box[\s\S]*?<\/a>/) || [""])[0].indexOf("今日") === -1);
 assert("tools card 美股焦點 kept", indexHtml.indexOf("tool-promo-close") !== -1 && indexHtml.indexOf(">打開美股焦點<") !== -1);
+assert("ZH tools heading kept", indexHtml.indexOf(">互動工具<") !== -1);
+assert("ZH tools lead sentence removed", indexHtml.indexOf("試算稅負，或掃今日官方發布") === -1);
+assert("ZH homepage uses 資訊分享 not 教育整理", indexHtml.indexOf("資訊分享，不是稅務意見") !== -1 && indexHtml.indexOf("教育整理") === -1);
+assert("ZH footer still says 教育性質", indexHtml.indexOf("教育性質與個人觀點分享") !== -1);
 
 function navBlock(html) {
   var m = html.match(/<nav class="main-nav"[^>]*>([\s\S]*?)<\/nav>/);
@@ -170,6 +175,9 @@ assert("EN header still has Tax Brief", navBlock(enIndex).indexOf("Tax Brief") !
 assert("EN nav Tax Brief then US Focus", /Tax Brief<\/a>\s*<a href="[^"]*us-close\.html[^"]*"[^>]*>US Focus<\/a>/.test(navBlock(enIndex).replace(/\s+/g, " ")));
 assert("EN header has no Chinese nav labels", !/[稅訊首頁文章服務關於官方資源美股焦點]/.test(navBlock(enIndex)));
 assert("EN hero Last night's US stocks", /hero-close-box"[^>]*href="\.\.\/us-close.html"/.test(enIndex) && enIndex.indexOf(">Last night's US stocks<") !== -1);
+assert("EN tools heading kept", enIndex.indexOf(">Interactive Tools<") !== -1);
+assert("EN tools lead sentence removed", enIndex.indexOf("Run a tax estimate, or scan today's official releases") === -1);
+assert("EN keeps Educational compilation", enIndex.indexOf("Educational compilation, not tax advice") !== -1);
 
 var articleNav = fs.readFileSync(path.join(root, "articles/apple-etr.html"), "utf8");
 assert("article nav 稅訊 then 美股焦點", afterTaxBeforeClose(articleNav));
