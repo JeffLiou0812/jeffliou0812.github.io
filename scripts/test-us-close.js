@@ -334,6 +334,21 @@ assert("EN about keeps principles and YouTube link", aboutEn.indexOf("Writing pr
 assert("topic cards use cream gold radius", /\.topic-card\s*\{[\s\S]*background:\s*var\(--card\)/.test(styleCss) && /\.topic-card\s*\{[\s\S]*border:\s*1px solid var\(--frame\)/.test(styleCss) && /\.topic-card\s*\{[\s\S]*border-radius:\s*var\(--radius\)/.test(styleCss));
 assert("topic cards stack on mobile", /\.topic-cards\s*\{[\s\S]*grid-template-columns:\s*1fr;/.test(styleCss));
 
+var siteJs = fs.readFileSync(path.join(root, "js/site.js"), "utf8");
+assert("filter buttons get data-category", siteJs.indexOf('b.setAttribute("data-category", label)') !== -1);
+assert("ZH AI x 稅務 tag has data-category", indexHtml.indexOf('class="tag" data-category="AI x 稅務"') !== -1);
+assert("EN AI x Tax tag has data-category", enIndex.indexOf('class="tag" data-category="AI x Tax"') !== -1);
+assert("tax-only pills use warm yellow", styleCss.indexOf('data-category="跨境稅務"') !== -1 && styleCss.indexOf("#FFF4CC") !== -1 && styleCss.indexOf("#D4A017") !== -1);
+assert("AI-only pills use slate blue", styleCss.indexOf("#E8EEF6") !== -1 && styleCss.indexOf("#3D5A80") !== -1);
+assert("AI x 稅務 is mixed yellow-blue", /data-category="AI x 稅務"[\s\S]*linear-gradient\(90deg, #FFF4CC/.test(styleCss));
+assert("selected filter stays navy contrast", /\.filter-bar button\.active[\s\S]*background:\s*var\(--navy\)/.test(styleCss));
+assert("Resources tag is not categorized", indexHtml.indexOf('class="tag">資源<') !== -1 && enIndex.indexOf('class="tag">Resources<') !== -1);
+assert("about-strip paragraphs have room", /\.about-strip p[\s\S]*margin:\s*0 0 1\.(1|2|3|4)/.test(styleCss));
+assert("about heading kept", indexHtml.indexOf(">關於傑夫哥<") !== -1);
+assert("about 實作案例 stays on about page", aboutZh.indexOf("實作案例") !== -1 && aboutZh.indexOf("ai-workflow-case.html") !== -1);
+assert("homepage keeps 實作案例 link", /href="ai-workflow-case.html">實作案例/.test(indexHtml));
+assert("EN homepage keeps hands-on case link", /href="ai-workflow-case.html">Hands-on case/.test(enIndex));
+
 if (failed) {
   console.error(failed + " failed");
   process.exit(1);

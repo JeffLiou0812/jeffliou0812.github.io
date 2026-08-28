@@ -52,6 +52,10 @@
     cards.forEach(function (c) {
       var v = c.getAttribute("data-category");
       if (v && cats.indexOf(v) === -1) cats.push(v);
+      var tag = c.querySelector(".tag");
+      if (tag && v && !tag.getAttribute("data-category")) {
+        tag.setAttribute("data-category", v);
+      }
     });
     if (cats.length < 2) return;
 
@@ -62,6 +66,7 @@
       var b = document.createElement("button");
       b.type = "button";
       b.textContent = label;
+      b.setAttribute("data-category", label);
       if (i === 0) b.className = "active";
       b.setAttribute("aria-pressed", i === 0 ? "true" : "false");
       b.addEventListener("click", function () {
