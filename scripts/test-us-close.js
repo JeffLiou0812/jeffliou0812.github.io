@@ -150,6 +150,26 @@ assert("hero 昨夜美股 links us-close", /hero-close-box"[^>]*href="us-close.h
 assert("hero 昨夜美股 has no 今日", (indexHtml.match(/hero-close-box[\s\S]*?<\/a>/) || [""])[0].indexOf("今日") === -1);
 assert("tools card 美股焦點 kept", indexHtml.indexOf("tool-promo-close") !== -1 && indexHtml.indexOf(">打開美股焦點<") !== -1);
 
+function navBlock(html) {
+  var m = html.match(/<nav class="main-nav"[^>]*>([\s\S]*?)<\/nav>/);
+  return m ? m[1] : "";
+}
+function afterTaxBeforeClose(html) {
+  var nav = navBlock(html).replace(/\s+/g, " ");
+  return /稅訊<\/a>\s*<a href="[^"]*us-close\.html[^"]*"[^>]*>美股焦點<\/a>/.test(nav);
+}
+assert("index nav 稅訊 then 美股焦點", afterTaxBeforeClose(indexHtml));
+assert("us-close nav active 美股焦點", /us-close\.html" class="active"[^>]*>美股焦點</.test(navBlock(html)));
+assert("us-close nav has no extra 今日", navBlock(html).indexOf("今日") === -1);
+
+var enIndex = fs.readFileSync(path.join(root, "en/index.html"), "utf8");
+assert("EN header has no 美股焦點", navBlock(enIndex).indexOf("美股焦點") === -1);
+assert("EN header still has Tax Brief", navBlock(enIndex).indexOf("Tax Brief") !== -1);
+
+var articleNav = fs.readFileSync(path.join(root, "articles/apple-etr.html"), "utf8");
+assert("article nav 稅訊 then 美股焦點", afterTaxBeforeClose(articleNav));
+assert("article close href is ../us-close.html", navBlock(articleNav).indexOf('href="../us-close.html"') !== -1);
+
 if (failed) {
   console.error(failed + " failed");
   process.exit(1);

@@ -324,6 +324,8 @@
       if (key) el.textContent = t(key);
     });
     applyNavHrefs();
+    var closeNav = document.querySelector('a[data-nav="close"]');
+    if (closeNav) closeNav.hidden = state.lang === "en";
     var zhBtn = document.getElementById("lang-zh");
     var enBtn = document.getElementById("lang-en");
     zhBtn.classList.toggle("active", state.lang === "zh");
