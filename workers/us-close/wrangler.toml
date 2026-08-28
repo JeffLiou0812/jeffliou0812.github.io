@@ -1,0 +1,13 @@
+name = "us-close"
+main = "src/index.js"
+compatibility_date = "2026-08-28"
+workers_dev = true
+
+# Jeff: after `npx wrangler kv namespace create US_CLOSE`, paste the id here.
+# Do not invent a token. Dashboard path is in README.md.
+[[kv_namespaces]]
+binding = "US_CLOSE"
+id = "replace-after-wrangler-kv-namespace-create"
+
+[vars]
+SNAPSHOT_URL = "https://taxcodeusstocks.com/content/us-close/latest.json"
