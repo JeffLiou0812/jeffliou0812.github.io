@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "id": "2026-08-27",
+  "compiled_taipei": "2026-08-27T07:00:00+08:00",
+  "session_et_date": "2026-08-26",
+  "after_hours_asof_et": "2026-08-26T19:10:00-04:00",
+  "headline": "多數上漲",
+  "conclusions": [
+    "週三（美東 8/26）多數上漲",
+    "上漲：康寧 +3.82%、Cloudflare +2.63%、卡特彼勒 +1.31%",
+    "跌最重：輝達 -1.59%、谷歌 -1.43%、特斯拉 -1.26%",
+    "本月與下月即將公布：8/27 起初領；9/1 ISM 製造；9/2 博通Q3(盤後)；9/4 非農就業人口（NFP）；9/10 PPI；9/11 CPI；9/16 零售；9/16 FOMC利率決議（2026年第6次Fed利率會議）；9/30 GDP 三估、PCE"
+  ],
+  "overnight": [
+    {
+      "title": "輝達公布 Q2 FY27 財報：營收 962 億美元（年增 106%），資料中心 890 億；展望 Q3 營收約 1,080 億美元",
+      "url": "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027",
+      "caveat": "Q3 指引未假設任何中國資料中心運算收入（官網 outlook 寫明）"
+    }
+  ],
+  "names": [
+    {"ticker": "AAPL", "name_zh": "蘋果", "close": 313.45, "chg_pct": 1.15, "after": -0.48},
+    {"ticker": "MSFT", "name_zh": "微軟", "close": 496.37, "chg_pct": 0.95, "after": -0.04},
+    {"ticker": "NVDA", "name_zh": "輝達", "close": 209.66, "chg_pct": -1.59, "after": 3.91},
+    {"ticker": "AMZN", "name_zh": "亞馬遜", "close": 260.28, "chg_pct": -0.30, "after": 0.56},
+    {"ticker": "GOOGL", "name_zh": "谷歌", "close": 342.00, "chg_pct": -1.43, "after": 0.24},
+    {"ticker": "META", "name_zh": "Meta", "close": 576.14, "chg_pct": 1.07, "after": 0.51},
+    {"ticker": "TSLA", "name_zh": "特斯拉", "close": 345.82, "chg_pct": -1.26, "after": 0.46},
+    {"ticker": "SPCX", "name_zh": "SpaceX", "close": 139.63, "chg_pct": 1.22, "after": 0.51},
+    {"ticker": "NET", "name_zh": "Cloudflare", "close": 284.89, "chg_pct": 2.63, "after": 2.50},
+    {"ticker": "MU", "name_zh": "美光", "close": 938.40, "chg_pct": 0.58, "after": 3.50},
+    {"ticker": "NOK", "name_zh": "諾基亞", "close": 10.41, "chg_pct": 0.58, "after": 3.27},
+    {"ticker": "SNDK", "name_zh": "SanDisk", "close": 1499.37, "chg_pct": 1.26, "after": 3.53},
+    {"ticker": "TSM", "name_zh": "台積電", "close": 417.69, "chg_pct": 0.07, "after": 1.44},
+    {"ticker": "GLW", "name_zh": "康寧", "close": 152.78, "chg_pct": 3.82, "after": 2.42},
+    {"ticker": "CAT", "name_zh": "卡特彼勒", "close": 821.93, "chg_pct": 1.31, "after": 0.75},
+    {"ticker": "AVGO", "name_zh": "博通", "close": 355.59, "chg_pct": -0.32, "after": 0.84}
+  ],
+  "calendar": [
+    {"date_et": "2026-08-27", "date_taipei": "2026-08-27", "item": "初領失業金", "status": "08:30 ET"},
+    {"date_et": "2026-09-01", "date_taipei": "2026-09-01", "item": "ISM製造業（8月）", "status": "10:00 ET"},
+    {"date_et": "2026-09-02", "date_taipei": "2026-09-03", "item": "博通Q3(盤後)", "status": "盤後"},
+    {"date_et": "2026-09-04", "date_taipei": "2026-09-04", "item": "非農就業人口（NFP）", "status": "08:30 ET"},
+    {"date_et": "2026-09-10", "date_taipei": "2026-09-10", "item": "PPI（8月）", "status": "08:30 ET"},
+    {"date_et": "2026-09-11", "date_taipei": "2026-09-11", "item": "CPI（8月）", "status": "08:30 ET"},
+    {"date_et": "2026-09-16", "date_taipei": "2026-09-16", "item": "零售銷售（8月）", "status": "08:30 ET"},
+    {"date_et": "2026-09-16", "date_taipei": "2026-09-17", "item": "FOMC利率決議（2026年第6次Fed利率會議）", "status": "14:00 ET"},
+    {"date_et": "2026-09-30", "date_taipei": "2026-09-30", "item": "GDP Q2 三估", "status": "08:30 ET"},
+    {"date_et": "2026-09-30", "date_taipei": "2026-09-30", "item": "PCE／核心PCE（8月）", "status": "08:30 ET"}
+  ],
+  "calendar_note": "名單內 AAPL MSFT AMZN GOOGL META TSLA SPCX NET NOK SNDK TSM GLW CAT 官方財報日未取得；輝達下一期財報日未取得；MU 九月財報官方 IR 未取得；十月不列入"
+}
