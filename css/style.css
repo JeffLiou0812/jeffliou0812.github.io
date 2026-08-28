@@ -133,6 +133,28 @@ nav.main-nav a.active {
   gap: .7rem;
   margin-top: 1.4rem;
 }
+.hero-close-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: inherit;
+  font-size: .92rem;
+  font-weight: 700;
+  color: var(--navy);
+  background: var(--card);
+  border: 1.5px solid var(--gold);
+  border-radius: var(--radius-sm);
+  padding: .52rem 1.05rem;
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+  letter-spacing: .02em;
+}
+.hero-close-box:hover {
+  background: var(--gold-soft);
+  color: var(--navy-dark);
+  border-color: var(--gold);
+}
+
 .hero-brief-intro {
   margin-top: .7rem;
   max-width: 36rem;

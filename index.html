@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>稅務 x 美股 x AI｜傑夫哥</title>
 <meta name="description" content="國際稅務專業視角的美股投資分析與 AI 研究自動化。如何善用稅法和AI，提升美股投資報酬。">
-<link rel="stylesheet" href="css/style.css?v=20260828-close">
+<link rel="stylesheet" href="css/style.css?v=20260828-cal">
+<link rel="stylesheet" href="css/home-focus.css?v=20260828-focus">
 <link rel="alternate" type="application/rss+xml" title="稅務 x 美股 x AI" href="https://taxcodeusstocks.com/feed.xml">
 <link rel="canonical" href="https://taxcodeusstocks.com/">
 <link rel="alternate" hreflang="zh-Hant" href="https://taxcodeusstocks.com/">
@@ -29,8 +30,9 @@
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<script src="js/site.js?v=20260828-close" defer></script>
-<script src="js/us-close.js?v=20260828-close" defer></script>
+<script src="js/site.js?v=20260828-cal" defer></script>
+<script src="js/us-close.js?v=20260828-cal" defer></script>
+<script src="js/home-focus.js?v=20260828-focus" defer></script>
 <script type="application/ld+json">
 {"@context": "https://schema.org", "@type": "WebSite", "name": "稅務 x 美股 x AI", "alternateName": "TaxCode x US Stocks x AI", "url": "https://taxcodeusstocks.com/", "inLanguage": "zh-Hant"}
 </script>
@@ -47,6 +49,7 @@
       <a href="about.html">關於傑夫哥</a>
       <a href="resources.html">官方資源</a>
       <a href="brief.html?lang=zh">稅訊</a>
+      <a href="us-close.html">美股焦點</a>
     </nav>
     <a class="lang-switch" href="en/index.html" hreflang="en" lang="en">EN</a>
     <button class="nav-toggle" aria-label="選單" aria-expanded="false" aria-controls="main-nav">☰</button>
@@ -64,6 +67,7 @@
         <a class="btn btn-primary" href="tools/us-dividend-tax-calculator.html">試算美股股利稅負</a>
         <a class="btn btn-secondary" href="ai-workflow-case.html">讀一篇代表作</a>
         <a class="btn btn-secondary" href="brief.html?lang=zh">看今日稅訊</a>
+        <a class="hero-close-box" href="us-close.html">昨夜美股</a>
       </div>
       <p class="hero-brief-intro">稅訊整理台灣、美國與亞太官方函釋與法規草案，依今天／昨天篩選，點標題開原文。教育整理，不是稅務意見。</p>
     </div>
@@ -82,6 +86,76 @@
         <span class="chip">13F 自動化</span>
       </div>
     </aside>
+  </div>
+</section>
+
+<section class="home-focus" id="home-focus" aria-label="焦點儀表">
+  <div class="home-focus-inner">
+    <header class="home-focus-chrome">
+      <div>
+        <p class="home-focus-kicker">焦點儀表</p>
+        <p class="home-focus-pillars">稅務 · 美股 · AI</p>
+      </div>
+      <div class="home-focus-meta">
+        <span class="home-focus-dot" id="home-focus-panel-dot" aria-hidden="true"></span>
+        <span id="home-focus-stamp">整理時間讀取中</span>
+        <a class="home-focus-workflow" href="ai-workflow-case.html">工作流</a>
+      </div>
+    </header>
+    <div class="home-focus-grid">
+      <article class="home-focus-card" id="home-focus-tax">
+        <div class="home-focus-card-head">
+          <span class="home-focus-card-kicker">TAX</span>
+          <span class="home-focus-dot is-off" id="home-focus-tax-dot" aria-hidden="true"></span>
+        </div>
+        <h2><a href="brief.html?lang=zh">當天稅訊</a></h2>
+        <div class="home-focus-counts">
+          <div class="home-focus-stat">
+            <span class="home-focus-stat-label">今天</span>
+            <span class="home-focus-stat-num" id="home-focus-tax-today">0</span>
+            <span class="home-focus-stat-unit">件</span>
+          </div>
+          <div class="home-focus-stat">
+            <span class="home-focus-stat-label">昨天</span>
+            <span class="home-focus-stat-num" id="home-focus-tax-yesterday">0</span>
+            <span class="home-focus-stat-unit">件</span>
+          </div>
+        </div>
+        <ul class="home-focus-titles" id="home-focus-tax-titles">
+          <li class="home-focus-empty">讀取官方發布中</li>
+        </ul>
+        <div class="home-focus-foot">
+          <span class="home-focus-stamp" id="home-focus-tax-stamp">資料時間讀取中</span>
+          <a class="home-focus-cta" href="brief.html?lang=zh">打開稅訊</a>
+        </div>
+      </article>
+      <article class="home-focus-card" id="home-focus-close">
+        <div class="home-focus-card-head">
+          <span class="home-focus-card-kicker">US CLOSE</span>
+          <span class="home-focus-dot is-off" id="home-focus-close-dot" aria-hidden="true"></span>
+        </div>
+        <h2><a href="us-close.html">當天美股焦點</a></h2>
+        <p class="home-focus-session" id="home-focus-close-session">美東收盤</p>
+        <p class="home-focus-sub" id="home-focus-close-headline">隔夜美股收盤整理</p>
+        <div class="home-focus-movers">
+          <div class="home-focus-chip is-up" id="home-focus-up">
+            <span class="home-focus-chip-kicker">漲最多</span>
+            <span class="home-focus-mover-name">—</span>
+            <span class="home-focus-mover-pct"></span>
+          </div>
+          <div class="home-focus-chip is-down" id="home-focus-down">
+            <span class="home-focus-chip-kicker">跌最重</span>
+            <span class="home-focus-mover-name">—</span>
+            <span class="home-focus-mover-pct"></span>
+          </div>
+        </div>
+        <div class="home-focus-breaking" id="home-focus-breaking" hidden></div>
+        <div class="home-focus-foot">
+          <span class="home-focus-stamp" id="home-focus-close-stamp">台北整理讀取中</span>
+          <a class="home-focus-cta" href="us-close.html">昨夜美股</a>
+        </div>
+      </article>
+    </div>
   </div>
 </section>
 

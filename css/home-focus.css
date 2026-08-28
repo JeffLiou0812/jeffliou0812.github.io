@@ -1,0 +1,295 @@
+/* Homepage 焦點儀表. Do not reuse 稅訊 brief-* class names. */
+.home-focus {
+  --hf-ink: #1A2B3D;
+  --hf-rule: rgba(36, 59, 85, 0.12);
+  background:
+    linear-gradient(180deg, rgba(26, 43, 61, 0.045), transparent 42%),
+    repeating-linear-gradient(0deg, transparent 0 23px, var(--hf-rule) 23px 24px),
+    repeating-linear-gradient(90deg, transparent 0 23px, var(--hf-rule) 23px 24px),
+    #F4ECE8;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--navy);
+  padding: 1.15rem 1.2rem 1.35rem;
+}
+
+.home-focus-inner {
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+.home-focus-chrome {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: .55rem 1.2rem;
+  margin-bottom: .85rem;
+  padding-bottom: .65rem;
+  border-bottom: 1px solid var(--navy);
+}
+
+.home-focus-kicker {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--navy);
+  margin: 0;
+}
+
+.home-focus-pillars {
+  margin: .2rem 0 0;
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: .06em;
+}
+
+.home-focus-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .45rem .7rem;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: .72rem;
+  color: var(--muted);
+}
+
+.home-focus-dot {
+  width: .48rem;
+  height: .48rem;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 2px rgba(201, 149, 90, 0.25);
+}
+
+.home-focus-dot.is-ok { background: var(--gold); }
+.home-focus-dot.is-off { background: var(--muted); box-shadow: none; }
+
+.home-focus-workflow {
+  color: var(--navy);
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid var(--gold);
+}
+
+.home-focus-workflow:hover { color: var(--navy-hover); }
+
+.home-focus-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .85rem;
+}
+
+.home-focus-card {
+  background: var(--card);
+  border: 1px solid var(--navy);
+  border-radius: var(--radius-sm);
+  padding: .95rem 1rem 1rem;
+  min-width: 0;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: .7rem;
+}
+
+.home-focus-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+}
+
+.home-focus-card-kicker {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.home-focus-card h2 {
+  margin: 0;
+  font-size: 1.28rem;
+  line-height: 1.25;
+  color: var(--navy);
+}
+
+.home-focus-card h2 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.home-focus-card h2 a:hover { color: var(--gold); }
+
+.home-focus-session {
+  margin: -.45rem 0 0;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+
+.home-focus-sub {
+  margin: -.25rem 0 0;
+  font-size: .92rem;
+  color: var(--ink);
+}
+
+.home-focus-counts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .55rem;
+}
+
+.home-focus-stat {
+  background: #F4ECE8;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: .45rem .6rem .55rem;
+}
+
+.home-focus-stat-label {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  color: var(--muted);
+}
+
+.home-focus-stat-num {
+  display: block;
+  margin-top: .1rem;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.05;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+
+.home-focus-stat-unit {
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.home-focus-titles {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-focus-titles li {
+  margin: 0 0 .4rem;
+  font-size: .88rem;
+  line-height: 1.45;
+}
+
+.home-focus-titles a {
+  color: var(--navy);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.home-focus-titles a:hover { color: var(--gold); }
+
+.home-focus-empty { color: var(--muted); font-weight: 500; }
+
+.home-focus-movers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+}
+
+.home-focus-chip {
+  display: flex;
+  flex-direction: column;
+  gap: .08rem;
+  min-width: 7.2rem;
+  background: #F4ECE8;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: .4rem .55rem;
+}
+
+.home-focus-chip-kicker {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: .64rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  color: var(--muted);
+}
+
+.home-focus-mover-name {
+  font-size: .92rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.home-focus-mover-pct {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 1.15rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.home-focus-chip.is-up .home-focus-mover-pct { color: #1F6B45; }
+.home-focus-chip.is-down .home-focus-mover-pct { color: var(--red); }
+
+.home-focus-breaking {
+  border: 1px solid var(--gold-soft);
+  background: #FFFCF7;
+  border-radius: 8px;
+  padding: .45rem .6rem;
+}
+
+.home-focus-breaking a {
+  display: block;
+  margin-top: .2rem;
+  color: var(--navy);
+  font-weight: 700;
+  font-size: .86rem;
+  text-decoration: none;
+}
+
+.home-focus-breaking a:hover { color: var(--gold); }
+
+.home-focus-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .45rem;
+  margin-top: auto;
+}
+
+.home-focus-stamp {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: .7rem;
+  color: var(--muted);
+}
+
+.home-focus-cta {
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--navy);
+  text-decoration: none;
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  padding: .28rem .65rem;
+  background: var(--card);
+}
+
+.home-focus-cta:hover {
+  background: var(--gold-soft);
+}
+
+@media (max-width: 760px) {
+  .home-focus-grid { grid-template-columns: 1fr; }
+  .home-focus-stat-num { font-size: 1.7rem; }
+}

@@ -5,7 +5,9 @@ var fs = require("fs");
 var path = require("path");
 
 require("../js/us-close.js");
+require("../js/home-focus.js");
 var U = globalThis.UsClose;
+var H = globalThis.HomeFocus;
 var failed = 0;
 
 function assert(name, cond) {
@@ -99,6 +101,123 @@ assert("caveat present", latest.overnight[0].caveat.indexOf("中國資料中心�
 assert("calendar has 10 confirmed items", latest.calendar.length === 10);
 assert("calendar first is 初領", latest.calendar[0].item === "初領失業金" && latest.calendar[0].date_et === "2026-08-27");
 assert("calendar FOMC taipei next day", latest.calendar[7].date_taipei === "2026-09-17");
+
+assert("section 摘要", U.SECTION.summary === "摘要");
+assert("section Breaking News", U.SECTION.overnight === "Breaking News");
+assert("section table heading 美股焦點", U.SECTION.names === "美股焦點");
+assert("overnight heading is not 隔夜", U.SECTION.overnight !== "隔夜");
+
+var win = U.calendarWindow(latest);
+assert("window is Aug then Sep 2026", win.length === 2 && win[0].year === 2026 && win[0].month === 8 && win[1].year === 2026 && win[1].month === 9);
+
+var emptyCal = {
+  id: "2026-08-27",
+  compiled_taipei: latest.compiled_taipei,
+  calendar: []
+};
+var emptyMonths = U.calendarMonths(emptyCal);
+assert("empty calendar still two months", emptyMonths.length === 2);
+assert("empty Aug has no marks", emptyMonths[0].cells.every(function (c) { return !c.labels || c.labels.length === 0; }));
+assert("empty Sep has no marks", emptyMonths[1].cells.every(function (c) { return !c.labels || c.labels.length === 0; }));
+
+var months = U.calendarMonths(latest);
+var byEt = U.groupCalendarByEtDate(latest.calendar);
+assert("groups still use date_et", byEt["2026-08-27"][0].item === "初領失業金");
+assert("9/16 has two ET items", byEt["2026-09-16"].length === 2);
+assert("short 初領", U.shortCalendarLabel(latest.calendar[0]) === "初領");
+assert("short FOMC", U.shortCalendarLabel(latest.calendar[7]) === "FOMC");
+
+function labelsOn(monthGrid, day) {
+  var cell = monthGrid.cells.filter(function (c) { return !c.empty && c.day === day; })[0];
+  return cell ? cell.labels.join(",") : "";
+}
+assert("Aug 27 marked 初領", labelsOn(months[0], 27) === "初領");
+assert("Sep 1 marked ISM", labelsOn(months[1], 1) === "ISM");
+assert("Sep 2 marked 博通Q3", labelsOn(months[1], 2) === "博通Q3");
+assert("Sep 16 has 零售 and FOMC", labelsOn(months[1], 16) === "零售,FOMC");
+assert("Sep 30 has GDP and PCE", labelsOn(months[1], 30) === "GDP,PCE");
+assert("Aug 1 unmarked", labelsOn(months[0], 1) === "");
+
+var html = fs.readFileSync(path.join(root, "us-close.html"), "utf8");
+assert("html h1 stays 美股焦點", /<h1>美股焦點<\/h1>/.test(html));
+assert("html heading 摘要", html.indexOf(">摘要<") !== -1);
+assert("html heading 美股焦點 table", html.indexOf("id=\"close-names-title\">美股焦點<") !== -1);
+assert("html keeps 本月與下月", html.indexOf("本月與下月即將公布總經／財報") !== -1);
+assert("html has no 今日", html.indexOf("今日") === -1);
+assert("html does not hardcode 結論 heading", html.indexOf(">結論<") === -1);
+assert("html does not hardcode 16 檔", html.indexOf("16 檔收盤快照") === -1);
+
+var indexHtml = fs.readFileSync(path.join(root, "index.html"), "utf8");
+assert("hero 昨夜美股 links us-close", /hero-close-box"[^>]*href="us-close.html"/.test(indexHtml) && indexHtml.indexOf(">昨夜美股<") !== -1);
+assert("hero 昨夜美股 has no 今日", (indexHtml.match(/hero-close-box[\s\S]*?<\/a>/) || [""])[0].indexOf("今日") === -1);
+assert("tools card 美股焦點 kept", indexHtml.indexOf("tool-promo-close") !== -1 && indexHtml.indexOf(">打開美股焦點<") !== -1);
+
+function navBlock(html) {
+  var m = html.match(/<nav class="main-nav"[^>]*>([\s\S]*?)<\/nav>/);
+  return m ? m[1] : "";
+}
+function afterTaxBeforeClose(html) {
+  var nav = navBlock(html).replace(/\s+/g, " ");
+  return /稅訊<\/a>\s*<a href="[^"]*us-close\.html[^"]*"[^>]*>美股焦點<\/a>/.test(nav);
+}
+assert("index nav 稅訊 then 美股焦點", afterTaxBeforeClose(indexHtml));
+assert("us-close nav active 美股焦點", /us-close\.html" class="active"[^>]*>美股焦點</.test(navBlock(html)));
+assert("us-close nav has no extra 今日", navBlock(html).indexOf("今日") === -1);
+
+var enIndex = fs.readFileSync(path.join(root, "en/index.html"), "utf8");
+assert("EN header has no 美股焦點", navBlock(enIndex).indexOf("美股焦點") === -1);
+assert("EN header still has Tax Brief", navBlock(enIndex).indexOf("Tax Brief") !== -1);
+
+var articleNav = fs.readFileSync(path.join(root, "articles/apple-etr.html"), "utf8");
+assert("article nav 稅訊 then 美股焦點", afterTaxBeforeClose(articleNav));
+assert("article close href is ../us-close.html", navBlock(articleNav).indexOf('href="../us-close.html"') !== -1);
+
+assert("focus formatCloseSession is 美東 M/D", H.formatCloseSession("2026-08-26") === "美東 8/26");
+assert("focus session never says 今日", H.formatCloseSession("2026-08-26").indexOf("今日") === -1);
+assert("focus empty session is blank", H.formatCloseSession("") === "");
+assert("focus pct plus", H.formatPct(3.82) === "+3.82%");
+assert("focus pct minus", H.formatPct(-1.59) === "-1.59%");
+
+var movers = H.closeCardModel(latest);
+assert("focus close model session", movers.session === "美東 8/26");
+assert("focus close model no 今日", JSON.stringify(movers).indexOf("今日") === -1);
+assert("focus 漲最多 is 康寧", movers.up && movers.up.name_zh === "康寧" && movers.up.chg_pct === 3.82);
+assert("focus 跌最重 is 輝達", movers.down && movers.down.name_zh === "輝達" && movers.down.chg_pct === -1.59);
+assert("focus fixture shows Breaking News", H.shouldShowBreaking(latest.overnight) === true);
+assert("focus empty overnight hides breaking", H.shouldShowBreaking([]) === false);
+assert("focus null overnight hides breaking", H.shouldShowBreaking(null) === false);
+assert("focus social overnight hides breaking", H.shouldShowBreaking([{ title: "nope", url: "https://x.com/foo" }]) === false);
+
+var taxItems = [
+  { title: "today A", url: "https://example.com/a", date: "2026-08-28" },
+  { title: "today B", url: "https://example.com/b", date: "2026-08-28" },
+  { title: "yest C", url: "https://example.com/c", date: "2026-08-27" },
+  { title: "old D", url: "https://example.com/d", date: "2026-08-26" }
+];
+var taxCounts = H.countTaxByDay(taxItems, "2026-08-28", "2026-08-27");
+assert("focus tax today count", taxCounts.today === 2);
+assert("focus tax yesterday count", taxCounts.yesterday === 1);
+var picked = H.pickTaxTitles(taxItems, "2026-08-28", "2026-08-27");
+assert("focus tax titles max 2 today first", picked.length === 2 && picked[0].title === "today A" && picked[1].title === "today B");
+assert("focus tax zero allowed", H.countTaxByDay([], "2026-08-28", "2026-08-27").today === 0);
+
+var focusHtml = indexHtml;
+var taxCard = (focusHtml.match(/id="home-focus-tax"[\s\S]*?<\/article>/) || [""])[0];
+var closeCard = (focusHtml.match(/id="home-focus-close"[\s\S]*?<\/article>/) || [""])[0];
+var focusSection = (focusHtml.match(/id="home-focus"[\s\S]*?<\/section>/) || [""])[0];
+assert("homepage has 焦點儀表 strip", /id="home-focus"/.test(focusHtml) && focusHtml.indexOf("焦點儀表") !== -1);
+assert("focus chrome has three pillars", focusSection.indexOf("稅務 · 美股 · AI") !== -1);
+assert("focus workflow is 工作流", /href="ai-workflow-case.html">工作流</.test(focusSection));
+assert("focus two cards only", (focusSection.match(/class="home-focus-card"/g) || []).length === 2);
+assert("tax card title 當天稅訊", taxCard.indexOf("當天稅訊") !== -1);
+assert("tax card links brief.html", /href="brief.html\?lang=zh"/.test(taxCard));
+assert("tax card may say 今天", taxCard.indexOf("今天") !== -1);
+assert("close card title 當天美股焦點", closeCard.indexOf("當天美股焦點") !== -1);
+assert("close card links us-close", /href="us-close.html"/.test(closeCard));
+assert("close card has no 今日", closeCard.indexOf("今日") === -1);
+assert("close breaking starts hidden", /id="home-focus-breaking"[^>]*hidden/.test(closeCard));
+assert("EN homepage has no 焦點儀表", enIndex.indexOf("home-focus") === -1 && enIndex.indexOf("焦點儀表") === -1);
+assert("focus below hero above pillars", /<\/section>\s*<section class="home-focus"[\s\S]*<\/section>\s*<main>[\s\S]*三個面向/.test(focusHtml));
 
 if (failed) {
   console.error(failed + " failed");
