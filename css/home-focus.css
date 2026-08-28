@@ -296,7 +296,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .home-focus-card {
-    transition: none;
+  .home-focus-card:hover {
+    transform: none;
+    box-shadow: var(--shadow-sm);
   }
 }
