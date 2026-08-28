@@ -72,6 +72,110 @@
     return filterOvernight(items).length > 0;
   }
 
+  var SECTION = {
+    summary: "摘要",
+    overnight: "Breaking News",
+    names: "美股焦點",
+    calendar: "本月與下月即將公布總經／財報"
+  };
+
+  function ymdParts(ymd) {
+    var m = String(ymd || "").match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (!m) return null;
+    return { y: Number(m[1]), m: Number(m[2]), d: Number(m[3]) };
+  }
+
+  function compileYmd(data) {
+    if (data && YMD.test(String(data.id || ""))) return String(data.id);
+    var iso = data && data.compiled_taipei ? String(data.compiled_taipei) : "";
+    var m = iso.match(/^(\d{4}-\d{2}-\d{2})/);
+    return m ? m[1] : "";
+  }
+
+  function calendarWindow(data) {
+    var parts = ymdParts(compileYmd(data));
+    if (!parts) return [];
+    var nextM = parts.m === 12 ? 1 : parts.m + 1;
+    var nextY = parts.m === 12 ? parts.y + 1 : parts.y;
+    return [
+      { year: parts.y, month: parts.m },
+      { year: nextY, month: nextM }
+    ];
+  }
+
+  function pad2(n) {
+    return (n < 10 ? "0" : "") + n;
+  }
+
+  function ymdKey(y, m, d) {
+    return y + "-" + pad2(m) + "-" + pad2(d);
+  }
+
+  function daysInMonth(year, month) {
+    return new Date(year, month, 0).getDate();
+  }
+
+  function weekdaySunday0(year, month, day) {
+    return new Date(year, month - 1, day).getDay();
+  }
+
+  function groupCalendarByEtDate(items) {
+    var map = {};
+    (items || []).forEach(function (row) {
+      if (!row || !YMD.test(String(row.date_et || ""))) return;
+      var key = row.date_et;
+      if (!map[key]) map[key] = [];
+      map[key].push(row);
+    });
+    return map;
+  }
+
+  function shortCalendarLabel(row) {
+    var raw = String((row && row.item) || "").trim();
+    raw = raw.replace(/（[^）]*）/g, "").replace(/\([^)]*\)/g, "").trim();
+    if (raw.indexOf("初領") === 0) return "初領";
+    if (raw.indexOf("ISM") === 0) return "ISM";
+    if (raw.indexOf("博通") === 0) return "博通Q3";
+    if (raw.indexOf("非農") === 0 || raw.indexOf("NFP") !== -1) return "NFP";
+    if (raw.indexOf("PPI") === 0) return "PPI";
+    if (raw.indexOf("CPI") === 0) return "CPI";
+    if (raw.indexOf("零售") === 0) return "零售";
+    if (raw.indexOf("FOMC") === 0) return "FOMC";
+    if (raw.indexOf("GDP") === 0) return "GDP";
+    if (raw.indexOf("PCE") === 0) return "PCE";
+    if (raw.length > 6) return raw.slice(0, 6);
+    return raw;
+  }
+
+  function monthGrid(year, month, byDate) {
+    var dim = daysInMonth(year, month);
+    var lead = weekdaySunday0(year, month, 1);
+    var cells = [];
+    var i;
+    for (i = 0; i < lead; i++) cells.push({ empty: true });
+    for (i = 1; i <= dim; i++) {
+      var key = ymdKey(year, month, i);
+      var rows = (byDate && byDate[key]) || [];
+      cells.push({
+        empty: false,
+        day: i,
+        date: key,
+        items: rows,
+        labels: rows.map(shortCalendarLabel).filter(Boolean)
+      });
+    }
+    while (cells.length % 7 !== 0) cells.push({ empty: true });
+    return { year: year, month: month, cells: cells };
+  }
+
+  function calendarMonths(data) {
+    var windowMonths = calendarWindow(data);
+    var byDate = groupCalendarByEtDate(data && data.calendar);
+    return windowMonths.map(function (w) {
+      return monthGrid(w.year, w.month, byDate);
+    });
+  }
+
   function latestIdFromIndex(indexData) {
     var items = indexData && Array.isArray(indexData.items) ? indexData.items : [];
     return items.length ? String(items[0].id || "") : "";
@@ -260,9 +364,11 @@
       return;
     }
     section.hidden = false;
+    section.innerHTML = "";
     var h = document.createElement("h2");
     h.className = "section-title";
-    h.textContent = "隔夜";
+    h.id = "close-overnight-title";
+    h.textContent = SECTION.overnight;
     section.appendChild(h);
     items.forEach(function (it) {
       var art = document.createElement("article");
@@ -353,38 +459,80 @@
       li.innerHTML = boldCompanyNames(line, data.names);
       return li;
     });
-    renderList(el, items, "這份沒有結論列。");
+    renderList(el, items, "這份沒有摘要列。");
   }
 
-  function formatCalendarDate(ymd) {
-    var m = String(ymd || "").match(/^(\d{4})-(\d{2})-(\d{2})$/);
-    if (!m) return String(ymd || "");
-    return String(Number(m[2])) + "/" + String(Number(m[3]));
+  function monthTitle(year, month) {
+    return year + "年" + month + "月";
+  }
+
+  function renderMonthCard(grid) {
+    var card = document.createElement("section");
+    card.className = "close-cal-month";
+    card.setAttribute("aria-label", monthTitle(grid.year, grid.month));
+
+    var title = document.createElement("h3");
+    title.className = "close-cal-month-title";
+    title.textContent = monthTitle(grid.year, grid.month);
+    card.appendChild(title);
+
+    var week = document.createElement("div");
+    week.className = "close-cal-weekdays";
+    week.setAttribute("aria-hidden", "true");
+    ["日", "一", "二", "三", "四", "五", "六"].forEach(function (w) {
+      var cell = document.createElement("span");
+      cell.textContent = w;
+      week.appendChild(cell);
+    });
+    card.appendChild(week);
+
+    var gridEl = document.createElement("div");
+    gridEl.className = "close-cal-grid";
+    grid.cells.forEach(function (cell) {
+      var day = document.createElement("div");
+      if (cell.empty) {
+        day.className = "close-cal-day is-pad";
+        day.setAttribute("aria-hidden", "true");
+        gridEl.appendChild(day);
+        return;
+      }
+      var marked = cell.labels.length > 0;
+      day.className = "close-cal-day" + (marked ? " is-marked" : "");
+      var num = document.createElement("span");
+      num.className = "close-cal-num";
+      num.textContent = String(cell.day);
+      day.appendChild(num);
+      if (marked) {
+        var mark = document.createElement("span");
+        mark.className = "close-cal-mark";
+        mark.setAttribute("aria-hidden", "true");
+        day.appendChild(mark);
+        cell.labels.forEach(function (label) {
+          var lab = document.createElement("span");
+          lab.className = "close-cal-label";
+          lab.textContent = label;
+          day.appendChild(lab);
+        });
+        day.setAttribute("title", cell.items.map(function (row) {
+          return [row.status, row.item].filter(Boolean).join(" ");
+        }).join("；"));
+      }
+      gridEl.appendChild(day);
+    });
+    card.appendChild(gridEl);
+    return card;
   }
 
   function renderCalendar(data) {
     var el = document.getElementById("close-calendar");
     if (!el) return;
     el.innerHTML = "";
-    var items = data.calendar || [];
-    if (!items.length) {
-      var empty = document.createElement("p");
-      empty.className = "close-empty";
-      empty.textContent = "這份沒有行事曆。";
-      el.appendChild(empty);
-      return;
-    }
-    var ul = document.createElement("ul");
-    items.forEach(function (row) {
-      var li = document.createElement("li");
-      var et = formatCalendarDate(row.date_et);
-      var bits = ["美東 " + et];
-      if (row.status) bits.push(row.status);
-      bits.push(row.item);
-      li.textContent = bits.join(" · ");
-      ul.appendChild(li);
+    var wrap = document.createElement("div");
+    wrap.className = "close-cal-pair";
+    calendarMonths(data).forEach(function (grid) {
+      wrap.appendChild(renderMonthCard(grid));
     });
-    el.appendChild(ul);
+    el.appendChild(wrap);
     if (data.calendar_note) {
       var note = document.createElement("p");
       note.className = "close-calendar-note";
@@ -457,6 +605,7 @@
   }
 
   root.UsClose = {
+    SECTION: SECTION,
     isOfficialOvernightUrl: isOfficialOvernightUrl,
     filterOvernight: filterOvernight,
     shouldShowOvernight: shouldShowOvernight,
@@ -468,7 +617,11 @@
     formatPct: formatPct,
     formatClose: formatClose,
     boldCompanyNames: boldCompanyNames,
-    requestedDateFromSearch: requestedDateFromSearch
+    requestedDateFromSearch: requestedDateFromSearch,
+    calendarWindow: calendarWindow,
+    groupCalendarByEtDate: groupCalendarByEtDate,
+    shortCalendarLabel: shortCalendarLabel,
+    calendarMonths: calendarMonths
   };
 
   if (typeof document !== "undefined") {

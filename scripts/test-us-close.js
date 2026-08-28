@@ -100,6 +100,56 @@ assert("calendar has 10 confirmed items", latest.calendar.length === 10);
 assert("calendar first is 初領", latest.calendar[0].item === "初領失業金" && latest.calendar[0].date_et === "2026-08-27");
 assert("calendar FOMC taipei next day", latest.calendar[7].date_taipei === "2026-09-17");
 
+assert("section 摘要", U.SECTION.summary === "摘要");
+assert("section Breaking News", U.SECTION.overnight === "Breaking News");
+assert("section table heading 美股焦點", U.SECTION.names === "美股焦點");
+assert("overnight heading is not 隔夜", U.SECTION.overnight !== "隔夜");
+
+var win = U.calendarWindow(latest);
+assert("window is Aug then Sep 2026", win.length === 2 && win[0].year === 2026 && win[0].month === 8 && win[1].year === 2026 && win[1].month === 9);
+
+var emptyCal = {
+  id: "2026-08-27",
+  compiled_taipei: latest.compiled_taipei,
+  calendar: []
+};
+var emptyMonths = U.calendarMonths(emptyCal);
+assert("empty calendar still two months", emptyMonths.length === 2);
+assert("empty Aug has no marks", emptyMonths[0].cells.every(function (c) { return !c.labels || c.labels.length === 0; }));
+assert("empty Sep has no marks", emptyMonths[1].cells.every(function (c) { return !c.labels || c.labels.length === 0; }));
+
+var months = U.calendarMonths(latest);
+var byEt = U.groupCalendarByEtDate(latest.calendar);
+assert("groups still use date_et", byEt["2026-08-27"][0].item === "初領失業金");
+assert("9/16 has two ET items", byEt["2026-09-16"].length === 2);
+assert("short 初領", U.shortCalendarLabel(latest.calendar[0]) === "初領");
+assert("short FOMC", U.shortCalendarLabel(latest.calendar[7]) === "FOMC");
+
+function labelsOn(monthGrid, day) {
+  var cell = monthGrid.cells.filter(function (c) { return !c.empty && c.day === day; })[0];
+  return cell ? cell.labels.join(",") : "";
+}
+assert("Aug 27 marked 初領", labelsOn(months[0], 27) === "初領");
+assert("Sep 1 marked ISM", labelsOn(months[1], 1) === "ISM");
+assert("Sep 2 marked 博通Q3", labelsOn(months[1], 2) === "博通Q3");
+assert("Sep 16 has 零售 and FOMC", labelsOn(months[1], 16) === "零售,FOMC");
+assert("Sep 30 has GDP and PCE", labelsOn(months[1], 30) === "GDP,PCE");
+assert("Aug 1 unmarked", labelsOn(months[0], 1) === "");
+
+var html = fs.readFileSync(path.join(root, "us-close.html"), "utf8");
+assert("html h1 stays 美股焦點", /<h1>美股焦點<\/h1>/.test(html));
+assert("html heading 摘要", html.indexOf(">摘要<") !== -1);
+assert("html heading 美股焦點 table", html.indexOf("id=\"close-names-title\">美股焦點<") !== -1);
+assert("html keeps 本月與下月", html.indexOf("本月與下月即將公布總經／財報") !== -1);
+assert("html has no 今日", html.indexOf("今日") === -1);
+assert("html does not hardcode 結論 heading", html.indexOf(">結論<") === -1);
+assert("html does not hardcode 16 檔", html.indexOf("16 檔收盤快照") === -1);
+
+var indexHtml = fs.readFileSync(path.join(root, "index.html"), "utf8");
+assert("hero 昨夜美股 links us-close", /hero-close-box"[^>]*href="us-close.html"/.test(indexHtml) && indexHtml.indexOf(">昨夜美股<") !== -1);
+assert("hero 昨夜美股 has no 今日", (indexHtml.match(/hero-close-box[\s\S]*?<\/a>/) || [""])[0].indexOf("今日") === -1);
+assert("tools card 美股焦點 kept", indexHtml.indexOf("tool-promo-close") !== -1 && indexHtml.indexOf(">打開美股焦點<") !== -1);
+
 if (failed) {
   console.error(failed + " failed");
   process.exit(1);
