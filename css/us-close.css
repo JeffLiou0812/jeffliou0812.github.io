@@ -34,8 +34,8 @@
 
 .close-overnight-item {
   background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
+  border: var(--frame-width) solid var(--frame);
+  border-radius: var(--radius);
   padding: 1rem 1.15rem;
   margin-bottom: .8rem;
   box-shadow: var(--shadow-sm);
@@ -74,7 +74,8 @@
   border-collapse: collapse;
   font-size: .92rem;
   background: var(--card);
-  border-radius: var(--radius-sm);
+  border: var(--frame-width) solid var(--frame);
+  border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
 }
@@ -99,7 +100,7 @@
   font-size: .88rem;
 }
 
-.close-table td.up { color: #1F8A4C; }
+.close-table td.up { color: var(--up); }
 .close-table td.down { color: var(--red); }
 
 .close-table-wrap {
@@ -116,7 +117,7 @@
 
 .close-cal-month {
   background: var(--card);
-  border: 1px solid var(--gold-soft);
+  border: var(--frame-width) solid var(--frame);
   border-radius: var(--radius);
   padding: .9rem .75rem 1rem;
   box-shadow: var(--shadow-sm);
@@ -149,9 +150,9 @@
 .close-cal-day {
   min-width: 0;
   min-height: 3.4rem;
-  background: #F4ECE8;
-  border: 1px solid var(--line);
-  border-radius: 8px;
+  background: var(--card);
+  border: var(--frame-width-sm) solid var(--gold-soft);
+  border-radius: var(--radius-sm);
   padding: .2rem .18rem .28rem;
   display: flex;
   flex-direction: column;
@@ -173,8 +174,8 @@
 }
 
 .close-cal-day.is-marked {
-  background: #FFFCF7;
-  border-color: var(--gold-soft);
+  background: var(--terra-wash);
+  border-color: var(--frame);
 }
 
 .close-cal-mark {

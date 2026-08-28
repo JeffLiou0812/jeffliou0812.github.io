@@ -1,14 +1,14 @@
-/* Homepage 焦點儀表. Do not reuse 稅訊 brief-* class names. */
+/* Homepage 焦點儀表. Do not reuse 稅訊 brief-* class names.
+   Chrome tokens live in css/style.css :root. */
 .home-focus {
-  --hf-ink: #1A2B3D;
-  --hf-rule: rgba(36, 59, 85, 0.12);
+  --hf-card-pad: 1rem 1.05rem 1.05rem;
+  --hf-card-min: 22.5rem;
   background:
-    linear-gradient(180deg, rgba(26, 43, 61, 0.045), transparent 42%),
-    repeating-linear-gradient(0deg, transparent 0 23px, var(--hf-rule) 23px 24px),
-    repeating-linear-gradient(90deg, transparent 0 23px, var(--hf-rule) 23px 24px),
+    radial-gradient(ellipse 70% 80% at 0% 0%, rgba(246, 238, 241, 0.7), transparent 58%),
+    radial-gradient(ellipse 50% 60% at 100% 100%, rgba(208, 106, 58, 0.06), transparent 55%),
     #F4ECE8;
   border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--navy);
+  border-bottom: 1px solid var(--gold-soft);
   padding: 1.15rem 1.2rem 1.35rem;
 }
 
@@ -25,7 +25,7 @@
   gap: .55rem 1.2rem;
   margin-bottom: .85rem;
   padding-bottom: .65rem;
-  border-bottom: 1px solid var(--navy);
+  border-bottom: 1px solid var(--gold-soft);
 }
 
 .home-focus-kicker {
@@ -34,7 +34,7 @@
   font-weight: 700;
   letter-spacing: .14em;
   text-transform: uppercase;
-  color: var(--navy);
+  color: var(--terra);
   margin: 0;
 }
 
@@ -57,15 +57,22 @@
 }
 
 .home-focus-dot {
-  width: .48rem;
-  height: .48rem;
+  width: .5rem;
+  height: .5rem;
   border-radius: 50%;
-  background: var(--gold);
-  box-shadow: 0 0 0 2px rgba(201, 149, 90, 0.25);
+  background: var(--terra);
+  box-shadow: 0 0 0 2px rgba(208, 106, 58, 0.22);
 }
 
-.home-focus-dot.is-ok { background: var(--gold); }
-.home-focus-dot.is-off { background: var(--muted); box-shadow: none; }
+.home-focus-dot.is-ok {
+  background: var(--up);
+  box-shadow: 0 0 0 2px rgba(31, 107, 69, 0.2);
+}
+
+.home-focus-dot.is-off {
+  background: var(--muted);
+  box-shadow: none;
+}
 
 .home-focus-workflow {
   color: var(--navy);
@@ -74,24 +81,39 @@
   border-bottom: 1px solid var(--gold);
 }
 
-.home-focus-workflow:hover { color: var(--navy-hover); }
+.home-focus-workflow:hover { color: var(--terra); }
 
 .home-focus-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  align-items: stretch;
   gap: .85rem;
 }
 
 .home-focus-card {
+  position: relative;
   background: var(--card);
-  border: 1px solid var(--navy);
-  border-radius: var(--radius-sm);
-  padding: .95rem 1rem 1rem;
+  border: var(--frame-width) solid var(--frame);
+  border-radius: var(--radius);
+  padding: var(--hf-card-pad);
   min-width: 0;
+  min-height: var(--hf-card-min);
+  height: 100%;
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
   gap: .7rem;
+}
+
+.home-focus-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--terra);
+  border-radius: var(--radius) var(--radius) 0 0;
 }
 
 .home-focus-card-head {
@@ -99,6 +121,7 @@
   align-items: center;
   justify-content: space-between;
   gap: .5rem;
+  padding-top: .15rem;
 }
 
 .home-focus-card-kicker {
@@ -122,35 +145,23 @@
   text-decoration: none;
 }
 
-.home-focus-card h2 a:hover { color: var(--gold); }
+.home-focus-card h2 a:hover { color: var(--terra); }
 
-.home-focus-session {
-  margin: -.45rem 0 0;
-  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: .04em;
-  color: var(--navy);
-  font-variant-numeric: tabular-nums;
-}
-
-.home-focus-sub {
-  margin: -.25rem 0 0;
-  font-size: .92rem;
-  color: var(--ink);
-}
-
-.home-focus-counts {
+.home-focus-metrics {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: .55rem;
 }
 
 .home-focus-stat {
-  background: #F4ECE8;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: .45rem .6rem .55rem;
+  background: var(--card);
+  border: var(--frame-width-sm) solid var(--frame);
+  border-radius: var(--radius-sm);
+  padding: .55rem .7rem .6rem;
+  min-height: 5.6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .home-focus-stat-label {
@@ -175,7 +186,34 @@
 .home-focus-stat-unit {
   font-size: .78rem;
   font-weight: 700;
-  color: var(--muted);
+  color: var(--ink);
+}
+
+.home-focus-stat.is-up .home-focus-stat-num { color: var(--up); }
+.home-focus-stat.is-down .home-focus-stat-num { color: var(--red); }
+
+.home-focus-body {
+  flex: 1 1 auto;
+  min-height: 4.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+
+.home-focus-session {
+  margin: 0;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+
+.home-focus-sub {
+  margin: 0;
+  font-size: .92rem;
+  color: var(--ink);
 }
 
 .home-focus-titles {
@@ -196,56 +234,15 @@
   text-decoration: none;
 }
 
-.home-focus-titles a:hover { color: var(--gold); }
+.home-focus-titles a:hover { color: var(--terra); }
 
 .home-focus-empty { color: var(--muted); font-weight: 500; }
 
-.home-focus-movers {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .45rem;
-}
-
-.home-focus-chip {
-  display: flex;
-  flex-direction: column;
-  gap: .08rem;
-  min-width: 7.2rem;
-  background: #F4ECE8;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: .4rem .55rem;
-}
-
-.home-focus-chip-kicker {
-  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  font-size: .64rem;
-  font-weight: 700;
-  letter-spacing: .08em;
-  color: var(--muted);
-}
-
-.home-focus-mover-name {
-  font-size: .92rem;
-  font-weight: 700;
-  color: var(--navy);
-}
-
-.home-focus-mover-pct {
-  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 1.15rem;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-}
-
-.home-focus-chip.is-up .home-focus-mover-pct { color: #1F6B45; }
-.home-focus-chip.is-down .home-focus-mover-pct { color: var(--red); }
-
 .home-focus-breaking {
-  border: 1px solid var(--gold-soft);
-  background: #FFFCF7;
-  border-radius: 8px;
-  padding: .45rem .6rem;
+  background: var(--card);
+  border: var(--frame-width-sm) solid var(--frame);
+  border-radius: var(--radius-sm);
+  padding: .5rem .7rem;
 }
 
 .home-focus-breaking a {
@@ -257,7 +254,15 @@
   text-decoration: none;
 }
 
-.home-focus-breaking a:hover { color: var(--gold); }
+.home-focus-breaking a:hover { color: var(--terra); }
+
+.home-focus-chip-kicker {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: .64rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  color: var(--muted);
+}
 
 .home-focus-foot {
   display: flex;
@@ -279,14 +284,16 @@
   font-weight: 700;
   color: var(--navy);
   text-decoration: none;
-  border: 1px solid var(--gold);
-  border-radius: 8px;
-  padding: .28rem .65rem;
+  border: var(--frame-width-sm) solid var(--frame);
+  border-radius: var(--radius-pill);
+  padding: .22rem .7rem;
   background: var(--card);
 }
 
 .home-focus-cta:hover {
-  background: var(--gold-soft);
+  background: var(--terra-wash);
+  border-color: var(--terra);
+  color: var(--navy);
 }
 
 @media (max-width: 760px) {

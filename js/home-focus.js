@@ -270,15 +270,16 @@
   function fillMover(id, row) {
     var el = document.getElementById(id);
     if (!el) return;
-    if (!row) {
-      el.hidden = true;
-      return;
-    }
     el.hidden = false;
     var name = el.querySelector(".home-focus-mover-name");
     var pct = el.querySelector(".home-focus-mover-pct");
-    if (name) name.textContent = row.name_zh || row.ticker || "";
-    if (pct) pct.textContent = formatPct(row.chg_pct);
+    if (!row) {
+      if (name) name.textContent = "-";
+      if (pct) pct.textContent = "-";
+      return;
+    }
+    if (name) name.textContent = row.name_zh || row.ticker || "-";
+    if (pct) pct.textContent = formatPct(row.chg_pct) || "-";
   }
 
   function renderCloseOk(data) {
