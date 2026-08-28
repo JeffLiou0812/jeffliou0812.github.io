@@ -1,14 +1,14 @@
 /* Homepage 焦點儀表. Do not reuse 稅訊 brief-* class names.
    Chrome tokens live in css/style.css :root. */
 .home-focus {
-  --hf-card-pad: 1rem 1.05rem 1.05rem;
+  --hf-card-pad: .9rem 1rem .95rem;
   --hf-card-min: 22.5rem;
-  --hf-grid: rgba(26, 43, 61, 0.07);
+  --hf-grid: rgba(26, 43, 61, 0.12);
   background:
-    repeating-linear-gradient(0deg, transparent 0 23px, var(--hf-grid) 23px 24px),
-    repeating-linear-gradient(90deg, transparent 0 23px, var(--hf-grid) 23px 24px),
+    repeating-linear-gradient(0deg, transparent 0 19px, var(--hf-grid) 19px 20px),
+    repeating-linear-gradient(90deg, transparent 0 19px, var(--hf-grid) 19px 20px),
     #F4ECE8;
-  padding: 1.15rem 1.2rem 1.35rem;
+  padding: 1.05rem 1.2rem 1.2rem;
 }
 
 .home-focus-inner {
@@ -21,23 +21,22 @@
   flex-wrap: wrap;
   align-items: flex-end;
   justify-content: space-between;
-  gap: .55rem 1.2rem;
-  margin-bottom: .85rem;
-  padding-bottom: .65rem;
+  gap: .4rem 1.1rem;
+  margin-bottom: .75rem;
+  padding-bottom: .45rem;
 }
 
 .home-focus-kicker {
-  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  font-size: .72rem;
+  font-size: 1.42rem;
   font-weight: 700;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--terra);
+  letter-spacing: .02em;
+  line-height: 1.25;
+  color: var(--navy);
   margin: 0;
 }
 
 .home-focus-pillars {
-  margin: .2rem 0 0;
+  margin: .15rem 0 0;
   font-size: .82rem;
   font-weight: 700;
   color: var(--ink);
@@ -92,7 +91,7 @@
   position: relative;
   background: var(--card);
   border: var(--frame-width) solid var(--frame);
-  border-radius: var(--radius);
+  border-radius: 8px;
   padding: var(--hf-card-pad);
   min-width: 0;
   min-height: var(--hf-card-min);
@@ -100,18 +99,7 @@
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
-  gap: .7rem;
-}
-
-.home-focus-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: var(--terra);
-  border-radius: var(--radius) var(--radius) 0 0;
+  gap: .55rem;
 }
 
 .home-focus-card-head {
@@ -119,16 +107,15 @@
   align-items: center;
   justify-content: space-between;
   gap: .5rem;
-  padding-top: .15rem;
 }
 
 .home-focus-card-kicker {
   font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  font-size: .68rem;
+  font-size: .7rem;
   font-weight: 700;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--navy);
 }
 
 .home-focus-card h2 {
@@ -154,8 +141,8 @@
 .home-focus-stat {
   background: var(--card);
   border: var(--frame-width-sm) solid var(--frame);
-  border-radius: var(--radius-sm);
-  padding: .55rem .7rem .6rem;
+  border-radius: 8px;
+  padding: .5rem .65rem .55rem;
   min-height: 5.6rem;
   display: flex;
   flex-direction: column;

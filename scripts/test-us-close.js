@@ -254,12 +254,13 @@ var focusCss = fs.readFileSync(path.join(root, "css/home-focus.css"), "utf8");
 var cardRule = (focusCss.match(/\.home-focus-card\s*\{[\s\S]*?\}/) || [""])[0];
 assert("one shared card frame rule", (focusCss.match(/\.home-focus-card\s*\{/g) || []).length === 1);
 assert("cards share min-height", /min-height:\s*var\(--hf-card-min\)/.test(cardRule) && /--hf-card-min:\s*[\d.]+rem/.test(focusCss));
-assert("cards share padding radius border", /padding:\s*var\(--hf-card-pad\)/.test(cardRule) && /border-radius:\s*var\(--radius\)/.test(cardRule) && /border:\s*var\(--frame-width\) solid var\(--frame\)/.test(cardRule));
+assert("cards share padding radius border", /padding:\s*var\(--hf-card-pad\)/.test(cardRule) && /border-radius:\s*8px/.test(cardRule) && /border:\s*var\(--frame-width\) solid var\(--frame\)/.test(cardRule));
 assert("grid stretches twins", /align-items:\s*stretch/.test(focusCss));
 assert("foot pinned to bottom", /margin-top:\s*auto/.test(focusCss));
 assert("stat tiles use warm white and gold", /\.home-focus-stat\s*\{[\s\S]*background:\s*var\(--card\)/.test(focusCss) && /\.home-focus-stat\s*\{[\s\S]*border:\s*var\(--frame-width-sm\) solid var\(--frame\)/.test(focusCss));
 assert("cta uses EN chip recipe", /\.home-focus-cta\s*\{[\s\S]*border:\s*var\(--frame-width-sm\) solid var\(--frame\)/.test(focusCss) && /\.home-focus-cta\s*\{[\s\S]*background:\s*var\(--card\)/.test(focusCss) && /\.home-focus-cta\s*\{[\s\S]*border-radius:\s*var\(--radius-pill\)/.test(focusCss));
-assert("focus card accent is terracotta", /background:\s*var\(--terra\)/.test(focusCss));
+assert("focus title is a real heading size", /\.home-focus-kicker\s*\{[\s\S]*font-size:\s*1\.(3[5-9]|4|5)/.test(focusCss) && /\.home-focus-kicker\s*\{[\s\S]*font-weight:\s*700/.test(focusCss));
+assert("focus cards have no top rail", focusCss.indexOf(".home-focus-card::before") === -1 && firstRule(focusCss, ".home-focus-card").indexOf("border-top") === -1);
 assert("focus strip has HUD hairline grid", focusCss.indexOf("repeating-linear-gradient") !== -1);
 
 var styleCss = fs.readFileSync(path.join(root, "css/style.css"), "utf8");
