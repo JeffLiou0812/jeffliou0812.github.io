@@ -245,10 +245,11 @@
     return String(Number(m[2])) + "/" + String(Number(m[3]));
   }
 
-  function formatHomepageLine(sessionEtDate, headline) {
+  function formatHomepageLine(sessionEtDate, headline, lang) {
     var md = formatEtMd(sessionEtDate);
     var line = String(headline || "").trim();
     if (!md || !line) return "";
+    if (lang === "en") return "ET " + md + ": " + line;
     return "美東 " + md + "：" + line;
   }
 
@@ -362,8 +363,11 @@
     if (!line) return;
     fetchJson(dataBase() + "latest.json")
       .then(function (data) {
-        var text = formatHomepageLine(data.session_et_date, data.headline);
-        if (text && text.indexOf("今日") === -1) line.textContent = text;
+        var lang = document.documentElement.lang === "en" ? "en" : "zh";
+        var text = formatHomepageLine(data.session_et_date, data.headline, lang);
+        if (text && text.indexOf("今日") === -1 && text.indexOf("Today") === -1) {
+          line.textContent = text;
+        }
       })
       .catch(function () {});
   }

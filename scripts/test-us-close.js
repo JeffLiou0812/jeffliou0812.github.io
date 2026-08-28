@@ -89,6 +89,8 @@ assert("index lists fixture", indexData.items[0].id === "2026-08-27" && indexDat
 
 assert("homepage line uses ET session date", U.formatHomepageLine("2026-08-26", "多數上漲") === "美東 8/26：多數上漲");
 assert("homepage line never says 今日", U.formatHomepageLine("2026-08-26", "多數上漲").indexOf("今日") === -1);
+assert("EN homepage line uses ET not Today", U.formatHomepageLine("2026-08-26", "多數上漲", "en") === "ET 8/26: 多數上漲");
+assert("EN homepage line never says Today", U.formatHomepageLine("2026-08-26", "多數上漲", "en").indexOf("Today") === -1);
 assert("null after renders dash", U.formatPct(null) === "—");
 assert("positive pct has plus", U.formatPct(1.15) === "+1.15%");
 
@@ -156,6 +158,7 @@ var indexHtml = fs.readFileSync(path.join(root, "index.html"), "utf8");
 assert("hero 昨夜美股 links us-close", /hero-close-box"[^>]*href="us-close.html"/.test(indexHtml) && indexHtml.indexOf(">昨夜美股<") !== -1);
 assert("hero 昨夜美股 has no 今日", (indexHtml.match(/hero-close-box[\s\S]*?<\/a>/) || [""])[0].indexOf("今日") === -1);
 assert("tools card 美股焦點 kept", indexHtml.indexOf("tool-promo-close") !== -1 && indexHtml.indexOf(">打開美股焦點<") !== -1);
+assert("ZH tool card uses 資訊分享 not 教育用途", indexHtml.indexOf("id=\"us-close-card-line\">隔夜美股收盤整理，資訊分享。") !== -1 && indexHtml.indexOf("教育用途") === -1);
 assert("ZH tools heading kept", indexHtml.indexOf(">互動工具<") !== -1);
 assert("ZH tools lead sentence removed", indexHtml.indexOf("試算稅負，或掃今日官方發布") === -1);
 assert("ZH homepage uses 資訊分享 not 教育整理", indexHtml.indexOf("資訊分享，不是稅務意見") !== -1 && indexHtml.indexOf("教育整理") === -1);
@@ -182,6 +185,8 @@ assert("EN hero Last night's US stocks", /hero-close-box"[^>]*href="\.\.\/us-clo
 assert("EN tools heading kept", enIndex.indexOf(">Interactive Tools<") !== -1);
 assert("EN tools lead sentence removed", enIndex.indexOf("Run a tax estimate, or scan today's official releases") === -1);
 assert("EN keeps Educational compilation", enIndex.indexOf("Educational compilation, not tax advice") !== -1);
+assert("EN tools has US Focus promo card", enIndex.indexOf("tool-promo-close") !== -1 && enIndex.indexOf(">Open US Focus<") !== -1 && enIndex.indexOf('href="../us-close.html">US Focus<') !== -1);
+assert("EN tools close card has no Today", ((enIndex.match(/tool-promo-close[\s\S]*?<\/div>\s*<div class="tool-secondary"/) || [""])[0]).indexOf("Today") === -1);
 
 var articleNav = fs.readFileSync(path.join(root, "articles/apple-etr.html"), "utf8");
 assert("article nav 稅訊 then 美股焦點", afterTaxBeforeClose(articleNav));
