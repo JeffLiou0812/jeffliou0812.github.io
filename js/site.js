@@ -52,6 +52,10 @@
     cards.forEach(function (c) {
       var v = c.getAttribute("data-category");
       if (v && cats.indexOf(v) === -1) cats.push(v);
+      var tag = c.querySelector(".tag");
+      if (tag && v && !tag.getAttribute("data-category")) {
+        tag.setAttribute("data-category", v);
+      }
     });
     if (cats.length < 2) return;
 
@@ -62,6 +66,7 @@
       var b = document.createElement("button");
       b.type = "button";
       b.textContent = label;
+      b.setAttribute("data-category", label);
       if (i === 0) b.className = "active";
       b.setAttribute("aria-pressed", i === 0 ? "true" : "false");
       b.addEventListener("click", function () {
@@ -94,13 +99,12 @@
   }
 
   function initCloseNavLink() {
-    if (IS_EN) return;
     var nav = document.querySelector("nav.main-nav");
     if (!nav || nav.querySelector('a[data-nav="close"], a[href*="us-close.html"]')) return;
     var a = document.createElement("a");
     a.href = SITE_ROOT + "us-close.html";
     a.setAttribute("data-nav", "close");
-    a.textContent = "美股焦點";
+    a.textContent = IS_EN ? "US Focus" : "美股焦點";
     var path = (location.pathname || "").replace(/\/+$/, "");
     if (/(^|\/)us-close(\.html)?$/.test(path)) a.className = "active";
     var brief = nav.querySelector('a[data-nav="brief"], a[href*="brief.html"]');

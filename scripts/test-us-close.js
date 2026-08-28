@@ -144,6 +144,7 @@ assert("html heading 摘要", html.indexOf(">摘要<") !== -1);
 assert("html heading 美股焦點 table", html.indexOf("id=\"close-names-title\">美股焦點<") !== -1);
 assert("html keeps 本月與下月", html.indexOf("本月與下月即將公布總經／財報") !== -1);
 assert("html has no 今日", html.indexOf("今日") === -1);
+assert("us-close uses 資訊分享 not 教育整理", html.indexOf("資訊分享，不是投資建議") !== -1 && html.indexOf("教育整理") === -1);
 assert("html does not hardcode 結論 heading", html.indexOf(">結論<") === -1);
 assert("html does not hardcode 16 檔", html.indexOf("16 檔收盤快照") === -1);
 
@@ -151,6 +152,10 @@ var indexHtml = fs.readFileSync(path.join(root, "index.html"), "utf8");
 assert("hero 昨夜美股 links us-close", /hero-close-box"[^>]*href="us-close.html"/.test(indexHtml) && indexHtml.indexOf(">昨夜美股<") !== -1);
 assert("hero 昨夜美股 has no 今日", (indexHtml.match(/hero-close-box[\s\S]*?<\/a>/) || [""])[0].indexOf("今日") === -1);
 assert("tools card 美股焦點 kept", indexHtml.indexOf("tool-promo-close") !== -1 && indexHtml.indexOf(">打開美股焦點<") !== -1);
+assert("ZH tools heading kept", indexHtml.indexOf(">互動工具<") !== -1);
+assert("ZH tools lead sentence removed", indexHtml.indexOf("試算稅負，或掃今日官方發布") === -1);
+assert("ZH homepage uses 資訊分享 not 教育整理", indexHtml.indexOf("資訊分享，不是稅務意見") !== -1 && indexHtml.indexOf("教育整理") === -1);
+assert("ZH footer still says 教育性質", indexHtml.indexOf("教育性質與個人觀點分享") !== -1);
 
 function navBlock(html) {
   var m = html.match(/<nav class="main-nav"[^>]*>([\s\S]*?)<\/nav>/);
@@ -167,13 +172,21 @@ assert("us-close nav has no extra 今日", navBlock(html).indexOf("今日") === 
 var enIndex = fs.readFileSync(path.join(root, "en/index.html"), "utf8");
 assert("EN header has no 美股焦點", navBlock(enIndex).indexOf("美股焦點") === -1);
 assert("EN header still has Tax Brief", navBlock(enIndex).indexOf("Tax Brief") !== -1);
+assert("EN nav Tax Brief then US Focus", /Tax Brief<\/a>\s*<a href="[^"]*us-close\.html[^"]*"[^>]*>US Focus<\/a>/.test(navBlock(enIndex).replace(/\s+/g, " ")));
+assert("EN header has no Chinese nav labels", !/[稅訊首頁文章服務關於官方資源美股焦點]/.test(navBlock(enIndex)));
+assert("EN hero Last night's US stocks", /hero-close-box"[^>]*href="\.\.\/us-close.html"/.test(enIndex) && enIndex.indexOf(">Last night's US stocks<") !== -1);
+assert("EN tools heading kept", enIndex.indexOf(">Interactive Tools<") !== -1);
+assert("EN tools lead sentence removed", enIndex.indexOf("Run a tax estimate, or scan today's official releases") === -1);
+assert("EN keeps Educational compilation", enIndex.indexOf("Educational compilation, not tax advice") !== -1);
 
 var articleNav = fs.readFileSync(path.join(root, "articles/apple-etr.html"), "utf8");
 assert("article nav 稅訊 then 美股焦點", afterTaxBeforeClose(articleNav));
 assert("article close href is ../us-close.html", navBlock(articleNav).indexOf('href="../us-close.html"') !== -1);
 
 assert("focus formatCloseSession is 美東 M/D", H.formatCloseSession("2026-08-26") === "美東 8/26");
+assert("focus formatCloseSession EN is ET M/D", H.formatCloseSession("2026-08-26", "en") === "ET 8/26");
 assert("focus session never says 今日", H.formatCloseSession("2026-08-26").indexOf("今日") === -1);
+assert("focus EN session never says Today", H.formatCloseSession("2026-08-26", "en").indexOf("Today") === -1);
 assert("focus empty session is blank", H.formatCloseSession("") === "");
 assert("focus pct plus", H.formatPct(3.82) === "+3.82%");
 assert("focus pct minus", H.formatPct(-1.59) === "-1.59%");
@@ -216,8 +229,15 @@ assert("close card title 當天美股焦點", closeCard.indexOf("當天美股焦
 assert("close card links us-close", /href="us-close.html"/.test(closeCard));
 assert("close card has no 今日", closeCard.indexOf("今日") === -1);
 assert("close breaking starts hidden", /id="home-focus-breaking"[^>]*hidden/.test(closeCard));
-assert("EN homepage has no 焦點儀表", enIndex.indexOf("home-focus") === -1 && enIndex.indexOf("焦點儀表") === -1);
+assert("EN homepage has focus instrument", /id="home-focus"/.test(enIndex) && enIndex.indexOf("Focus instrument") !== -1);
+assert("EN homepage has no 焦點儀表 label", enIndex.indexOf("焦點儀表") === -1);
+assert("EN chrome is Tax · US stocks · AI", enIndex.indexOf("Tax · US stocks · AI") !== -1);
+assert("EN tax card links lang=en", /href="\.\.\/brief.html\?lang=en"/.test(enIndex));
+assert("EN close card has no Today", ((enIndex.match(/id="home-focus-close"[\s\S]*?<\/article>/) || [""])[0]).indexOf("Today") === -1);
+assert("EN close card never says 今日", ((enIndex.match(/id="home-focus-close"[\s\S]*?<\/article>/) || [""])[0]).indexOf("今日") === -1);
+assert("EN workflow links ai-workflow-case", /href="ai-workflow-case.html">Workflow</.test(enIndex));
 assert("focus below hero above pillars", /<\/section>\s*<section class="home-focus"[\s\S]*<\/section>\s*<main>[\s\S]*三個面向/.test(focusHtml));
+assert("EN focus below hero above pillars", /<\/section>\s*<section class="home-focus"[\s\S]*<\/section>\s*<main>[\s\S]*Three Pillars/.test(enIndex));
 
 function skeletonBits(card) {
   return {
@@ -242,12 +262,14 @@ var focusCss = fs.readFileSync(path.join(root, "css/home-focus.css"), "utf8");
 var cardRule = (focusCss.match(/\.home-focus-card\s*\{[\s\S]*?\}/) || [""])[0];
 assert("one shared card frame rule", (focusCss.match(/\.home-focus-card\s*\{/g) || []).length === 1);
 assert("cards share min-height", /min-height:\s*var\(--hf-card-min\)/.test(cardRule) && /--hf-card-min:\s*[\d.]+rem/.test(focusCss));
-assert("cards share padding radius border", /padding:\s*var\(--hf-card-pad\)/.test(cardRule) && /border-radius:\s*var\(--radius\)/.test(cardRule) && /border:\s*var\(--frame-width\) solid var\(--frame\)/.test(cardRule));
+assert("cards share padding radius border", /padding:\s*var\(--hf-card-pad\)/.test(cardRule) && /border-radius:\s*8px/.test(cardRule) && /border:\s*var\(--frame-width\) solid var\(--frame\)/.test(cardRule));
 assert("grid stretches twins", /align-items:\s*stretch/.test(focusCss));
 assert("foot pinned to bottom", /margin-top:\s*auto/.test(focusCss));
 assert("stat tiles use warm white and gold", /\.home-focus-stat\s*\{[\s\S]*background:\s*var\(--card\)/.test(focusCss) && /\.home-focus-stat\s*\{[\s\S]*border:\s*var\(--frame-width-sm\) solid var\(--frame\)/.test(focusCss));
 assert("cta uses EN chip recipe", /\.home-focus-cta\s*\{[\s\S]*border:\s*var\(--frame-width-sm\) solid var\(--frame\)/.test(focusCss) && /\.home-focus-cta\s*\{[\s\S]*background:\s*var\(--card\)/.test(focusCss) && /\.home-focus-cta\s*\{[\s\S]*border-radius:\s*var\(--radius-pill\)/.test(focusCss));
-assert("focus hairline is terracotta not navy bar", /background:\s*var\(--terra\)/.test(focusCss) && focusCss.indexOf("repeating-linear-gradient") === -1);
+assert("focus title is a real heading size", /\.home-focus-kicker\s*\{[\s\S]*font-size:\s*1\.(3[5-9]|4|5)/.test(focusCss) && /\.home-focus-kicker\s*\{[\s\S]*font-weight:\s*700/.test(focusCss));
+assert("focus cards have no top rail", focusCss.indexOf(".home-focus-card::before") === -1 && firstRule(focusCss, ".home-focus-card").indexOf("border-top") === -1);
+assert("focus strip has HUD hairline grid", focusCss.indexOf("repeating-linear-gradient") !== -1);
 
 var styleCss = fs.readFileSync(path.join(root, "css/style.css"), "utf8");
 assert("lang-switch still white gold pill", /\.lang-switch\s*\{[\s\S]*border:\s*1px solid var\(--gold\)/.test(styleCss) && /\.lang-switch\s*\{[\s\S]*background:\s*var\(--card\)/.test(styleCss) && /\.lang-switch\s*\{[\s\S]*border-radius:\s*999px/.test(styleCss));
@@ -260,14 +282,72 @@ function firstRule(css, sel) {
   var m = css.match(re);
   return m ? m[1] : "";
 }
+var chromeRule = firstRule(focusCss, ".home-focus-chrome");
+var stripRule = firstRule(focusCss, ".home-focus");
+assert("chrome has no gold/tan bottom bar", !/border-bottom/.test(chromeRule));
+assert("strip has no gold top/bottom bars", !/border-top/.test(stripRule) && !/border-bottom/.test(stripRule) && stripRule.indexOf("gold") === -1);
+var breakingRule = firstRule(focusCss, ".home-focus-breaking");
+assert("breaking box has no gold top rule", breakingRule.indexOf("border-top") === -1 && breakingRule.indexOf("--frame") === -1 && breakingRule.indexOf("gold") === -1);
 var primaryRule = firstRule(styleCss, ".btn-primary");
 var promoBtnRule = firstRule(styleCss, ".tool-promo .btn");
 assert("primary button is navy not gold fill", /background:\s*var\(--navy\)/.test(primaryRule) && !/background:\s*var\(--gold\)/.test(primaryRule) && /background:\s*var\(--navy\)/.test(promoBtnRule));
 
 var focusJs = fs.readFileSync(path.join(root, "js/home-focus.js"), "utf8");
 assert("tax feed url unchanged", focusJs.indexOf('TAX_FEED = "https://tax-brief.fengyen0812.workers.dev/feed?countries=tw,us"') !== -1);
-assert("close json url unchanged", focusJs.indexOf('CLOSE_JSON = "content/us-close/latest.json"') !== -1);
+assert("close json still latest.json", focusJs.indexOf("content/us-close/latest.json") !== -1);
 assert("empty mover stays visible", focusJs.indexOf("el.hidden = true") === -1);
+
+var closeCss = fs.readFileSync(path.join(root, "css/us-close.css"), "utf8");
+assert("table wrap scrolls horizontally", /\.close-table-wrap\s*\{[\s\S]*overflow-x:\s*auto/.test(closeCss));
+assert("table uses separate collapse", /\.close-table\s*\{[\s\S]*border-collapse:\s*separate/.test(closeCss));
+var tableRule = firstRule(closeCss, ".close-table");
+assert("table itself has no gold frame", tableRule.indexOf("--frame") === -1 && tableRule.indexOf("border-radius") === -1 && /border-collapse:\s*separate/.test(tableRule));
+assert("calendar day is compact 6px 1px", /\.close-cal-day\s*\{[\s\S]*border-radius:\s*6px/.test(closeCss) && /\.close-cal-day\s*\{[\s\S]*border:\s*1px solid var\(--line\)/.test(closeCss));
+assert("calendar stays 7 columns", /grid-template-columns:\s*repeat\(7,/.test(closeCss));
+assert("calendar labels do not wrap cells", /\.close-cal-label\s*\{[\s\S]*white-space:\s*nowrap/.test(closeCss));
+
+var zhPillars = (indexHtml.match(/<div class="pillars">[\s\S]*?<h2 class="section-title">互動工具/) || [""])[0];
+assert("ZH pillar boxes are 稅務 美股 AI", zhPillars.indexOf(">稅務<") !== -1 && zhPillars.indexOf(">美股<") !== -1 && /class="pillar-icon"[^>]*>AI</.test(zhPillars));
+assert("ZH pillars have no leftover h3 titles", zhPillars.indexOf("<h3>") === -1);
+assert("ZH pillar body copy kept", zhPillars.indexOf("Apple 為什麼多年 ETR") !== -1 && zhPillars.indexOf("遺產稅 USD 60,000") !== -1 && zhPillars.indexOf("13F 追蹤") !== -1);
+
+var enPillars = (enIndex.match(/<div class="pillars">[\s\S]*?<h2 class="section-title">Interactive Tools/) || [""])[0];
+assert("EN pillar boxes are Tax US AI", enPillars.indexOf(">Tax<") !== -1 && enPillars.indexOf(">US<") !== -1 && /class="pillar-icon"[^>]*>AI</.test(enPillars));
+assert("EN pillars have no leftover h3 titles", enPillars.indexOf("<h3>") === -1);
+assert("EN pillar body copy kept", enPillars.indexOf("effective tax rate") !== -1 && enPillars.indexOf("USD 60,000") !== -1 && enPillars.indexOf("13F tracking") !== -1);
+
+var aboutZh = fs.readFileSync(path.join(root, "about.html"), "utf8");
+var aboutEn = fs.readFileSync(path.join(root, "en/about.html"), "utf8");
+assert("ZH about heading updated", aboutZh.indexOf("稅務議題弄明白，美股報酬最大化") !== -1);
+assert("ZH about dropped old heading", aboutZh.indexOf("這個網站寫什麼") === -1);
+assert("ZH homepage has the same heading", indexHtml.indexOf("稅務議題弄明白，美股報酬最大化") !== -1);
+assert("ZH homepage has five topic cards", (indexHtml.match(/class="topic-card"/g) || []).length === 5);
+assert("ZH homepage keeps principles and YouTube", indexHtml.indexOf("寫作原則") !== -1 && indexHtml.indexOf("稅務 x 美股 x AI 傑夫哥") !== -1);
+assert("ZH homepage heading is not the hero h1", /<h1>把稅務講清楚，讓美股報酬留在自己口袋<\/h1>/.test(indexHtml));
+assert("EN homepage matching heading", enIndex.indexOf("Get the tax issues straight so more of the US-stock return stays yours") !== -1);
+assert("EN about matching heading", aboutEn.indexOf("Get the tax issues straight so more of the US-stock return stays yours") !== -1);
+assert("EN headings have no em dash", enIndex.indexOf("\u2014") === -1 && aboutEn.indexOf("\u2014") === -1);
+assert("ZH about has five topic cards", (aboutZh.match(/class="topic-card"/g) || []).length === 5);
+assert("ZH about keeps writing principles and YouTube", aboutZh.indexOf("寫作原則") !== -1 && aboutZh.indexOf("稅務 x 美股 x AI 傑夫哥") !== -1 && aboutZh.indexOf("youtube.com/@TaxCodeUSStocks") !== -1);
+assert("EN about has five topic cards", (aboutEn.match(/class="topic-card"/g) || []).length === 5);
+assert("EN about keeps principles and YouTube link", aboutEn.indexOf("Writing principles") !== -1 && /youtube.com\/@TaxCodeUSStocks[^>]*>YouTube channel</.test(aboutEn));
+assert("topic cards use cream gold radius", /\.topic-card\s*\{[\s\S]*background:\s*var\(--card\)/.test(styleCss) && /\.topic-card\s*\{[\s\S]*border:\s*1px solid var\(--frame\)/.test(styleCss) && /\.topic-card\s*\{[\s\S]*border-radius:\s*var\(--radius\)/.test(styleCss));
+assert("topic cards stack on mobile", /\.topic-cards\s*\{[\s\S]*grid-template-columns:\s*1fr;/.test(styleCss));
+
+var siteJs = fs.readFileSync(path.join(root, "js/site.js"), "utf8");
+assert("filter buttons get data-category", siteJs.indexOf('b.setAttribute("data-category", label)') !== -1);
+assert("ZH AI x 稅務 tag has data-category", indexHtml.indexOf('class="tag" data-category="AI x 稅務"') !== -1);
+assert("EN AI x Tax tag has data-category", enIndex.indexOf('class="tag" data-category="AI x Tax"') !== -1);
+assert("tax-only pills use warm yellow", styleCss.indexOf('data-category="跨境稅務"') !== -1 && styleCss.indexOf("#FFF4CC") !== -1 && styleCss.indexOf("#D4A017") !== -1);
+assert("AI-only pills use slate blue", styleCss.indexOf("#E8EEF6") !== -1 && styleCss.indexOf("#3D5A80") !== -1);
+assert("AI x 稅務 is mixed yellow-blue", /data-category="AI x 稅務"[\s\S]*linear-gradient\(90deg, #FFF4CC/.test(styleCss));
+assert("selected filter stays navy contrast", /\.filter-bar button\.active[\s\S]*background:\s*var\(--navy\)/.test(styleCss));
+assert("Resources tag is not categorized", indexHtml.indexOf('class="tag">資源<') !== -1 && enIndex.indexOf('class="tag">Resources<') !== -1);
+assert("about-strip paragraphs have room", /\.about-strip p[\s\S]*margin:\s*0 0 1\.(1|2|3|4)/.test(styleCss));
+assert("about heading kept", indexHtml.indexOf(">關於傑夫哥<") !== -1);
+assert("about 實作案例 stays on about page", aboutZh.indexOf("實作案例") !== -1 && aboutZh.indexOf("ai-workflow-case.html") !== -1);
+assert("homepage keeps 實作案例 link", /href="ai-workflow-case.html">實作案例/.test(indexHtml));
+assert("EN homepage keeps hands-on case link", /href="ai-workflow-case.html">Hands-on case/.test(enIndex));
 
 if (failed) {
   console.error(failed + " failed");

@@ -69,15 +69,22 @@
   margin-bottom: .7rem;
 }
 
+.close-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: .4rem;
+  background: var(--card);
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+}
+
 .close-table {
   width: 100%;
-  border-collapse: collapse;
+  min-width: 32rem;
+  border-collapse: separate;
+  border-spacing: 0;
   font-size: .92rem;
   background: var(--card);
-  border: var(--frame-width) solid var(--frame);
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: var(--shadow-sm);
 }
 
 .close-table th {
@@ -86,12 +93,24 @@
   text-align: left;
   padding: .5rem .75rem;
   white-space: nowrap;
+  font-weight: 700;
+}
+
+.close-table thead th:first-child { border-top-left-radius: 8px; }
+.close-table thead th:last-child { border-top-right-radius: 8px; }
+
+.close-table th.num,
+.close-table td.num {
+  text-align: right;
 }
 
 .close-table td {
   border-bottom: 1px solid var(--line);
   padding: .45rem .75rem;
+  vertical-align: middle;
 }
+
+.close-table tbody tr:last-child td { border-bottom: 0; }
 
 .close-table td.num,
 .close-table td.ticker {
@@ -102,11 +121,6 @@
 
 .close-table td.up { color: var(--up); }
 .close-table td.down { color: var(--red); }
-
-.close-table-wrap {
-  overflow-x: auto;
-  margin-bottom: .4rem;
-}
 
 .close-cal-pair {
   display: grid;
@@ -149,15 +163,16 @@
 
 .close-cal-day {
   min-width: 0;
-  min-height: 3.4rem;
+  min-height: 2.2rem;
   background: var(--card);
-  border: var(--frame-width-sm) solid var(--gold-soft);
-  border-radius: var(--radius-sm);
-  padding: .2rem .18rem .28rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: .12rem .08rem .14rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: .08rem;
+  gap: .04rem;
+  overflow: hidden;
 }
 
 .close-cal-day.is-pad {
@@ -175,7 +190,7 @@
 
 .close-cal-day.is-marked {
   background: var(--terra-wash);
-  border-color: var(--frame);
+  border-color: var(--line);
 }
 
 .close-cal-mark {
@@ -188,11 +203,14 @@
 }
 
 .close-cal-label {
-  font-size: .62rem;
-  line-height: 1.25;
+  font-size: .58rem;
+  line-height: 1.15;
   color: var(--navy);
   font-weight: 700;
-  overflow-wrap: anywhere;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .close-calendar-note,
