@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>美股股利稅負試算器：美國扣 30% 之後，台灣還要補多少？｜稅務 x 美股 x AI</title>
 <meta name="description" content="輸入美國股利與海外財產交易損益，自動算出美國 30% 扣繳、台灣最低稅負制補繳與總稅負。含損失只能同類互抵、實現才課稅、匯回迷思三大原則與 1042-S 扣抵教學。115 年度（2026）參數。">
-<link rel="stylesheet" href="../css/style.css?v=20260818-brief">
+<link rel="stylesheet" href="../css/style.css?v=20260828-live">
 <link rel="alternate" type="application/rss+xml" title="稅務 x 美股 x AI" href="https://taxcodeusstocks.com/feed.xml">
 <link rel="canonical" href="https://taxcodeusstocks.com/tools/us-dividend-tax-calculator.html">
 <link rel="alternate" hreflang="zh-Hant" href="https://taxcodeusstocks.com/tools/us-dividend-tax-calculator.html">
@@ -26,20 +26,20 @@
 <meta name="twitter:description" content="輸入美國股利與海外財產交易損益，自動算出美國 30% 扣繳、台灣最低稅負制補繳與總稅負，並教你用 1042-S 主張扣抵。">
 <meta name="twitter:image" content="https://taxcodeusstocks.com/img/og-default.png">
 <style>
-  .calc-panel { background: #f0f3f7; border: 1px solid var(--line); border-radius: 8px; padding: 1.2rem 1.3rem; margin: 1.2rem 0; }
+  .calc-panel { background: var(--card); border: var(--frame-width) solid var(--frame); border-radius: var(--radius); padding: 1.2rem 1.3rem; margin: 1.2rem 0; }
   .calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: .9rem 1.1rem; }
   .calc-field label { display: block; font-size: .85rem; font-weight: 700; color: var(--navy); margin-bottom: .25rem; }
-  .calc-field input { width: 100%; padding: .5rem .7rem; font-size: 1rem; border: 1px solid var(--line); border-radius: 6px; font-family: inherit; }
+  .calc-field input { width: 100%; padding: .5rem .7rem; font-size: 1rem; border: var(--frame-width-sm) solid var(--frame); border-radius: var(--radius-sm); font-family: inherit; background: var(--card); }
   .calc-field input:focus { outline: 2px solid var(--gold); border-color: var(--gold); }
   .calc-field .hint { font-size: .76rem; color: var(--muted); margin-top: .2rem; line-height: 1.5; }
   .preset-row { margin-top: .35rem; display: flex; flex-wrap: wrap; gap: .35rem; }
-  .preset-row button { font-size: .78rem; padding: .15rem .55rem; border: 1px solid var(--line); background: #fff; border-radius: 4px; cursor: pointer; color: var(--navy); font-family: inherit; }
-  .preset-row button:hover { border-color: var(--gold); background: #faf6ee; }
-  .verdict { border-radius: 8px; padding: 1rem 1.2rem; margin: 1.2rem 0; font-size: 1rem; line-height: 1.8; border-left: 5px solid var(--gold); background: #faf6ee; }
+  .preset-row button { font-size: .78rem; padding: .15rem .55rem; border: var(--frame-width-sm) solid var(--frame); background: var(--card); border-radius: var(--radius-pill); cursor: pointer; color: var(--navy); font-family: inherit; }
+  .preset-row button:hover { border-color: var(--terra); background: var(--terra-wash); }
+  .verdict { border-radius: var(--radius-sm); padding: 1rem 1.2rem; margin: 1.2rem 0; font-size: 1rem; line-height: 1.8; border: var(--frame-width-sm) solid var(--frame); border-left: 5px solid var(--terra); background: var(--card); }
   .verdict.pay { border-left-color: var(--red); background: #fdf3f4; }
   .verdict strong { color: var(--navy); }
   .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .8rem; margin: 1rem 0; }
-  .kpi { background: var(--card); border: 1px solid var(--line); border-top: 4px solid var(--navy); border-radius: 8px; padding: .8rem 1rem; text-align: center; }
+  .kpi { background: var(--card); border: var(--frame-width-sm) solid var(--frame); border-top: 4px solid var(--terra); border-radius: var(--radius-sm); padding: .8rem 1rem; text-align: center; }
   .kpi.total { border-top-color: var(--gold); }
   .kpi .kpi-label { font-size: .78rem; color: var(--muted); }
   .kpi .kpi-value { font-size: 1.25rem; font-weight: 700; color: var(--navy); margin-top: .15rem; white-space: nowrap; }

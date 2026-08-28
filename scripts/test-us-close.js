@@ -219,6 +219,56 @@ assert("close breaking starts hidden", /id="home-focus-breaking"[^>]*hidden/.tes
 assert("EN homepage has no 焦點儀表", enIndex.indexOf("home-focus") === -1 && enIndex.indexOf("焦點儀表") === -1);
 assert("focus below hero above pillars", /<\/section>\s*<section class="home-focus"[\s\S]*<\/section>\s*<main>[\s\S]*三個面向/.test(focusHtml));
 
+function skeletonBits(card) {
+  return {
+    head: card.indexOf("home-focus-card-head") !== -1,
+    title: /<h2>/.test(card),
+    metrics: (card.match(/class="home-focus-stat(?:\s|")/g) || []).length,
+    body: card.indexOf("home-focus-body") !== -1,
+    foot: card.indexOf("home-focus-foot") !== -1
+  };
+}
+var taxSkel = skeletonBits(taxCard);
+var closeSkel = skeletonBits(closeCard);
+assert("tax skeleton head title metrics body foot", taxSkel.head && taxSkel.title && taxSkel.metrics === 2 && taxSkel.body && taxSkel.foot);
+assert("close skeleton matches tax", closeSkel.head && closeSkel.title && closeSkel.metrics === 2 && closeSkel.body && closeSkel.foot);
+assert("tax metrics are 今天 and 昨天", taxCard.indexOf(">今天<") !== -1 && taxCard.indexOf(">昨天<") !== -1);
+assert("close metrics are 漲最多 and 跌最重", closeCard.indexOf(">漲最多<") !== -1 && closeCard.indexOf(">跌最重<") !== -1);
+assert("close movers live in metric cells", closeCard.indexOf('id="home-focus-up"') !== -1 && closeCard.indexOf("home-focus-stat is-up") !== -1);
+assert("close no leftover chip tiles", closeCard.indexOf("home-focus-chip is-up") === -1 && closeCard.indexOf("home-focus-movers") === -1);
+assert("focus cards have no em dash", taxCard.indexOf("\u2014") === -1 && closeCard.indexOf("\u2014") === -1);
+
+var focusCss = fs.readFileSync(path.join(root, "css/home-focus.css"), "utf8");
+var cardRule = (focusCss.match(/\.home-focus-card\s*\{[\s\S]*?\}/) || [""])[0];
+assert("one shared card frame rule", (focusCss.match(/\.home-focus-card\s*\{/g) || []).length === 1);
+assert("cards share min-height", /min-height:\s*var\(--hf-card-min\)/.test(cardRule) && /--hf-card-min:\s*[\d.]+rem/.test(focusCss));
+assert("cards share padding radius border", /padding:\s*var\(--hf-card-pad\)/.test(cardRule) && /border-radius:\s*var\(--radius\)/.test(cardRule) && /border:\s*var\(--frame-width\) solid var\(--frame\)/.test(cardRule));
+assert("grid stretches twins", /align-items:\s*stretch/.test(focusCss));
+assert("foot pinned to bottom", /margin-top:\s*auto/.test(focusCss));
+assert("stat tiles use warm white and gold", /\.home-focus-stat\s*\{[\s\S]*background:\s*var\(--card\)/.test(focusCss) && /\.home-focus-stat\s*\{[\s\S]*border:\s*var\(--frame-width-sm\) solid var\(--frame\)/.test(focusCss));
+assert("cta uses EN chip recipe", /\.home-focus-cta\s*\{[\s\S]*border:\s*var\(--frame-width-sm\) solid var\(--frame\)/.test(focusCss) && /\.home-focus-cta\s*\{[\s\S]*background:\s*var\(--card\)/.test(focusCss) && /\.home-focus-cta\s*\{[\s\S]*border-radius:\s*var\(--radius-pill\)/.test(focusCss));
+assert("focus hairline is terracotta not navy bar", /background:\s*var\(--terra\)/.test(focusCss) && focusCss.indexOf("repeating-linear-gradient") === -1);
+
+var styleCss = fs.readFileSync(path.join(root, "css/style.css"), "utf8");
+assert("lang-switch still white gold pill", /\.lang-switch\s*\{[\s\S]*border:\s*1px solid var\(--gold\)/.test(styleCss) && /\.lang-switch\s*\{[\s\S]*background:\s*var\(--card\)/.test(styleCss) && /\.lang-switch\s*\{[\s\S]*border-radius:\s*999px/.test(styleCss));
+assert("hero pair shares secondary pill chrome", /\.btn,\s*\n\.hero-close-box\s*\{[\s\S]*min-height:\s*2\.6rem/.test(styleCss) && /\.btn-secondary,\s*\n\.hero-close-box\s*\{[\s\S]*border-color:\s*var\(--frame\)/.test(styleCss));
+assert("palette tokens locked", /--card:\s*#FFFCF7/.test(styleCss) && /--frame:\s*#C9955A/.test(styleCss) && /--navy:\s*#1A2B3D/.test(styleCss) && /--terra:\s*#D06A3A/.test(styleCss) && /--ink:\s*#2A241F/.test(styleCss) && /--bg:\s*#F4ECE8/.test(styleCss) && /--up:\s*#1F6B45/.test(styleCss) && /--red:\s*#B42318/.test(styleCss));
+assert("no navy stacked promo bars", !/linear-gradient\(135deg,\s*var\(--navy\)/.test(styleCss) && !/linear-gradient\(135deg,\s*#3d5348/.test(styleCss));
+assert("large cards share gold frame", /\.pillar\s*\{[\s\S]*border:\s*var\(--frame-width\) solid var\(--frame\)/.test(styleCss) && /\.card\s*\{[\s\S]*border:\s*var\(--frame-width\) solid var\(--frame\)/.test(styleCss) && /\.tool-promo\s*\{[\s\S]*border:\s*var\(--frame-width\) solid var\(--frame\)/.test(styleCss));
+function firstRule(css, sel) {
+  var re = new RegExp(sel.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\s*\\{([\\s\\S]*?)\\}");
+  var m = css.match(re);
+  return m ? m[1] : "";
+}
+var primaryRule = firstRule(styleCss, ".btn-primary");
+var promoBtnRule = firstRule(styleCss, ".tool-promo .btn");
+assert("primary button is navy not gold fill", /background:\s*var\(--navy\)/.test(primaryRule) && !/background:\s*var\(--gold\)/.test(primaryRule) && /background:\s*var\(--navy\)/.test(promoBtnRule));
+
+var focusJs = fs.readFileSync(path.join(root, "js/home-focus.js"), "utf8");
+assert("tax feed url unchanged", focusJs.indexOf('TAX_FEED = "https://tax-brief.fengyen0812.workers.dev/feed?countries=tw,us"') !== -1);
+assert("close json url unchanged", focusJs.indexOf('CLOSE_JSON = "content/us-close/latest.json"') !== -1);
+assert("empty mover stays visible", focusJs.indexOf("el.hidden = true") === -1);
+
 if (failed) {
   console.error(failed + " failed");
   process.exit(1);

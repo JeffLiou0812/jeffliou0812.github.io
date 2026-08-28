@@ -52,7 +52,7 @@
     radial-gradient(circle at 92% -10%, rgba(231, 246, 238, 0.95), transparent 42%),
     radial-gradient(circle at 0% 120%, rgba(255, 246, 212, 0.9), transparent 46%),
     var(--card);
-  border: 1px solid var(--gold-soft);
+  border: var(--frame-width) solid var(--frame);
   border-radius: var(--brief-radius);
   padding: 1.35rem 1.3rem 1.25rem;
   box-shadow: var(--shadow-sm);
@@ -104,7 +104,7 @@
   cursor: pointer;
   color: var(--navy);
   background: var(--card);
-  border: 1.5px solid var(--line);
+  border: var(--frame-width-sm) solid var(--frame);
   border-radius: 999px;
   padding: .38rem .95rem;
   min-height: 40px;
@@ -310,7 +310,7 @@
   text-decoration: none;
   color: inherit;
   background: var(--brief-cream);
-  border: 1px solid var(--gold-soft);
+  border: var(--frame-width) solid var(--frame);
   border-radius: 18px;
   padding: .85rem .95rem;
   min-height: 64px;
@@ -416,7 +416,7 @@
 
 .brief-empty {
   background: var(--brief-cream);
-  border: 1px solid var(--gold-soft);
+  border: var(--frame-width) solid var(--frame);
   border-radius: 18px;
   padding: 1.15rem 1.15rem 1.2rem;
   box-shadow: var(--shadow-sm);
@@ -452,7 +452,7 @@
   padding: 1.05rem 1.15rem;
   margin: 0 0 1.15rem;
   background: var(--brief-cream);
-  border: 1px solid var(--gold-soft);
+  border: var(--frame-width) solid var(--frame);
   box-shadow: var(--shadow-sm);
 }
 
