@@ -245,10 +245,11 @@
     return String(Number(m[2])) + "/" + String(Number(m[3]));
   }
 
-  function formatHomepageLine(sessionEtDate, headline) {
+  function formatHomepageLine(sessionEtDate, headline, lang) {
     var md = formatEtMd(sessionEtDate);
     var line = String(headline || "").trim();
     if (!md || !line) return "";
+    if (lang === "en") return "ET " + md + ": " + line;
     return "美東 " + md + "：" + line;
   }
 
@@ -316,8 +317,33 @@
     return DATA_BASE;
   }
 
-  function fetchJson(url) {
-    return fetch(url, { credentials: "omit" }).then(function (res) {
+  function cacheBustUrl(url, bust) {
+    if (!bust) return url;
+    return url + (url.indexOf("?") === -1 ? "?" : "&") + "t=" + Date.now();
+  }
+
+  function payloadFingerprint(data) {
+    try {
+      return JSON.stringify(data);
+    } catch (e) {
+      return "";
+    }
+  }
+
+  function refreshStatus(prevFingerprint, nextPayload, fetchFailed) {
+    if (fetchFailed) {
+      return { apply: false, text: "讀不到資料，請稍後再按更新", error: true };
+    }
+    if (prevFingerprint && payloadFingerprint(nextPayload) === prevFingerprint) {
+      return { apply: true, text: "已是最新", error: false };
+    }
+    return { apply: true, text: "", error: false };
+  }
+
+  function fetchJson(url, bust) {
+    var opts = { credentials: "omit" };
+    if (bust) opts.cache = "no-store";
+    return fetch(cacheBustUrl(url, bust), opts).then(function (res) {
       if (!res.ok) throw new Error("http-" + res.status);
       return res.json();
     });
@@ -337,21 +363,59 @@
     if (!line) return;
     fetchJson(dataBase() + "latest.json")
       .then(function (data) {
-        var text = formatHomepageLine(data.session_et_date, data.headline);
-        if (text && text.indexOf("今日") === -1) line.textContent = text;
+        var lang = document.documentElement.lang === "en" ? "en" : "zh";
+        var text = formatHomepageLine(data.session_et_date, data.headline, lang);
+        if (text && text.indexOf("今日") === -1 && text.indexOf("Today") === -1) {
+          line.textContent = text;
+        }
       })
       .catch(function () {});
   }
 
-  function renderStamps(data) {
+  function stampChips(data) {
     var etMd = formatEtMd(data.session_et_date);
-    var ah = data.after_hours_asof_et ? formatEtClock(data.after_hours_asof_et) : "—";
-    var bits = [
+    var ah = data.after_hours_asof_et ? formatEtClock(data.after_hours_asof_et) : "無";
+    return [
       "美東 " + etMd + " 收盤",
       "盤後截至 " + ah,
       "台北整理 " + formatTaipeiStamp(data.compiled_taipei)
     ];
-    return bits.join(" · ");
+  }
+
+  var pageState = {
+    lastPayload: null,
+    lastIndex: null,
+    lastFingerprint: ""
+  };
+
+  function setBusy(on) {
+    var btn = document.getElementById("close-refresh");
+    if (!btn) return;
+    btn.setAttribute("aria-busy", on ? "true" : "false");
+    btn.disabled = !!on;
+  }
+
+  function setStatus(text, isError) {
+    var el = document.getElementById("close-status");
+    if (!el) return;
+    el.textContent = text || "";
+    el.hidden = !text;
+    el.className = "close-status" + (isError ? " is-error" : "");
+  }
+
+  function renderHead(data) {
+    var dateEl = document.getElementById("close-date");
+    var etMd = formatEtMd(data && data.session_et_date);
+    if (dateEl) dateEl.textContent = etMd ? "美東 " + etMd : "";
+    var pills = document.getElementById("close-pills");
+    if (!pills) return;
+    pills.innerHTML = "";
+    stampChips(data).forEach(function (label) {
+      var chip = document.createElement("span");
+      chip.className = "close-chip";
+      chip.textContent = label;
+      pills.appendChild(chip);
+    });
   }
 
   function renderOvernight(data) {
@@ -562,8 +626,7 @@
   }
 
   function renderPage(data, indexData) {
-    var stamps = document.getElementById("close-stamps");
-    if (stamps) stamps.textContent = renderStamps(data);
+    renderHead(data);
     renderConclusions(data);
     renderOvernight(data);
     renderNames(data);
@@ -571,36 +634,86 @@
     renderArchive(indexData, data.id);
   }
 
-  function loadPage() {
+  function acceptPayload(data) {
+    return data && validatePayload(data).length === 0;
+  }
+
+  function applyPayload(data, indexData, fromRefresh) {
+    var status = fromRefresh
+      ? refreshStatus(pageState.lastFingerprint, data, false)
+      : { apply: true, text: "", error: false };
+    pageState.lastPayload = data;
+    pageState.lastIndex = indexData;
+    pageState.lastFingerprint = payloadFingerprint(data);
+    renderPage(data, indexData);
+    if (fromRefresh) setStatus(status.text, status.error);
+    else setStatus("", false);
+  }
+
+  function keepLastOnFail(fromRefresh) {
+    if (fromRefresh && pageState.lastPayload) {
+      setStatus("讀不到資料，請稍後再按更新", true);
+      return;
+    }
+    setStatus("目前讀不到收盤整理。請稍後再開。", true);
+  }
+
+  function loadPage(opts) {
+    opts = opts || {};
+    var bust = !!opts.bust;
+    var fromRefresh = !!opts.fromRefresh;
     var root = document.getElementById("us-close-root");
     if (!root) return;
     var base = dataBase();
     var requested = requestedDateFromSearch(location.search || "");
-    Promise.all([fetchJson(base + "latest.json"), fetchJson(base + "index.json")])
+    if (fromRefresh) setBusy(true);
+    return Promise.all([
+      fetchJson(base + "latest.json", bust),
+      fetchJson(base + "index.json", bust)
+    ])
       .then(function (pair) {
         var latest = pair[0];
         var indexData = pair[1];
         var id = resolveDateId(requested, indexData, latest);
         if (!id || id === latest.id) {
-          renderPage(latest, indexData);
+          if (!acceptPayload(latest)) throw new Error("invalid-latest");
+          applyPayload(latest, indexData, fromRefresh);
           return;
         }
-        return fetchJson(base + id + ".json")
+        return fetchJson(base + id + ".json", bust)
           .then(function (day) {
-            renderPage(day, indexData);
+            if (!acceptPayload(day)) throw new Error("invalid-day");
+            applyPayload(day, indexData, fromRefresh);
           })
-          .catch(function () {
-            renderPage(latest, indexData);
+          .catch(function (err) {
+            if (fromRefresh && pageState.lastPayload) {
+              setStatus("讀不到資料，請稍後再按更新", true);
+              return;
+            }
+            if (String(err && err.message) === "invalid-day") throw err;
+            if (!acceptPayload(latest)) throw new Error("invalid-latest");
+            applyPayload(latest, indexData, fromRefresh);
           });
       })
       .catch(function () {
-        var stamps = document.getElementById("close-stamps");
-        if (stamps) stamps.textContent = "目前讀不到收盤整理。請稍後再開。";
+        keepLastOnFail(fromRefresh);
+      })
+      .finally(function () {
+        if (fromRefresh) setBusy(false);
       });
+  }
+
+  function bindRefresh() {
+    var btn = document.getElementById("close-refresh");
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      loadPage({ bust: true, fromRefresh: true });
+    });
   }
 
   function start() {
     fillHomepageCard();
+    bindRefresh();
     loadPage();
   }
 
@@ -621,7 +734,11 @@
     calendarWindow: calendarWindow,
     groupCalendarByEtDate: groupCalendarByEtDate,
     shortCalendarLabel: shortCalendarLabel,
-    calendarMonths: calendarMonths
+    calendarMonths: calendarMonths,
+    cacheBustUrl: cacheBustUrl,
+    payloadFingerprint: payloadFingerprint,
+    refreshStatus: refreshStatus,
+    stampChips: stampChips
   };
 
   if (typeof document !== "undefined") {

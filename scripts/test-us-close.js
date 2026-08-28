@@ -89,6 +89,8 @@ assert("index lists fixture", indexData.items[0].id === "2026-08-27" && indexDat
 
 assert("homepage line uses ET session date", U.formatHomepageLine("2026-08-26", "多數上漲") === "美東 8/26：多數上漲");
 assert("homepage line never says 今日", U.formatHomepageLine("2026-08-26", "多數上漲").indexOf("今日") === -1);
+assert("EN homepage line uses ET not Today", U.formatHomepageLine("2026-08-26", "多數上漲", "en") === "ET 8/26: 多數上漲");
+assert("EN homepage line never says Today", U.formatHomepageLine("2026-08-26", "多數上漲", "en").indexOf("Today") === -1);
 assert("null after renders dash", U.formatPct(null) === "—");
 assert("positive pct has plus", U.formatPct(1.15) === "+1.15%");
 
@@ -140,6 +142,10 @@ assert("Aug 1 unmarked", labelsOn(months[0], 1) === "");
 
 var html = fs.readFileSync(path.join(root, "us-close.html"), "utf8");
 assert("html h1 stays 美股焦點", /<h1>美股焦點<\/h1>/.test(html));
+assert("html has 更新 button in close-refresh slot", /id="close-refresh"[\s\S]*>更新</.test(html));
+assert("html refresh is not a brief class", html.indexOf("brief-refresh") === -1 && html.indexOf("class=\"brief-") === -1);
+assert("html has no 即時更新 drawer", html.indexOf("即時更新") === -1 && html.indexOf("live-panel") === -1 && html.indexOf("brief-live") === -1);
+assert("html script tag is closed", /<script src="js\/us-close\.js\?v=[^"]+" defer><\/script>/.test(html));
 assert("html heading 摘要", html.indexOf(">摘要<") !== -1);
 assert("html heading 美股焦點 table", html.indexOf("id=\"close-names-title\">美股焦點<") !== -1);
 assert("html keeps 本月與下月", html.indexOf("本月與下月即將公布總經／財報") !== -1);
@@ -152,6 +158,7 @@ var indexHtml = fs.readFileSync(path.join(root, "index.html"), "utf8");
 assert("hero 昨夜美股 links us-close", /hero-close-box"[^>]*href="us-close.html"/.test(indexHtml) && indexHtml.indexOf(">昨夜美股<") !== -1);
 assert("hero 昨夜美股 has no 今日", (indexHtml.match(/hero-close-box[\s\S]*?<\/a>/) || [""])[0].indexOf("今日") === -1);
 assert("tools card 美股焦點 kept", indexHtml.indexOf("tool-promo-close") !== -1 && indexHtml.indexOf(">打開美股焦點<") !== -1);
+assert("ZH tool card uses 資訊分享 not 教育用途", indexHtml.indexOf("id=\"us-close-card-line\">隔夜美股收盤整理，資訊分享。") !== -1 && indexHtml.indexOf("教育用途") === -1);
 assert("ZH tools heading kept", indexHtml.indexOf(">互動工具<") !== -1);
 assert("ZH tools lead sentence removed", indexHtml.indexOf("試算稅負，或掃今日官方發布") === -1);
 assert("ZH homepage uses 資訊分享 not 教育整理", indexHtml.indexOf("資訊分享，不是稅務意見") !== -1 && indexHtml.indexOf("教育整理") === -1);
@@ -178,6 +185,8 @@ assert("EN hero Last night's US stocks", /hero-close-box"[^>]*href="\.\.\/us-clo
 assert("EN tools heading kept", enIndex.indexOf(">Interactive Tools<") !== -1);
 assert("EN tools lead sentence removed", enIndex.indexOf("Run a tax estimate, or scan today's official releases") === -1);
 assert("EN keeps Educational compilation", enIndex.indexOf("Educational compilation, not tax advice") !== -1);
+assert("EN tools has US Focus promo card", enIndex.indexOf("tool-promo-close") !== -1 && enIndex.indexOf(">Open US Focus<") !== -1 && enIndex.indexOf('href="../us-close.html">US Focus<') !== -1);
+assert("EN tools close card has no Today", ((enIndex.match(/tool-promo-close[\s\S]*?<\/div>\s*<div class="tool-secondary"/) || [""])[0]).indexOf("Today") === -1);
 
 var articleNav = fs.readFileSync(path.join(root, "articles/apple-etr.html"), "utf8");
 assert("article nav 稅訊 then 美股焦點", afterTaxBeforeClose(articleNav));
@@ -305,6 +314,35 @@ assert("table itself has no gold frame", tableRule.indexOf("--frame") === -1 && 
 assert("calendar day is compact 6px 1px", /\.close-cal-day\s*\{[\s\S]*border-radius:\s*6px/.test(closeCss) && /\.close-cal-day\s*\{[\s\S]*border:\s*1px solid var\(--line\)/.test(closeCss));
 assert("calendar stays 7 columns", /grid-template-columns:\s*repeat\(7,/.test(closeCss));
 assert("calendar labels do not wrap cells", /\.close-cal-label\s*\{[\s\S]*white-space:\s*nowrap/.test(closeCss));
+assert("close css has no brief class names", closeCss.indexOf(".brief-") === -1 && closeCss.indexOf("brief-refresh") === -1);
+assert("close-head is slate HUD not cream gazette", /\.close-head\s*\{[\s\S]*#1A2B3D/.test(closeCss) && /\.close-head\s*\{[\s\S]*#3D5A80/.test(closeCss) && !/\.close-head\s*\{[\s\S]*#FFFCF7/.test(closeCss) && !/\.close-head\s*\{[\s\S]*#F4ECE8/.test(closeCss));
+assert("close-refresh has busy state", /\.close-refresh\[aria-busy="true"\]/.test(closeCss));
+
+var closeJs = fs.readFileSync(path.join(root, "js/us-close.js"), "utf8");
+assert("js cache-busts snapshot fetch", closeJs.indexOf("cacheBustUrl") !== -1 && closeJs.indexOf("no-store") !== -1 && closeJs.indexOf("t=") !== -1);
+assert("js refresh uses latest.json or dated file", closeJs.indexOf("latest.json") !== -1 && closeJs.indexOf(".json") !== -1);
+assert("js sets aria-busy and disabled", closeJs.indexOf("aria-busy") !== -1 && closeJs.indexOf("btn.disabled") !== -1);
+assert("js fail keeps last render", closeJs.indexOf("讀不到資料，請稍後再按更新") !== -1 && closeJs.indexOf("lastPayload") !== -1);
+assert("js unchanged still re-renders as 已是最新", closeJs.indexOf("已是最新") !== -1);
+assert("js has no live drawer clone", closeJs.indexOf("live-panel") === -1 && closeJs.indexOf("即時更新") === -1 && closeJs.indexOf("openLive") === -1);
+assert("js does not scrape market APIs", closeJs.indexOf("yahoo") === -1 && closeJs.indexOf("finance.google") === -1 && closeJs.indexOf("workers.dev") === -1);
+
+assert("cache bust adds t=", U.cacheBustUrl("latest.json", true).indexOf("latest.json?t=") === 0);
+assert("cache bust dated file", U.cacheBustUrl("2026-08-27.json", true).indexOf("2026-08-27.json?t=") === 0);
+assert("no bust keeps url", U.cacheBustUrl("latest.json", false) === "latest.json");
+assert("fingerprint is stable JSON", U.payloadFingerprint(latest) === JSON.stringify(latest));
+
+var failKeep = U.refreshStatus("abc", latest, true);
+assert("fail does not apply new numbers", failKeep.apply === false && failKeep.error === true && failKeep.text === "讀不到資料，請稍後再按更新");
+var sameSnap = U.refreshStatus(U.payloadFingerprint(latest), latest, false);
+assert("unchanged snapshot is 已是最新", sameSnap.apply === true && sameSnap.text === "已是最新" && sameSnap.error === false);
+var nextSnap = JSON.parse(JSON.stringify(latest));
+nextSnap.headline = "多數下跌";
+var changed = U.refreshStatus(U.payloadFingerprint(latest), nextSnap, false);
+assert("changed snapshot applies and has no 已是最新", changed.apply === true && changed.text === "" && changed.error === false);
+
+var chips = U.stampChips(latest);
+assert("stamp chips are three HUD labels", chips.length === 3 && chips[0].indexOf("美東 8/26") !== -1 && chips[1].indexOf("盤後截至") !== -1 && chips[2].indexOf("台北整理") !== -1);
 
 var zhPillars = (indexHtml.match(/<div class="pillars">[\s\S]*?<h2 class="section-title">互動工具/) || [""])[0];
 assert("ZH pillar boxes are 稅務 美股 AI", zhPillars.indexOf(">稅務<") !== -1 && zhPillars.indexOf(">美股<") !== -1 && /class="pillar-icon"[^>]*>AI</.test(zhPillars));
