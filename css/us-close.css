@@ -1,23 +1,110 @@
 /* 美股焦點 page only. Do not reuse 稅訊 brief-* class names. */
-.close-page .close-stamps {
-  font-size: .95rem;
-  font-weight: 600;
-  color: var(--navy);
-  margin-bottom: .35rem;
+.close-head {
+  --close-grid: rgba(232, 238, 246, 0.08);
+  --close-slate: #3D5A80;
+  --close-wash: #E8EEF6;
+  position: relative;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 19px, var(--close-grid) 19px 20px),
+    repeating-linear-gradient(90deg, transparent 0 19px, var(--close-grid) 19px 20px),
+    linear-gradient(160deg, #1A2B3D 0%, #243B55 58%, #2A4158 100%);
+  border: 1px solid var(--close-slate);
+  border-radius: 8px;
+  padding: 1.35rem 1.3rem 1.25rem;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 1.15rem;
+  color: var(--close-wash);
 }
 
-.close-page h1 {
-  color: var(--navy);
-  font-size: clamp(1.7rem, 3.4vw, 2.2rem);
-  line-height: 1.25;
-  margin-bottom: .35rem;
+.close-date {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--close-wash);
+  letter-spacing: .04em;
+  margin: 0;
 }
 
-.close-lead {
-  color: var(--muted);
-  font-size: .95rem;
+.close-head h1 {
+  margin-top: .2rem;
+  margin-bottom: 0;
+  font-size: clamp(1.85rem, 4vw, 2.4rem);
+  color: #fff;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.close-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .7rem 1rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-top: 1.05rem;
+}
+
+.close-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+}
+
+.close-chip {
+  font: inherit;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--close-wash);
+  background: rgba(232, 238, 246, 0.1);
+  border: 1px solid var(--close-slate);
+  border-radius: 999px;
+  padding: .38rem .95rem;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.close-refresh {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font: inherit;
+  font-size: .92rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--navy);
+  background: var(--close-wash);
+  border: 1.5px solid var(--gold);
+  border-radius: 999px;
+  padding: .5rem 1.15rem;
+  min-height: 44px;
+  box-shadow: var(--shadow-sm);
+}
+
+.close-refresh:hover { background: #fff; }
+.close-refresh:disabled { opacity: .72; cursor: wait; }
+.close-refresh[aria-busy="true"] { opacity: .72; cursor: wait; }
+.close-refresh svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; }
+
+.close-hint {
+  margin-top: .85rem;
+  margin-bottom: 0;
+  font-size: .8rem;
+  color: rgba(232, 238, 246, 0.78);
   max-width: 40rem;
-  margin-bottom: 1.4rem;
+}
+
+.close-status {
+  margin-top: .55rem;
+  margin-bottom: 0;
+  font-size: .82rem;
+  font-weight: 700;
+  color: #C8E6C9;
+}
+
+.close-status.is-error {
+  color: #FFCDD2;
 }
 
 .close-page #close-conclusions ul,
@@ -232,6 +319,8 @@
 }
 
 @media (max-width: 640px) {
+  .close-toolbar { flex-direction: column; }
+  .close-refresh { width: 100%; justify-content: center; }
   .close-table { font-size: .84rem; }
   .close-table th,
   .close-table td { padding: .4rem .5rem; }

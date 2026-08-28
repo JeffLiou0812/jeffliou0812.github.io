@@ -6,7 +6,7 @@
 <title>美股焦點｜稅務 x 美股 x AI</title>
 <meta name="description" content="隔夜美股收盤整理：摘要、Breaking News、16 檔快照與後續行事曆。資訊分享，不是投資建議。">
 <link rel="stylesheet" href="css/style.css?v=20260828-hud">
-<link rel="stylesheet" href="css/us-close.css?v=20260828-hud">
+<link rel="stylesheet" href="css/us-close.css?v=20260828-refresh">
 <link rel="alternate" type="application/rss+xml" title="稅務 x 美股 x AI" href="https://taxcodeusstocks.com/feed.xml">
 <link rel="canonical" href="https://taxcodeusstocks.com/us-close.html">
 <meta property="og:type" content="website">
@@ -27,7 +27,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script src="js/site.js?v=20260828-hud" defer></script>
-<script src="js/us-close.js?v=20260828-hud" defer></script
+<script src="js/us-close.js?v=20260828-refresh" defer></script>
 </head>
 <body class="close-page" data-no-ads="true">
 
@@ -49,9 +49,19 @@
 </header>
 
 <main id="us-close-root">
-  <p class="close-stamps" id="close-stamps"></p>
-  <h1>美股焦點</h1>
-  <p class="close-lead">隔夜美股收盤整理。資訊分享，不是投資建議，也不是即時報價。</p>
+  <section class="close-head">
+    <p class="close-date" id="close-date"></p>
+    <h1>美股焦點</h1>
+    <div class="close-toolbar">
+      <div class="close-pills" id="close-pills" role="group" aria-label="收盤時戳"></div>
+      <button type="button" class="close-refresh" id="close-refresh">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.2-5.5"/><path d="M20 4v6h-6"/></svg>
+        <span>更新</span>
+      </button>
+    </div>
+    <p class="close-hint">隔夜美股收盤整理。資訊分享，不是投資建議，也不是即時報價。</p>
+    <p class="close-status" id="close-status" role="status" aria-live="polite" hidden></p>
+  </section>
 
   <h2 class="section-title" id="close-summary-title">摘要</h2>
   <div id="close-conclusions" aria-labelledby="close-summary-title"></div>
