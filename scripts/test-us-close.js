@@ -5,7 +5,9 @@ var fs = require("fs");
 var path = require("path");
 
 require("../js/us-close.js");
+require("../js/home-focus.js");
 var U = globalThis.UsClose;
+var H = globalThis.HomeFocus;
 var failed = 0;
 
 function assert(name, cond) {
@@ -169,6 +171,53 @@ assert("EN header still has Tax Brief", navBlock(enIndex).indexOf("Tax Brief") !
 var articleNav = fs.readFileSync(path.join(root, "articles/apple-etr.html"), "utf8");
 assert("article nav 稅訊 then 美股焦點", afterTaxBeforeClose(articleNav));
 assert("article close href is ../us-close.html", navBlock(articleNav).indexOf('href="../us-close.html"') !== -1);
+
+assert("focus formatCloseSession is 美東 M/D", H.formatCloseSession("2026-08-26") === "美東 8/26");
+assert("focus session never says 今日", H.formatCloseSession("2026-08-26").indexOf("今日") === -1);
+assert("focus empty session is blank", H.formatCloseSession("") === "");
+assert("focus pct plus", H.formatPct(3.82) === "+3.82%");
+assert("focus pct minus", H.formatPct(-1.59) === "-1.59%");
+
+var movers = H.closeCardModel(latest);
+assert("focus close model session", movers.session === "美東 8/26");
+assert("focus close model no 今日", JSON.stringify(movers).indexOf("今日") === -1);
+assert("focus 漲最多 is 康寧", movers.up && movers.up.name_zh === "康寧" && movers.up.chg_pct === 3.82);
+assert("focus 跌最重 is 輝達", movers.down && movers.down.name_zh === "輝達" && movers.down.chg_pct === -1.59);
+assert("focus fixture shows Breaking News", H.shouldShowBreaking(latest.overnight) === true);
+assert("focus empty overnight hides breaking", H.shouldShowBreaking([]) === false);
+assert("focus null overnight hides breaking", H.shouldShowBreaking(null) === false);
+assert("focus social overnight hides breaking", H.shouldShowBreaking([{ title: "nope", url: "https://x.com/foo" }]) === false);
+
+var taxItems = [
+  { title: "today A", url: "https://example.com/a", date: "2026-08-28" },
+  { title: "today B", url: "https://example.com/b", date: "2026-08-28" },
+  { title: "yest C", url: "https://example.com/c", date: "2026-08-27" },
+  { title: "old D", url: "https://example.com/d", date: "2026-08-26" }
+];
+var taxCounts = H.countTaxByDay(taxItems, "2026-08-28", "2026-08-27");
+assert("focus tax today count", taxCounts.today === 2);
+assert("focus tax yesterday count", taxCounts.yesterday === 1);
+var picked = H.pickTaxTitles(taxItems, "2026-08-28", "2026-08-27");
+assert("focus tax titles max 2 today first", picked.length === 2 && picked[0].title === "today A" && picked[1].title === "today B");
+assert("focus tax zero allowed", H.countTaxByDay([], "2026-08-28", "2026-08-27").today === 0);
+
+var focusHtml = indexHtml;
+var taxCard = (focusHtml.match(/id="home-focus-tax"[\s\S]*?<\/article>/) || [""])[0];
+var closeCard = (focusHtml.match(/id="home-focus-close"[\s\S]*?<\/article>/) || [""])[0];
+var focusSection = (focusHtml.match(/id="home-focus"[\s\S]*?<\/section>/) || [""])[0];
+assert("homepage has 焦點儀表 strip", /id="home-focus"/.test(focusHtml) && focusHtml.indexOf("焦點儀表") !== -1);
+assert("focus chrome has three pillars", focusSection.indexOf("稅務 · 美股 · AI") !== -1);
+assert("focus workflow is 工作流", /href="ai-workflow-case.html">工作流</.test(focusSection));
+assert("focus two cards only", (focusSection.match(/class="home-focus-card"/g) || []).length === 2);
+assert("tax card title 當天稅訊", taxCard.indexOf("當天稅訊") !== -1);
+assert("tax card links brief.html", /href="brief.html\?lang=zh"/.test(taxCard));
+assert("tax card may say 今天", taxCard.indexOf("今天") !== -1);
+assert("close card title 當天美股焦點", closeCard.indexOf("當天美股焦點") !== -1);
+assert("close card links us-close", /href="us-close.html"/.test(closeCard));
+assert("close card has no 今日", closeCard.indexOf("今日") === -1);
+assert("close breaking starts hidden", /id="home-focus-breaking"[^>]*hidden/.test(closeCard));
+assert("EN homepage has no 焦點儀表", enIndex.indexOf("home-focus") === -1 && enIndex.indexOf("焦點儀表") === -1);
+assert("focus below hero above pillars", /<\/section>\s*<section class="home-focus"[\s\S]*<\/section>\s*<main>[\s\S]*三個面向/.test(focusHtml));
 
 if (failed) {
   console.error(failed + " failed");
