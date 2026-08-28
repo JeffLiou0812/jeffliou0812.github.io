@@ -290,13 +290,16 @@ main { max-width: 1040px; margin: 0 auto; padding: 2.2rem 1.2rem 3rem; }
   transform: translateY(-2px);
 }
 .pillar-icon {
-  width: 42px;
-  height: 42px;
+  width: 3.35rem;
+  height: 3.35rem;
   border-radius: var(--radius-sm);
   display: grid;
   place-items: center;
-  font-size: 1.05rem;
+  font-size: .8rem;
   font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+  white-space: nowrap;
   color: var(--navy);
   background: var(--card);
   border: var(--frame-width-sm) solid var(--frame);
@@ -304,6 +307,34 @@ main { max-width: 1040px; margin: 0 auto; padding: 2.2rem 1.2rem 3rem; }
 }
 .pillar h3 { color: var(--ink); font-size: 1.08rem; margin-bottom: .45rem; }
 .pillar p { font-size: .92rem; color: var(--muted); }
+
+/* Topic cards under 稅務議題弄明白，美股報酬最大化: gold frame, not leftover bullets. */
+.topic-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: .65rem;
+  margin: .85rem 0 1.15rem;
+  padding: 0;
+  list-style: none;
+}
+.topic-card {
+  background: var(--card);
+  border: 1px solid var(--frame);
+  border-radius: var(--radius);
+  padding: .85rem 1.05rem;
+  color: var(--ink);
+  font-size: .95rem;
+  line-height: 1.65;
+  box-shadow: var(--shadow-sm);
+}
+.topic-prose {
+  margin-top: 1rem;
+  color: var(--ink);
+}
+@media (min-width: 720px) {
+  .topic-cards { grid-template-columns: 1fr 1fr; }
+  .topic-card:last-child { grid-column: 1 / -1; }
+}
 
 /* ===== Tool promo banner ===== */
 .tool-promo {

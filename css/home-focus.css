@@ -3,12 +3,11 @@
 .home-focus {
   --hf-card-pad: 1rem 1.05rem 1.05rem;
   --hf-card-min: 22.5rem;
+  --hf-grid: rgba(26, 43, 61, 0.07);
   background:
-    radial-gradient(ellipse 70% 80% at 0% 0%, rgba(246, 238, 241, 0.7), transparent 58%),
-    radial-gradient(ellipse 50% 60% at 100% 100%, rgba(208, 106, 58, 0.06), transparent 55%),
+    repeating-linear-gradient(0deg, transparent 0 23px, var(--hf-grid) 23px 24px),
+    repeating-linear-gradient(90deg, transparent 0 23px, var(--hf-grid) 23px 24px),
     #F4ECE8;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--gold-soft);
   padding: 1.15rem 1.2rem 1.35rem;
 }
 
@@ -25,7 +24,6 @@
   gap: .55rem 1.2rem;
   margin-bottom: .85rem;
   padding-bottom: .65rem;
-  border-bottom: 1px solid var(--gold-soft);
 }
 
 .home-focus-kicker {
@@ -240,8 +238,9 @@
 
 .home-focus-breaking {
   background: var(--card);
-  border: var(--frame-width-sm) solid var(--frame);
-  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--terra);
+  border-radius: 6px;
   padding: .5rem .7rem;
 }
 

@@ -94,13 +94,12 @@
   }
 
   function initCloseNavLink() {
-    if (IS_EN) return;
     var nav = document.querySelector("nav.main-nav");
     if (!nav || nav.querySelector('a[data-nav="close"], a[href*="us-close.html"]')) return;
     var a = document.createElement("a");
     a.href = SITE_ROOT + "us-close.html";
     a.setAttribute("data-nav", "close");
-    a.textContent = "美股焦點";
+    a.textContent = IS_EN ? "US Focus" : "美股焦點";
     var path = (location.pathname || "").replace(/\/+$/, "");
     if (/(^|\/)us-close(\.html)?$/.test(path)) a.className = "active";
     var brief = nav.querySelector('a[data-nav="brief"], a[href*="brief.html"]');

@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TaxCode x US Stocks x AI | Jeff</title>
 <meta name="description" content="US stock analysis through an international tax lens, plus AI-automated research workflows. The tax layer you're missing in US stock investing.">
-<link rel="stylesheet" href="../css/style.css?v=20260828-live">
+<link rel="stylesheet" href="../css/style.css?v=20260828-hud">
+<link rel="stylesheet" href="../css/home-focus.css?v=20260828-hud">
 <link rel="alternate" type="application/rss+xml" title="TaxCode x US Stocks x AI" href="https://taxcodeusstocks.com/en/feed.xml">
 <link rel="canonical" href="https://taxcodeusstocks.com/en/">
 <link rel="alternate" hreflang="zh-Hant" href="https://taxcodeusstocks.com/">
@@ -29,7 +30,9 @@
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<script src="../js/site.js?v=20260818-brief" defer></script>
+<script src="../js/site.js?v=20260828-hud" defer></script>
+<script src="../js/us-close.js?v=20260828-hud" defer></script>
+<script src="../js/home-focus.js?v=20260828-hud" defer></script>
 </head>
 <body>
 
@@ -43,6 +46,7 @@
       <a href="about.html">About</a>
       <a href="resources.html">Resources</a>
       <a href="../brief.html?lang=en">Tax Brief</a>
+      <a href="../us-close.html">US Focus</a>
     </nav>
     <a class="lang-switch" href="../index.html" hreflang="zh-Hant" lang="zh-Hant">中文</a>
     <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">☰</button>
@@ -60,6 +64,7 @@
         <a class="btn btn-primary" href="tools/us-dividend-tax-calculator.html">Try the dividend tax calculator</a>
         <a class="btn btn-secondary" href="ai-workflow-case.html">Read a featured piece</a>
         <a class="btn btn-secondary" href="../brief.html?lang=en">Open Tax Brief</a>
+        <a class="btn btn-secondary hero-close-box" href="../us-close.html">Last night's US stocks</a>
       </div>
       <p class="hero-brief-intro">Tax Brief lists official rulings and draft rules from Taiwan, the US, and Asia-Pacific for today and yesterday. Click a title to open the source. Educational compilation, not tax advice.</p>
     </div>
@@ -81,22 +86,93 @@
   </div>
 </section>
 
+<section class="home-focus" id="home-focus" data-lang="en" aria-label="Focus instrument">
+  <div class="home-focus-inner">
+    <header class="home-focus-chrome">
+      <div>
+        <p class="home-focus-kicker">Focus instrument</p>
+        <p class="home-focus-pillars">Tax · US stocks · AI</p>
+      </div>
+      <div class="home-focus-meta">
+        <span class="home-focus-dot" id="home-focus-panel-dot" aria-hidden="true"></span>
+        <span id="home-focus-stamp">Compile time loading</span>
+        <a class="home-focus-workflow" href="ai-workflow-case.html">Workflow</a>
+      </div>
+    </header>
+    <div class="home-focus-grid">
+      <article class="home-focus-card" id="home-focus-tax">
+        <div class="home-focus-card-head">
+          <span class="home-focus-card-kicker">TAX</span>
+          <span class="home-focus-dot is-off" id="home-focus-tax-dot" aria-hidden="true"></span>
+        </div>
+        <h2><a href="../brief.html?lang=en">Tax Brief</a></h2>
+        <div class="home-focus-metrics">
+          <div class="home-focus-stat">
+            <span class="home-focus-stat-label">Today</span>
+            <span class="home-focus-stat-num" id="home-focus-tax-today">0</span>
+            <span class="home-focus-stat-unit">items</span>
+          </div>
+          <div class="home-focus-stat">
+            <span class="home-focus-stat-label">Yesterday</span>
+            <span class="home-focus-stat-num" id="home-focus-tax-yesterday">0</span>
+            <span class="home-focus-stat-unit">items</span>
+          </div>
+        </div>
+        <div class="home-focus-body">
+          <ul class="home-focus-titles" id="home-focus-tax-titles">
+            <li class="home-focus-empty">Loading official releases</li>
+          </ul>
+        </div>
+        <div class="home-focus-foot">
+          <span class="home-focus-stamp" id="home-focus-tax-stamp">Feed time loading</span>
+          <a class="home-focus-cta" href="../brief.html?lang=en">Open Tax Brief</a>
+        </div>
+      </article>
+      <article class="home-focus-card" id="home-focus-close">
+        <div class="home-focus-card-head">
+          <span class="home-focus-card-kicker">US CLOSE</span>
+          <span class="home-focus-dot is-off" id="home-focus-close-dot" aria-hidden="true"></span>
+        </div>
+        <h2><a href="../us-close.html">US Focus</a></h2>
+        <div class="home-focus-metrics">
+          <div class="home-focus-stat is-up" id="home-focus-up">
+            <span class="home-focus-stat-label">Top gainer</span>
+            <span class="home-focus-stat-num home-focus-mover-pct">-</span>
+            <span class="home-focus-stat-unit home-focus-mover-name">-</span>
+          </div>
+          <div class="home-focus-stat is-down" id="home-focus-down">
+            <span class="home-focus-stat-label">Top loser</span>
+            <span class="home-focus-stat-num home-focus-mover-pct">-</span>
+            <span class="home-focus-stat-unit home-focus-mover-name">-</span>
+          </div>
+        </div>
+        <div class="home-focus-body">
+          <p class="home-focus-session" id="home-focus-close-session">ET close</p>
+          <p class="home-focus-sub" id="home-focus-close-headline">Overnight US close notes</p>
+          <div class="home-focus-breaking" id="home-focus-breaking" hidden></div>
+        </div>
+        <div class="home-focus-foot">
+          <span class="home-focus-stamp" id="home-focus-close-stamp">Taipei compile loading</span>
+          <a class="home-focus-cta" href="../us-close.html">Last night's US stocks</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
 <main>
   <h2 class="section-title">Three Pillars</h2>
   <div class="pillars">
     <div class="pillar">
-      <div class="pillar-icon" aria-hidden="true">Tx</div>
-      <h3>Tax</h3>
+      <div class="pillar-icon" aria-hidden="true">Tax</div>
       <p>Why did Apple's effective tax rate sit at 12-16% for years? How does the OECD Pillar Two global minimum tax change Big Tech's earnings? I read the 10-K income tax footnote the way practitioners do, and decode it for you.</p>
     </div>
     <div class="pillar">
       <div class="pillar-icon" aria-hidden="true">US</div>
-      <h3>US Stocks</h3>
       <p>The blind spots for non-US investors: the USD 60,000 estate tax threshold, ADR dividend withholding, after-tax returns that differ by fund domicile. Cross-border details most finance content never touches.</p>
     </div>
     <div class="pillar">
       <div class="pillar-icon" aria-hidden="true">AI</div>
-      <h3>AI Automation</h3>
       <p>I design the workflow and AI generates the code (Python, pulling from SEC EDGAR) to automate investment research: 13F tracking, deep-reading filings, multi-source verification against hallucination, with a human checking the output. Methods fully public, so you can build your own.</p>
     </div>
   </div>
@@ -217,6 +293,17 @@
   <div class="callout" style="margin-top:1.2rem;">
     Every article and the interactive dividend tax calculator are available in English. Prefer Chinese? Visit the <a href="../index.html" hreflang="zh-Hant">Chinese edition</a>.
   </div>
+
+  <h2 class="section-title">Get the tax issues straight so more of the US-stock return stays yours</h2>
+  <ul class="topic-cards">
+    <li class="topic-card">Deep dives into the tax structures of major US companies (where Apple's, Google's, and Microsoft's ETRs actually come from)</li>
+    <li class="topic-card">Cross-border tax essentials for non-US investors in US stocks (estate tax, dividend withholding, ADR mechanics)</li>
+    <li class="topic-card">How the Pillar Two global tax reform hits US tech stocks</li>
+    <li class="topic-card">Hedge fund 13F tracking and analysis methods</li>
+    <li class="topic-card">Using AI to automate the investment research workflow</li>
+  </ul>
+  <p class="topic-prose">Writing principles: every number carries a source and a date, every case states its assumptions, and everything AI-assisted passes human review and multi-source fact-checking. Professional content is only worth reading if it can be trusted; that part is not negotiable.</p>
+  <p class="topic-prose">Some topics also come as short videos on the <a href="https://www.youtube.com/@TaxCodeUSStocks" target="_blank" rel="noopener">YouTube channel</a> (Chinese-language), for readers who want the one-minute version first.</p>
 
   <h2 class="section-title">About Jeff</h2>
   <div class="profile-box about-strip">

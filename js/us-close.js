@@ -409,7 +409,7 @@
     table.className = "close-table";
     var thead = document.createElement("thead");
     thead.innerHTML =
-      "<tr><th>代號</th><th>名稱</th><th>收盤</th><th>漲跌%</th><th>盤後%</th></tr>";
+      "<tr><th>代號</th><th>名稱</th><th class=\"num\">收盤</th><th class=\"num\">漲跌%</th><th class=\"num\">盤後%</th></tr>";
     table.appendChild(thead);
     var tbody = document.createElement("tbody");
     (data.names || []).forEach(function (n) {

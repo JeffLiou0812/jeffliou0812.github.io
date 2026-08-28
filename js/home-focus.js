@@ -4,7 +4,60 @@
   "use strict";
 
   var TAX_FEED = "https://tax-brief.fengyen0812.workers.dev/feed?countries=tw,us";
-  var CLOSE_JSON = "content/us-close/latest.json";
+  var CLOSE_JSON = (function () {
+    if (typeof document === "undefined") return "content/us-close/latest.json";
+    var script = document.currentScript;
+    if (script && script.src) {
+      return script.src.replace(/js\/home-focus\.js.*$/, "content/us-close/latest.json");
+    }
+    return "content/us-close/latest.json";
+  })();
+
+  var COPY = {
+    zh: {
+      sessionPrefix: "美東 ",
+      sessionFallback: "美東收盤",
+      headlineFallback: "收盤整理",
+      headlineFail: "未取得",
+      stampFail: "未取得",
+      stampClose: "台北整理 ",
+      stampCloseMissing: "台北整理未取得",
+      stampTax: "資料時間 ",
+      stampTaxMissing: "資料時間未取得",
+      taxEmpty: "視窗內尚無新發布",
+      taxFail: "未取得",
+      panelFail: "整理時間未取得",
+      breaking: "Breaking News"
+    },
+    en: {
+      sessionPrefix: "ET ",
+      sessionFallback: "ET close",
+      headlineFallback: "Overnight close notes",
+      headlineFail: "Unavailable",
+      stampFail: "Unavailable",
+      stampClose: "Taipei compile ",
+      stampCloseMissing: "Taipei compile unavailable",
+      stampTax: "Feed ",
+      stampTaxMissing: "Feed time unavailable",
+      taxEmpty: "No new releases in this window",
+      taxFail: "Unavailable",
+      panelFail: "Compile time unavailable",
+      breaking: "Breaking News"
+    }
+  };
+
+  function pageLang() {
+    if (typeof document === "undefined") return "zh";
+    var root = document.getElementById("home-focus");
+    var attr = root && root.getAttribute("data-lang");
+    if (attr === "en") return "en";
+    var htmlLang = (document.documentElement.lang || "").toLowerCase();
+    return htmlLang.indexOf("en") === 0 ? "en" : "zh";
+  }
+
+  function t() {
+    return COPY[pageLang()] || COPY.zh;
+  }
 
   function isHttpUrl(s) {
     try {
@@ -105,9 +158,12 @@
     return String(Number(m[2])) + "/" + String(Number(m[3]));
   }
 
-  function formatCloseSession(sessionEtDate) {
+  function formatCloseSession(sessionEtDate, lang) {
     var md = formatEtMd(sessionEtDate);
-    return md ? "美東 " + md : "";
+    if (!md) return "";
+    var prefix = lang === "en" ? COPY.en.sessionPrefix : COPY.zh.sessionPrefix;
+    if (lang == null && pageLang() === "en") prefix = COPY.en.sessionPrefix;
+    return prefix + md;
   }
 
   function formatPct(n) {
@@ -151,7 +207,7 @@
       var m = String(iso).match(/^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2})/);
       return m ? m[1] + " " + m[2] : "";
     }
-    return new Intl.DateTimeFormat("zh-Hant", {
+    return new Intl.DateTimeFormat(pageLang() === "en" ? "en-CA" : "zh-Hant", {
       timeZone: "Asia/Taipei",
       year: "numeric",
       month: "2-digit",
@@ -165,7 +221,7 @@
   function closeCardModel(data) {
     if (!data || typeof data !== "object") return null;
     var session = formatCloseSession(data.session_et_date);
-    if (!session || session.indexOf("今日") !== -1) return null;
+    if (!session || session.indexOf("今日") !== -1 || /\bToday\b/i.test(session)) return null;
     return {
       session: session,
       headline: String(data.headline || "").trim(),
@@ -229,7 +285,7 @@
     var titles = pickTaxTitles(payload.items, win.today, win.yesterday);
     setText("home-focus-tax-today", String(counts.today));
     setText("home-focus-tax-yesterday", String(counts.yesterday));
-    setText("home-focus-tax-stamp", payload.generatedAt ? "資料時間 " + formatTaipeiStamp(payload.generatedAt) : "資料時間未取得");
+    setText("home-focus-tax-stamp", payload.generatedAt ? t().stampTax + formatTaipeiStamp(payload.generatedAt) : t().stampTaxMissing);
     setDot("home-focus-tax-dot", true);
     var list = document.getElementById("home-focus-tax-titles");
     if (!list) return;
@@ -237,7 +293,7 @@
     if (!titles.length) {
       var empty = document.createElement("li");
       empty.className = "home-focus-empty";
-      empty.textContent = "視窗內尚無新發布";
+      empty.textContent = t().taxEmpty;
       list.appendChild(empty);
       return;
     }
@@ -256,14 +312,14 @@
   function renderTaxFail() {
     setText("home-focus-tax-today", "0");
     setText("home-focus-tax-yesterday", "0");
-    setText("home-focus-tax-stamp", "未取得");
+    setText("home-focus-tax-stamp", t().stampFail);
     setDot("home-focus-tax-dot", false);
     var list = document.getElementById("home-focus-tax-titles");
     if (!list) return;
     list.innerHTML = "";
     var li = document.createElement("li");
     li.className = "home-focus-empty";
-    li.textContent = "未取得";
+    li.textContent = t().taxFail;
     list.appendChild(li);
   }
 
@@ -289,8 +345,8 @@
       return;
     }
     setText("home-focus-close-session", model.session);
-    setText("home-focus-close-headline", model.headline || "收盤整理");
-    setText("home-focus-close-stamp", model.stamp ? "台北整理 " + model.stamp : "台北整理未取得");
+    setText("home-focus-close-headline", model.headline || t().headlineFallback);
+    setText("home-focus-close-stamp", model.stamp ? t().stampClose + model.stamp : t().stampCloseMissing);
     setDot("home-focus-close-dot", true);
     fillMover("home-focus-up", model.up);
     fillMover("home-focus-down", model.down);
@@ -304,7 +360,7 @@
         br.innerHTML = "";
         var lab = document.createElement("span");
         lab.className = "home-focus-chip-kicker";
-        lab.textContent = "Breaking News";
+        lab.textContent = t().breaking;
         var a = document.createElement("a");
         a.href = model.breaking.url;
         a.target = "_blank";
@@ -317,9 +373,9 @@
   }
 
   function renderCloseFail() {
-    setText("home-focus-close-session", "美東收盤");
-    setText("home-focus-close-headline", "未取得");
-    setText("home-focus-close-stamp", "未取得");
+    setText("home-focus-close-session", t().sessionFallback);
+    setText("home-focus-close-headline", t().headlineFail);
+    setText("home-focus-close-stamp", t().stampFail);
     setDot("home-focus-close-dot", false);
     fillMover("home-focus-up", null);
     fillMover("home-focus-down", null);
@@ -336,9 +392,10 @@
     var panel = document.getElementById("home-focus-stamp");
     if (!panel) return;
     var bits = [];
-    if (tax && tax.textContent && tax.textContent !== "未取得") bits.push(tax.textContent);
-    if (close && close.textContent && close.textContent !== "未取得") bits.push(close.textContent);
-    panel.textContent = bits.length ? bits.join(" · ") : "整理時間未取得";
+    var fail = t().stampFail;
+    if (tax && tax.textContent && tax.textContent !== fail) bits.push(tax.textContent);
+    if (close && close.textContent && close.textContent !== fail) bits.push(close.textContent);
+    panel.textContent = bits.length ? bits.join(" · ") : t().panelFail;
   }
 
   function start() {
