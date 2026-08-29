@@ -2,6 +2,16 @@
   "schema_version": 1,
   "items": [
     {
+      "id": "2026-08-29",
+      "session_et_date": "2026-08-28",
+      "headline": "多數下跌"
+    },
+    {
+      "id": "2026-08-28",
+      "session_et_date": "2026-08-27",
+      "headline": "多數上漲"
+    },
+    {
       "id": "2026-08-27",
       "session_et_date": "2026-08-26",
       "headline": "多數上漲"

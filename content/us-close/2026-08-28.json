@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "id": "2026-08-29",
-  "compiled_taipei": "2026-08-29T07:00:00+08:00",
-  "session_et_date": "2026-08-28",
-  "after_hours_asof_et": "2026-08-28T19:11:00-04:00",
-  "headline": "多數下跌",
+  "id": "2026-08-28",
+  "compiled_taipei": "2026-08-28T07:00:00+08:00",
+  "session_et_date": "2026-08-27",
+  "after_hours_asof_et": "2026-08-27T19:05:00-04:00",
+  "headline": "多數上漲",
   "conclusions": [
-    "週五（美東 8/28）多數下跌",
-    "上漲：亞馬遜 +3.97%、谷歌 +1.74%、微軟 +1.68%",
-    "跌最重：輝達 -4.57%、諾基亞 -3.59%、Cloudflare -2.72%",
+    "週四（美東 8/27）多數上漲",
+    "上漲：輝達 +8.74%、Cloudflare +8.19%、博通 +4.49%",
+    "跌最重：亞馬遜 -1.54%、SanDisk -0.96%、Meta -0.87%",
     "本月與下月即將公布：9/1 ISM 製造；9/2 博通Q3(盤後)；9/4 非農就業人口（NFP）；9/10 PPI；9/11 CPI；9/16 零售；9/16 FOMC利率決議（2026年第6次Fed利率會議）；9/30 GDP 三估、PCE"
   ],
   "overnight": [],
@@ -16,114 +16,114 @@
     {
       "ticker": "AAPL",
       "name_zh": "蘋果",
-      "close": 319.7,
-      "chg_pct": 1.63,
-      "after": 0.13
+      "close": 314.58,
+      "chg_pct": 0.36,
+      "after": -0.03
     },
     {
       "ticker": "MSFT",
       "name_zh": "微軟",
-      "close": 513.53,
-      "chg_pct": 1.68,
-      "after": -0.2
+      "close": 505.06,
+      "chg_pct": 1.75,
+      "after": -0.25
     },
     {
       "ticker": "NVDA",
       "name_zh": "輝達",
-      "close": 217.55,
-      "chg_pct": -4.57,
-      "after": 0.17
+      "close": 227.98,
+      "chg_pct": 8.74,
+      "after": -0.76
     },
     {
       "ticker": "AMZN",
       "name_zh": "亞馬遜",
-      "close": 266.43,
-      "chg_pct": 3.97,
-      "after": -0.14
+      "close": 256.26,
+      "chg_pct": -1.54,
+      "after": 0.11
     },
     {
       "ticker": "GOOGL",
       "name_zh": "谷歌",
-      "close": 346.59,
-      "chg_pct": 1.74,
-      "after": -0.17
+      "close": 340.65,
+      "chg_pct": -0.39,
+      "after": 0.05
     },
     {
       "ticker": "META",
       "name_zh": "Meta",
-      "close": 578.02,
-      "chg_pct": 1.21,
-      "after": -0.01
+      "close": 571.1,
+      "chg_pct": -0.87,
+      "after": 0.07
     },
     {
       "ticker": "TSLA",
       "name_zh": "特斯拉",
-      "close": 348.75,
-      "chg_pct": -1.71,
-      "after": -0.24
+      "close": 354.81,
+      "chg_pct": 2.6,
+      "after": -0.14
     },
     {
       "ticker": "SPCX",
       "name_zh": "SpaceX",
-      "close": 141.5,
-      "chg_pct": 0.45,
-      "after": -0.35
+      "close": 140.87,
+      "chg_pct": 0.89,
+      "after": -0.39
     },
     {
       "ticker": "NET",
       "name_zh": "Cloudflare",
-      "close": 299.84,
-      "chg_pct": -2.72,
-      "after": 0.36
+      "close": 308.23,
+      "chg_pct": 8.19,
+      "after": -0.24
     },
     {
       "ticker": "MU",
       "name_zh": "美光",
-      "close": 932.86,
-      "chg_pct": -0.27,
-      "after": -0.38
+      "close": 935.39,
+      "chg_pct": -0.32,
+      "after": -1.37
     },
     {
       "ticker": "NOK",
       "name_zh": "諾基亞",
-      "close": 10.21,
-      "chg_pct": -3.59,
-      "after": -0.29
+      "close": 10.59,
+      "chg_pct": 1.73,
+      "after": -0.55
     },
     {
       "ticker": "SNDK",
       "name_zh": "SanDisk",
-      "close": 1484.98,
-      "chg_pct": 0.0,
-      "after": -0.4
+      "close": 1484.95,
+      "chg_pct": -0.96,
+      "after": -1.07
     },
     {
       "ticker": "TSM",
       "name_zh": "台積電",
-      "close": 417.52,
-      "chg_pct": -2.29,
-      "after": 0.23
+      "close": 427.3,
+      "chg_pct": 2.3,
+      "after": -0.3
     },
     {
       "ticker": "GLW",
       "name_zh": "康寧",
-      "close": 148.98,
-      "chg_pct": -2.5,
-      "after": -0.36
+      "close": 152.8,
+      "chg_pct": 0.01,
+      "after": -0.6
     },
     {
       "ticker": "CAT",
       "name_zh": "卡特彼勒",
-      "close": 800.25,
-      "chg_pct": -2.05,
-      "after": -0.03
+      "close": 817.0,
+      "chg_pct": -0.6,
+      "after": 0.0
     },
     {
       "ticker": "AVGO",
       "name_zh": "博通",
-      "close": 368.79,
-      "chg_pct": -0.74,
-      "after": 0.06
+      "close": 371.54,
+      "chg_pct": 4.49,
+      "after": 0.0
     }
   ],
   "calendar": [
