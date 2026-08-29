@@ -1,27 +1,28 @@
 /* 美股焦點 page only. Do not reuse 稅訊 brief-* class names. */
+.close-page {
+  background: #F4ECE8;
+}
+
 .close-head {
-  --close-grid: rgba(232, 238, 246, 0.08);
-  --close-slate: #3D5A80;
-  --close-wash: #E8EEF6;
   position: relative;
   overflow: hidden;
   background:
-    repeating-linear-gradient(0deg, transparent 0 19px, var(--close-grid) 19px 20px),
-    repeating-linear-gradient(90deg, transparent 0 19px, var(--close-grid) 19px 20px),
-    linear-gradient(160deg, #1A2B3D 0%, #243B55 58%, #2A4158 100%);
-  border: 1px solid var(--close-slate);
-  border-radius: 8px;
+    radial-gradient(circle at 92% -10%, rgba(244, 236, 232, 0.95), transparent 42%),
+    radial-gradient(circle at 0% 120%, rgba(232, 212, 184, 0.42), transparent 46%),
+    var(--card);
+  border: var(--frame-width) solid var(--frame);
+  border-radius: var(--radius);
   padding: 1.35rem 1.3rem 1.25rem;
   box-shadow: var(--shadow-sm);
   margin-bottom: 1.15rem;
-  color: var(--close-wash);
+  color: var(--navy);
 }
 
 .close-date {
   font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   font-size: .95rem;
   font-weight: 700;
-  color: var(--close-wash);
+  color: var(--navy);
   letter-spacing: .04em;
   margin: 0;
 }
@@ -30,7 +31,7 @@
   margin-top: .2rem;
   margin-bottom: 0;
   font-size: clamp(1.85rem, 4vw, 2.4rem);
-  color: #fff;
+  color: var(--navy);
   line-height: 1.2;
   font-weight: 700;
 }
@@ -55,9 +56,9 @@
   font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   font-size: .78rem;
   font-weight: 700;
-  color: var(--close-wash);
-  background: rgba(232, 238, 246, 0.1);
-  border: 1px solid var(--close-slate);
+  color: var(--navy);
+  background: var(--bg);
+  border: var(--frame-width-sm) solid var(--frame);
   border-radius: 999px;
   padding: .38rem .95rem;
   min-height: 40px;
@@ -73,8 +74,8 @@
   font-size: .92rem;
   font-weight: 700;
   cursor: pointer;
-  color: var(--navy);
-  background: var(--close-wash);
+  color: #fff;
+  background: var(--navy);
   border: 1.5px solid var(--gold);
   border-radius: 999px;
   padding: .5rem 1.15rem;
@@ -82,7 +83,7 @@
   box-shadow: var(--shadow-sm);
 }
 
-.close-refresh:hover { background: #fff; }
+.close-refresh:hover { background: var(--navy-hover); }
 .close-refresh:disabled { opacity: .72; cursor: wait; }
 .close-refresh[aria-busy="true"] { opacity: .72; cursor: wait; }
 .close-refresh svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; }
@@ -91,7 +92,7 @@
   margin-top: .85rem;
   margin-bottom: 0;
   font-size: .8rem;
-  color: rgba(232, 238, 246, 0.78);
+  color: var(--muted);
   max-width: 40rem;
 }
 
@@ -100,11 +101,11 @@
   margin-bottom: 0;
   font-size: .82rem;
   font-weight: 700;
-  color: #C8E6C9;
+  color: var(--up);
 }
 
 .close-status.is-error {
-  color: #FFCDD2;
+  color: var(--red);
 }
 
 .close-page #close-conclusions ul,
@@ -142,6 +143,12 @@
   margin-top: .55rem;
   font-size: .9rem;
   color: var(--muted);
+}
+
+.close-table-note,
+.close-table-asof {
+  padding-left: .75rem;
+  padding-right: .75rem;
 }
 
 .close-table-note {
@@ -287,13 +294,19 @@
   background: var(--gold);
   display: inline-block;
   margin: .05rem 0 .08rem;
+  align-self: center;
 }
 
 .close-cal-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
   font-size: .58rem;
   line-height: 1.15;
   color: var(--navy);
   font-weight: 700;
+  text-align: center;
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -324,4 +337,6 @@
   .close-table { font-size: .84rem; }
   .close-table th,
   .close-table td { padding: .4rem .5rem; }
+  .close-table-note,
+  .close-table-asof { padding-left: .5rem; padding-right: .5rem; }
 }

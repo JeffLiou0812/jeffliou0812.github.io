@@ -149,6 +149,8 @@ assert("html script tag is closed", /<script src="js\/us-close\.js\?v=[^"]+" def
 assert("html heading 摘要", html.indexOf(">摘要<") !== -1);
 assert("html heading 美股焦點 table", html.indexOf("id=\"close-names-title\">美股焦點<") !== -1);
 assert("html keeps 本月與下月", html.indexOf("本月與下月即將公布總經／財報") !== -1);
+assert("html heading 歷史資訊", html.indexOf(">歷史資訊<") !== -1);
+assert("html has no visible 封存", html.indexOf("封存") === -1);
 assert("html has no 今日", html.indexOf("今日") === -1);
 assert("us-close uses 資訊分享 not 教育整理", html.indexOf("資訊分享，不是投資建議") !== -1 && html.indexOf("教育整理") === -1);
 assert("html does not hardcode 結論 heading", html.indexOf(">結論<") === -1);
@@ -314,8 +316,12 @@ assert("table itself has no gold frame", tableRule.indexOf("--frame") === -1 && 
 assert("calendar day is compact 6px 1px", /\.close-cal-day\s*\{[\s\S]*border-radius:\s*6px/.test(closeCss) && /\.close-cal-day\s*\{[\s\S]*border:\s*1px solid var\(--line\)/.test(closeCss));
 assert("calendar stays 7 columns", /grid-template-columns:\s*repeat\(7,/.test(closeCss));
 assert("calendar labels do not wrap cells", /\.close-cal-label\s*\{[\s\S]*white-space:\s*nowrap/.test(closeCss));
+assert("calendar labels stay ellipsis", /\.close-cal-label\s*\{[\s\S]*text-overflow:\s*ellipsis/.test(closeCss));
+assert("calendar labels are centered", /\.close-cal-label\s*\{[\s\S]*text-align:\s*center/.test(closeCss) && /\.close-cal-label\s*\{[\s\S]*justify-content:\s*center/.test(closeCss));
 assert("close css has no brief class names", closeCss.indexOf(".brief-") === -1 && closeCss.indexOf("brief-refresh") === -1);
-assert("close-head is slate HUD not cream gazette", /\.close-head\s*\{[\s\S]*#1A2B3D/.test(closeCss) && /\.close-head\s*\{[\s\S]*#3D5A80/.test(closeCss) && !/\.close-head\s*\{[\s\S]*#FFFCF7/.test(closeCss) && !/\.close-head\s*\{[\s\S]*#F4ECE8/.test(closeCss));
+assert("close-page canvas is 稅訊 beige", /\.close-page\s*\{[\s\S]*background:\s*#F4ECE8/.test(closeCss));
+assert("close-head is cream beige not slate HUD", /\.close-head\s*\{[\s\S]*var\(--card\)/.test(closeCss) && /\.close-head\s*\{[\s\S]*var\(--frame\)/.test(closeCss) && !/\.close-head\s*\{[\s\S]*#1A2B3D/.test(closeCss) && !/\.close-head\s*\{[\s\S]*#3D5A80/.test(closeCss) && closeCss.indexOf("--close-slate") === -1);
+assert("table notes sit inward like cells", /\.close-table-note,\s*\n\.close-table-asof\s*\{[\s\S]*padding-left:\s*\.75rem/.test(closeCss));
 assert("close-refresh has busy state", /\.close-refresh\[aria-busy="true"\]/.test(closeCss));
 
 var closeJs = fs.readFileSync(path.join(root, "js/us-close.js"), "utf8");
@@ -326,6 +332,7 @@ assert("js fail keeps last render", closeJs.indexOf("讀不到資料，請稍後
 assert("js unchanged still re-renders as 已是最新", closeJs.indexOf("已是最新") !== -1);
 assert("js has no live drawer clone", closeJs.indexOf("live-panel") === -1 && closeJs.indexOf("即時更新") === -1 && closeJs.indexOf("openLive") === -1);
 assert("js does not scrape market APIs", closeJs.indexOf("yahoo") === -1 && closeJs.indexOf("finance.google") === -1 && closeJs.indexOf("workers.dev") === -1);
+assert("js has no visible 封存", closeJs.indexOf("封存") === -1);
 
 assert("cache bust adds t=", U.cacheBustUrl("latest.json", true).indexOf("latest.json?t=") === 0);
 assert("cache bust dated file", U.cacheBustUrl("2026-08-27.json", true).indexOf("2026-08-27.json?t=") === 0);
