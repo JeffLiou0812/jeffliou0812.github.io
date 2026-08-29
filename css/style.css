@@ -706,17 +706,6 @@ footer.site-footer {
   color: #2A241F;
 }
 
-.filter-bar button[data-category="AI 自動化"],
-.filter-bar button[data-category="AI Automation"],
-.card .tag[data-category="AI 自動化"],
-.card .tag[data-category="AI Automation"],
-.tag[data-category="AI 自動化"],
-.tag[data-category="AI Automation"] {
-  background: #E8EEF6;
-  border-color: #3D5A80;
-  color: #1A2B3D;
-}
-
 .filter-bar button[data-category="稅務 x 美股"],
 .filter-bar button[data-category="Tax x US Stocks"],
 .card .tag[data-category="稅務 x 美股"],
@@ -728,22 +717,23 @@ footer.site-footer {
   color: #1A2B3D;
 }
 
+/* AI-only and AI-hybrid share the AI x 稅務 / AI x Tax frame. */
+.filter-bar button[data-category="AI 自動化"],
+.filter-bar button[data-category="AI Automation"],
 .filter-bar button[data-category="AI x 美股"],
 .filter-bar button[data-category="AI x US Stocks"],
-.card .tag[data-category="AI x 美股"],
-.card .tag[data-category="AI x US Stocks"],
-.tag[data-category="AI x 美股"],
-.tag[data-category="AI x US Stocks"] {
-  background: #E8EEF6;
-  border-color: #C9955A;
-  color: #1A2B3D;
-  box-shadow: inset 3px 0 0 #D4A017;
-}
-
 .filter-bar button[data-category="AI x 稅務"],
 .filter-bar button[data-category="AI x Tax"],
+.card .tag[data-category="AI 自動化"],
+.card .tag[data-category="AI Automation"],
+.card .tag[data-category="AI x 美股"],
+.card .tag[data-category="AI x US Stocks"],
 .card .tag[data-category="AI x 稅務"],
 .card .tag[data-category="AI x Tax"],
+.tag[data-category="AI 自動化"],
+.tag[data-category="AI Automation"],
+.tag[data-category="AI x 美股"],
+.tag[data-category="AI x US Stocks"],
 .tag[data-category="AI x 稅務"],
 .tag[data-category="AI x Tax"] {
   background: linear-gradient(90deg, #FFF4CC 0%, #E8EEF6 100%);
