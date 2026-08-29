@@ -384,8 +384,13 @@ assert("filter buttons get data-category", siteJs.indexOf('b.setAttribute("data-
 assert("ZH AI x 稅務 tag has data-category", indexHtml.indexOf('class="tag" data-category="AI x 稅務"') !== -1);
 assert("EN AI x Tax tag has data-category", enIndex.indexOf('class="tag" data-category="AI x Tax"') !== -1);
 assert("tax-only pills use warm yellow", styleCss.indexOf('data-category="跨境稅務"') !== -1 && styleCss.indexOf("#FFF4CC") !== -1 && styleCss.indexOf("#D4A017") !== -1);
-assert("AI-only pills use slate blue", styleCss.indexOf("#E8EEF6") !== -1 && styleCss.indexOf("#3D5A80") !== -1);
-assert("AI x 稅務 is mixed yellow-blue", /data-category="AI x 稅務"[\s\S]*linear-gradient\(90deg, #FFF4CC/.test(styleCss));
+assert("tax-only recipe stays solid yellow", /data-category="跨境稅務"[\s\S]*?\{[\s\S]*?background:\s*#FFF4CC/.test(styleCss) && /data-category="台灣稅務"[\s\S]*?\{[\s\S]*?background:\s*#FFF4CC/.test(styleCss));
+assert("稅務 x 美股 recipe unchanged", /data-category="稅務 x 美股"[\s\S]*?\{[\s\S]*?background:\s*#F8E6A0/.test(styleCss) && /data-category="Tax x US Stocks"[\s\S]*?\{[\s\S]*?background:\s*#F8E6A0/.test(styleCss));
+var aiFrame = styleCss.match(/data-category="AI 自動化"[\s\S]*?\{([\s\S]*?)\}/);
+assert("all AI pills share one frame block", !!(aiFrame && aiFrame[0].indexOf('data-category="AI Automation"') !== -1 && aiFrame[0].indexOf('data-category="AI x 美股"') !== -1 && aiFrame[0].indexOf('data-category="AI x US Stocks"') !== -1 && aiFrame[0].indexOf('data-category="AI x 稅務"') !== -1 && aiFrame[0].indexOf('data-category="AI x Tax"') !== -1));
+assert("AI frame is the AI x 稅務 recipe", !!(aiFrame && /background:\s*linear-gradient\(90deg, #FFF4CC 0%, #E8EEF6 100%\)/.test(aiFrame[1]) && /border-color:\s*#3D5A80/.test(aiFrame[1]) && /color:\s*#1A2B3D/.test(aiFrame[1]) && /box-shadow:\s*inset 3px 0 0 #D4A017/.test(aiFrame[1])));
+assert("AI-only is not a solid slate fill", !(aiFrame && /background:\s*#E8EEF6/.test(aiFrame[1])));
+assert("全部 stays cream gold idle", /data-category="全部"[\s\S]*?\{[\s\S]*?background:\s*var\(--card\)/.test(styleCss) && /data-category="All"[\s\S]*?\{[\s\S]*?background:\s*var\(--card\)/.test(styleCss));
 assert("selected filter stays navy contrast", /\.filter-bar button\.active[\s\S]*background:\s*var\(--navy\)/.test(styleCss));
 assert("Resources tag is not categorized", indexHtml.indexOf('class="tag">資源<') !== -1 && enIndex.indexOf('class="tag">Resources<') !== -1);
 assert("about-strip paragraphs have room", /\.about-strip p[\s\S]*margin:\s*0 0 1\.(1|2|3|4)/.test(styleCss));
