@@ -242,6 +242,7 @@ nav.main-nav a.active {
   margin-top: 1rem;
 }
 .chip {
+  display: inline-block;
   font-size: .74rem;
   font-weight: 700;
   color: var(--navy);
@@ -249,6 +250,8 @@ nav.main-nav a.active {
   border: var(--frame-width-sm) solid var(--frame);
   border-radius: var(--radius-pill);
   padding: .2rem .65rem;
+  text-decoration: none;
+  cursor: pointer;
 }
 .chip:hover {
   background: var(--terra-wash);
@@ -278,35 +281,50 @@ main { max-width: 1040px; margin: 0 auto; padding: 2.2rem 1.2rem 3rem; }
   gap: 1.25rem;
 }
 .pillar {
+  display: block;
   background: var(--card);
   border: var(--frame-width) solid var(--frame);
   border-radius: var(--radius);
   padding: 1.45rem 1.4rem;
   box-shadow: var(--shadow-sm);
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
   transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
 }
 .pillar:hover {
   box-shadow: var(--shadow);
   transform: translateY(-2px);
 }
-.pillar-icon {
-  width: 3.35rem;
-  height: 3.35rem;
-  border-radius: var(--radius-sm);
-  display: grid;
-  place-items: center;
+.pillars .pillar-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: 4.4rem;
+  height: auto;
+  padding: .28rem .9rem;
+  border-radius: var(--radius-pill);
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", monospace;
   font-size: .8rem;
   font-weight: 700;
-  letter-spacing: 0;
-  line-height: 1;
+  letter-spacing: .08em;
+  line-height: 1.2;
   white-space: nowrap;
-  color: var(--navy);
-  background: var(--card);
-  border: var(--frame-width-sm) solid var(--frame);
-  margin-bottom: .85rem;
+  color: #1A2B3D;
+  background: linear-gradient(90deg, #FFF4CC 0%, #E8EEF6 100%);
+  border: var(--frame-width-sm) solid #3D5A80;
+  box-shadow: inset 3px 0 0 #D4A017;
+  margin-bottom: .75rem;
 }
 .pillar h3 { color: var(--ink); font-size: 1.08rem; margin-bottom: .45rem; }
-.pillar p { font-size: .92rem; color: var(--muted); }
+.pillar p {
+  font-size: .95rem;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.55;
+}
+.pillar p + p { margin-top: .35rem; }
 
 /* Topic cards under 稅務議題弄明白，美股報酬最大化: gold frame, not leftover bullets. */
 .topic-cards {
@@ -317,7 +335,13 @@ main { max-width: 1040px; margin: 0 auto; padding: 2.2rem 1.2rem 3rem; }
   padding: 0;
   list-style: none;
 }
+.topic-cards > li {
+  display: flex;
+  min-width: 0;
+}
 .topic-card {
+  display: block;
+  width: 100%;
   background: var(--card);
   border: 1px solid var(--frame);
   border-radius: var(--radius);
@@ -326,6 +350,11 @@ main { max-width: 1040px; margin: 0 auto; padding: 2.2rem 1.2rem 3rem; }
   font-size: .95rem;
   line-height: 1.65;
   box-shadow: var(--shadow-sm);
+  text-decoration: none;
+  cursor: pointer;
+}
+.topic-card:hover {
+  box-shadow: var(--shadow);
 }
 .topic-prose {
   margin-top: 1rem;
@@ -333,7 +362,7 @@ main { max-width: 1040px; margin: 0 auto; padding: 2.2rem 1.2rem 3rem; }
 }
 @media (min-width: 720px) {
   .topic-cards { grid-template-columns: 1fr 1fr; }
-  .topic-card:last-child { grid-column: 1 / -1; }
+  .topic-cards > li:last-child { grid-column: 1 / -1; }
 }
 
 /* ===== Tool promo banner ===== */
@@ -636,6 +665,22 @@ footer.site-footer {
 .footer-inner a:hover {
   color: var(--navy-hover);
   text-decoration-color: var(--gold);
+}
+.footer-inner a.footer-yt {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  line-height: 0;
+  text-decoration: none;
+}
+.footer-inner a.footer-yt svg {
+  display: block;
+  width: 22px;
+  height: 16px;
+}
+.footer-inner a.footer-yt:hover {
+  color: inherit;
+  opacity: .85;
 }
 .footer-disclaimer {
   margin-top: .85rem;

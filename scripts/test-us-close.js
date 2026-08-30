@@ -354,22 +354,22 @@ assert("stamp chips are three HUD labels", chips.length === 3 && chips[0].indexO
 var zhPillars = (indexHtml.match(/<div class="pillars">[\s\S]*?<h2 class="section-title">互動工具/) || [""])[0];
 assert("ZH pillar boxes are 稅務 美股 AI", zhPillars.indexOf(">稅務<") !== -1 && zhPillars.indexOf(">美股<") !== -1 && /class="pillar-icon"[^>]*>AI</.test(zhPillars));
 assert("ZH pillars have no leftover h3 titles", zhPillars.indexOf("<h3>") === -1);
-assert("ZH pillar body copy kept", zhPillars.indexOf("Apple 為什麼多年 ETR") !== -1 && zhPillars.indexOf("遺產稅 USD 60,000") !== -1 && zhPillars.indexOf("13F 追蹤") !== -1);
+assert("ZH pillar body copy kept", zhPillars.indexOf("Apple 多年 ETR 12-16%") !== -1 && zhPillars.indexOf("遺產稅 USD 60k") !== -1 && zhPillars.indexOf("13F、財報、多來源驗證") !== -1);
 
 var enPillars = (enIndex.match(/<div class="pillars">[\s\S]*?<h2 class="section-title">Interactive Tools/) || [""])[0];
-assert("EN pillar boxes are Tax US AI", enPillars.indexOf(">Tax<") !== -1 && enPillars.indexOf(">US<") !== -1 && /class="pillar-icon"[^>]*>AI</.test(enPillars));
+assert("EN pillar boxes are TAX US AI", enPillars.indexOf(">TAX<") !== -1 && enPillars.indexOf(">US<") !== -1 && /class="pillar-icon"[^>]*>AI</.test(enPillars));
 assert("EN pillars have no leftover h3 titles", enPillars.indexOf("<h3>") === -1);
-assert("EN pillar body copy kept", enPillars.indexOf("effective tax rate") !== -1 && enPillars.indexOf("USD 60,000") !== -1 && enPillars.indexOf("13F tracking") !== -1);
+assert("EN pillar body copy kept", enPillars.indexOf("Apple ETR sat at 12-16%") !== -1 && enPillars.indexOf("USD 60k estate tax") !== -1 && enPillars.indexOf("13F, filings, multi-source checks") !== -1);
 
 var aboutZh = fs.readFileSync(path.join(root, "about.html"), "utf8");
 var aboutEn = fs.readFileSync(path.join(root, "en/about.html"), "utf8");
 assert("ZH about heading updated", aboutZh.indexOf("稅務議題弄明白，美股報酬最大化") !== -1);
 assert("ZH about dropped old heading", aboutZh.indexOf("這個網站寫什麼") === -1);
-assert("ZH homepage has the same heading", indexHtml.indexOf("稅務議題弄明白，美股報酬最大化") !== -1);
-assert("ZH homepage has five topic cards", (indexHtml.match(/class="topic-card"/g) || []).length === 5);
-assert("ZH homepage keeps principles and YouTube", indexHtml.indexOf("寫作原則") !== -1 && indexHtml.indexOf("稅務 x 美股 x AI 傑夫哥") !== -1);
+assert("ZH homepage dropped slogan heading", indexHtml.indexOf("稅務議題弄明白，美股報酬最大化") === -1);
+assert("ZH homepage dropped topic cards", (indexHtml.match(/class="topic-card"/g) || []).length === 0);
+assert("ZH homepage keeps principles and YouTube in About", indexHtml.indexOf("每一個數字標注來源與日期") !== -1 && indexHtml.indexOf("稅務 x 美股 x AI 傑夫哥") !== -1);
 assert("ZH homepage heading is not the hero h1", /<h1>把稅務講清楚，讓美股報酬留在自己口袋<\/h1>/.test(indexHtml));
-assert("EN homepage matching heading", enIndex.indexOf("Get the tax issues straight so more of the US-stock return stays yours") !== -1);
+assert("EN homepage dropped slogan heading", enIndex.indexOf("Get the tax issues straight so more of the US-stock return stays yours") === -1);
 assert("EN about matching heading", aboutEn.indexOf("Get the tax issues straight so more of the US-stock return stays yours") !== -1);
 assert("EN headings have no em dash", enIndex.indexOf("\u2014") === -1 && aboutEn.indexOf("\u2014") === -1);
 assert("ZH about has five topic cards", (aboutZh.match(/class="topic-card"/g) || []).length === 5);
