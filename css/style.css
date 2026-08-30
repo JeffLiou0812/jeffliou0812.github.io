@@ -242,6 +242,7 @@ nav.main-nav a.active {
   margin-top: 1rem;
 }
 .chip {
+  display: inline-block;
   font-size: .74rem;
   font-weight: 700;
   color: var(--navy);
@@ -249,6 +250,8 @@ nav.main-nav a.active {
   border: var(--frame-width-sm) solid var(--frame);
   border-radius: var(--radius-pill);
   padding: .2rem .65rem;
+  text-decoration: none;
+  cursor: pointer;
 }
 .chip:hover {
   background: var(--terra-wash);
@@ -278,11 +281,15 @@ main { max-width: 1040px; margin: 0 auto; padding: 2.2rem 1.2rem 3rem; }
   gap: 1.25rem;
 }
 .pillar {
+  display: block;
   background: var(--card);
   border: var(--frame-width) solid var(--frame);
   border-radius: var(--radius);
   padding: 1.45rem 1.4rem;
   box-shadow: var(--shadow-sm);
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
   transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
 }
 .pillar:hover {
@@ -317,7 +324,13 @@ main { max-width: 1040px; margin: 0 auto; padding: 2.2rem 1.2rem 3rem; }
   padding: 0;
   list-style: none;
 }
+.topic-cards > li {
+  display: flex;
+  min-width: 0;
+}
 .topic-card {
+  display: block;
+  width: 100%;
   background: var(--card);
   border: 1px solid var(--frame);
   border-radius: var(--radius);
@@ -326,6 +339,11 @@ main { max-width: 1040px; margin: 0 auto; padding: 2.2rem 1.2rem 3rem; }
   font-size: .95rem;
   line-height: 1.65;
   box-shadow: var(--shadow-sm);
+  text-decoration: none;
+  cursor: pointer;
+}
+.topic-card:hover {
+  box-shadow: var(--shadow);
 }
 .topic-prose {
   margin-top: 1rem;
@@ -333,7 +351,7 @@ main { max-width: 1040px; margin: 0 auto; padding: 2.2rem 1.2rem 3rem; }
 }
 @media (min-width: 720px) {
   .topic-cards { grid-template-columns: 1fr 1fr; }
-  .topic-card:last-child { grid-column: 1 / -1; }
+  .topic-cards > li:last-child { grid-column: 1 / -1; }
 }
 
 /* ===== Tool promo banner ===== */
